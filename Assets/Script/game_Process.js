@@ -6,7 +6,7 @@ var sizeY:int=13;
 var persons:person[] = new person[8];
 var person:GameObject;
 var box:GameObject;
-var pstep:int=0;
+//var pstep:int=0;
 var map : plane[,] = new plane[sizeX,sizeY];
 var currentplayer:int=0;
 public static var instance:game_Process;
@@ -15,7 +15,6 @@ public static var instance:game_Process;
 private var mytarget : plane ;
 private var targetPos : Vector3 ;
 var startWalk : boolean = false;
-var stepList : Aset[];
 
 function Awake(){
 	instance=this;
@@ -70,6 +69,14 @@ function SetUpLocation(){
 	}
 }
 
+/*function highlightplaneat(originLocation:Vector2){   //still useless now, similar to treeRecursive
+	print("color");
+	var walkRange:List.<plane> = Highlight.FindHighlight(map[originLocation.x,originLocation.y],persons[currentplayer].step);
+	for(var t:plane in walkRange){
+		print(t.gridPosition);
+		t.setcanSelect(true);
+	}
+}*/
 function treeRecursive(x:int,y:int,step:int){ // do the recursion to render which is OK in walk
 		if(step>0){
 				if((y-1>=0) /*&& map[x,y-1].GetComponent.<planeColor>().getcanSelect()==false*/){
@@ -103,109 +110,14 @@ function getTargetPlace(map:plane){
 }
 function ShowWalk(){
 	//map[1,1].SendMessage("setcanSelect",true);
-		var y:int = persons[currentplayer].GetComponent.<person>().locateY;
-		var x:int = persons[currentplayer].GetComponent.<person>().locateX;
-		pstep=persons[currentplayer].GetComponent.<person>().step;
-		treeRecursive(x,y,pstep);
+//		pstep=persons[currentplayer].GetComponent.<person>().step;
+		treeRecursive(persons[currentplayer].position.x,persons[currentplayer].position.y,persons[currentplayer].step);
+		//highlightplaneat(persons[currentplayer].position);
 }
 
 function reset(){
 	for(var j:int=0;j<sizeY;j++)
 		for(var i:int=0;i<sizeX;i++)
 			map[i,j].GetComponent.<plane>().setcanSelect(false);
-				pstep=0;
-}
-
-function astar(lx:int , ly:int ):Aset[]{
-	var open: List.<Aset> = new List.<Aset>();
-	var close:List.<Aset> = new List.<Aset>();
-	var fin:List.<Aset> = new List.<Aset>();
-	var tool1: Aset = new Aset();
-	tool1.setUp(5,4);
-	open.Add(tool1);
-		do{
-			if((open[0].y-1>=0) /*&&OKBoard[open.get(0).x][open.get(0).y-1]==true*/){
-				var tool2:Aset = new Aset();
-				tool2.setUp(open[0].x,open[0].y-1);
-				var same:boolean=false;
-				for(var i:int =0;i<close.Count;i++){
-					if(close[i].x==tool2.x &&close[i].y==tool2.y)
-						same=true;
-				}
-				if(same==false){
-					tool2.Gval(open[0].x,open[0].y);
-					tool2.Hval(lx, ly);
-					open.Add(tool2);
-					tool2.setprev(open[0]);
-				}
-			}
-			if((open[0].y+1<=sizeY-1) /*&&OKBoard[open.get(0).x][open.get(0).y+1]==true*/){
-				var tool3:Aset = new Aset();
-				tool3.setUp(open[0].x,open[0].y+1);
-				same=false;
-				for(i=0;i<close.Count;i++){
-					if(close[i].x==tool3.x &&close[i].y==tool3.y)
-						same=true;
-				}
-				if(same==false){
-					tool3.Gval(open[0].x,open[0].y);
-					tool3.Hval(lx, ly);
-					open.Add(tool3);
-					tool3.setprev(open[0]);
-				}
-			}
-			if((open[0].x-1>=0) /*&&OKBoard[open.get(0).x][open.get(0).y+1]==true*/){
-				var tool4:Aset = new Aset();
-				tool4.setUp(open[0].x-1,open[0].y);
-				same = false;
-				for( i=0;i<close.Count;i++){
-					if(close[i].x==tool4.x &&close[i].y==tool4.y)
-						same=true;
-				}
-				if(same==false){
-					tool4.Gval(open[0].x,open[0].y);
-					tool4.Hval(lx, ly);
-					open.Add(tool4);
-					tool4.setprev(open[0]);
-				}
-			}
-			if((open[0].x+1<=map.length-1) /*&&OKBoard[open.get(0).x][open.get(0).y+1]==true*/){
-				var tool5:Aset = new Aset();
-				tool5.setUp(open[0].x+1,open[0].y);
-				same=false;
-				for( i=0;i<close.Count;i++){
-					if(close[i].x==tool5.x &&close[i].y==tool5.y)
-						same=true;
-				}
-				if(same==false){
-					tool5.Gval(open[0].x,open[0].y);
-					tool5.Hval(lx, ly);
-					open.Add(tool5);
-					tool5.setprev(open[0]);
-				}
-			}
-			close.Add(open[0]);
-			open.Remove(open[0]);
-			for( i =1;i<open.Count;i++){
-				for(var in2:int =i;in2>0;in2--){
-					if( open[in2].getF() < open[in2-1].getF() ){
-						var tmp:Aset =open[in2];
-						open[in2]=open[in2-1];
-						open[in2-1]= tmp;
-					}
-					else
-						break;
-				}
-			}
-		}while(open[0].x!=lx || open[0].y!=ly);
-		var tool:Aset =open[0];
-		while(tool3.prev!=null){
-			fin.Add(tool);
-			tool=tool.prev;
-		}
-		var fin2:Aset[] =new Aset[fin.Count];
-		for( i =0;i<fin2.length;i++){
-			fin2[fin.Count-i-1]=fin[i];
-		}
-		return fin2;
+//				pstep=0;
 }

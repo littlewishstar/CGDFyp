@@ -1,8 +1,7 @@
 ﻿#pragma strict
 public var id:int;
-public var step:int=1;
-public var locateX:int=5;
-public var locateY:int=4;
+public var step:int=4;
+public var position:Vector2; //use vector2 instead of locX locY , I think better
 var incontrol : boolean=false;
 var controller: GameObject;
 function Start () {
@@ -14,8 +13,8 @@ function Update () {
 
 }
 function setlocation(x:int,y:int){
-	locateX=x;
-	locateY=y;
+	position.x=x;
+	position.y=y;
 }
 function OnMouseDown(){
 		//transform.parent.SendMessage("getTargetPlace",LocX,LocY);

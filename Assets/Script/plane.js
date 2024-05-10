@@ -1,8 +1,8 @@
 ﻿#pragma strict
-import System.Collections.Generic;
+	import System.Collections.Generic;
 
 public var selected : boolean = false;
-public var gridPosition : Vector2 = Vector2.zero;
+public var gridPosition : Vector2 = Vector2.zero; //use vector2 instead of locX locY , I think better
 var onSelect : Material;
 var noSelect : Material;
 var XSelect:Material;
@@ -10,7 +10,9 @@ var canSelect:boolean = false;
 var LocX : int;
 var LocY : int;
 var canStand:boolean = false;
+var movecost:int=1;
 var neighbors:List.<plane> = new List.<plane>();
+var movecolor:Material;
 
 function Start () {
 	//canSelect=false;	
