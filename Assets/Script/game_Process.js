@@ -15,6 +15,7 @@ public static var instance:game_Process;
 private var mytarget : plane ;
 private var targetPos : Vector3 ;
 var startWalk : boolean = false;
+var icepre:GameObject;
 
 function Awake(){
 	instance=this;
@@ -29,18 +30,33 @@ function Start () {
 		persons[x].id=x;
 		//persons[x].transform.position=map[x,4].transform.position+Vector3(0,0.5,0);
 	}
+	yield WaitForSeconds(0.0000001);
 	Awake();
-	//	print(open[0].GetComponent.<plane>().LocX);
+	var ice : GameObject=Instantiate(icepre, map[2,4].transform.position, Quaternion.Euler(new Vector3()));
+		ice.renderer.material.color=Color.blue;
+	updatePlane();
 }
+function updatePlane(){
+	for(var j:int =0;j<sizeY;j++)
+		for(var i:int=0;i<sizeX;i++)
+			if(map[i,j].gridPosition==persons[i].position){
+				map[i,j].status[0].ishere=true;
+			}
+			else
+				map[i,j].status[0].ishere=false;
+}
+
 function Update () {
-		
+updatePlane();
 }
 
 function walk(){
 	var tomiddleofplane:Vector3=new Vector3(0,persons[currentplayer].transform.localScale.y/2,0);
+	var now:plane=map[persons[currentplayer].position.x,persons[currentplayer].position.y];
+	now.status[0].ishere=false;
 	if(startWalk==true){
 		reset();
-		for(var go:plane in PathFinder.FindPath(map[persons[currentplayer].position.x,persons[currentplayer].position.y],mytarget).listOfPlanes){
+		for(var go:plane in PathFinder.FindPath(now,mytarget).listOfPlanes){
 			persons[currentplayer].toPlace.Add(go);
 		}
 		targetPos=mytarget.transform.position;
@@ -55,6 +71,7 @@ function walk(){
 		}
 	}
 	persons[currentplayer].setlocation(mytarget.gridPosition.x,mytarget.gridPosition.y);
+	mytarget.status[0].ishere=true;
 		if(currentplayer<persons.length-1)
 			currentplayer++;
 		else
@@ -71,9 +88,8 @@ function SetUpLocation(){
 			newbox.transform.position = this.transform.position + Vector3(j,0,i);
 			newbox.transform.parent = this.transform;
 			map[i,j].gridPosition = new Vector2(i,j);
-			//map[i,j].GetComponent.<Aset>().setUp(i,j);
 			map[i,j].setcanSelect(false);
-			
+
 		}
 	}
 }
@@ -113,7 +129,6 @@ function highlightplaneat(originLocation:Vector2){   //still useless now, simila
 	}*/
 function getTargetPlace(map:plane){
 	mytarget=map;
-	//stepList=astar(mytarget.gridPosition.x,mytarget.gridPosition.y);
 	startWalk=true;
 	walk();	
 }
@@ -126,5 +141,4 @@ function reset(){
 	for(var j:int=0;j<sizeY;j++)
 		for(var i:int=0;i<sizeX;i++)
 			map[i,j].GetComponent.<plane>().setcanSelect(false);
-//				pstep=0;
 }
