@@ -23,19 +23,19 @@ function Start () {
 function findneighbors(){
 	if(gridPosition.y>0){
 		var up : Vector2 = new Vector2(gridPosition.x,gridPosition.y-1);
-		neighbors.Add(game_Process.instance.map[up.x,up.y]);
+		neighbors.Add(game_Process.instance.map[parseInt(up.x),parseInt(up.y)]);
 	}
 	if(gridPosition.y<game_Process.instance.sizeY-1){
 		var down : Vector2 = new Vector2(gridPosition.x,gridPosition.y+1);
-		neighbors.Add(game_Process.instance.map[down.x,down.y]);
+		neighbors.Add(game_Process.instance.map[parseInt(down.x),parseInt(down.y)]);
 	}
 	if(gridPosition.x>0){
 		var left : Vector2 = new Vector2(gridPosition.x-1,gridPosition.y);
-		neighbors.Add(game_Process.instance.map[left.x,left.y]);
+		neighbors.Add(game_Process.instance.map[parseInt(left.x),parseInt(left.y)]);
 	}
 	if(gridPosition.x<game_Process.instance.sizeX-1){
 		var right : Vector2 = new Vector2(gridPosition.x+1,gridPosition.y);
-		neighbors.Add(game_Process.instance.map[right.x,right.y]);
+		neighbors.Add(game_Process.instance.map[parseInt(right.x),parseInt(right.y)]);
 	}
 }
 function setUp(x:int,y:int){

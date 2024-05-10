@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\game_Process.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Highlights.js">
     <Files>
-      <File FileName="Assets\Script\plane.js" Line="77" Column="22" />
-      <File FileName="Assets\Script\person.js" Line="4" Column="81" />
-      <File FileName="Assets\Script\game_Process.js" Line="77" Column="24" />
-      <File FileName="Assets\Script\Highlights.js" Line="2" Column="35" />
+      <File FileName="Assets\Script\plane.js" Line="26" Column="73" />
+      <File FileName="Assets\Script\person.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\game_Process.js" Line="76" Column="32" />
+      <File FileName="Assets\Script\Highlights.js" Line="49" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

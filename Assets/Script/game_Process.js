@@ -69,14 +69,14 @@ function SetUpLocation(){
 	}
 }
 
-/*function highlightplaneat(originLocation:Vector2){   //still useless now, similar to treeRecursive
-	print("color");
-	var walkRange:List.<plane> = Highlight.FindHighlight(map[originLocation.x,originLocation.y],persons[currentplayer].step);
+function highlightplaneat(originLocation:Vector2){   //still useless now, similar to treeRecursive
+	var walkRange:List.<plane> = Highlights.FindHighlight(map[parseInt(originLocation.x),parseInt(originLocation.y)],persons[currentplayer].step);
+	//var walkRange:List.<plane> = Highlights.FindHighlight(map[2,2],persons[currentplayer].step);
+	//print(walkRange.Count);
 	for(var t:plane in walkRange){
-		print(t.gridPosition);
 		t.setcanSelect(true);
 	}
-}*/
+}
 function treeRecursive(x:int,y:int,step:int){ // do the recursion to render which is OK in walk
 		if(step>0){
 				if((y-1>=0) /*&& map[x,y-1].GetComponent.<planeColor>().getcanSelect()==false*/){
@@ -109,10 +109,8 @@ function getTargetPlace(map:plane){
 	
 }
 function ShowWalk(){
-	//map[1,1].SendMessage("setcanSelect",true);
-//		pstep=persons[currentplayer].GetComponent.<person>().step;
-		treeRecursive(persons[currentplayer].position.x,persons[currentplayer].position.y,persons[currentplayer].step);
-		//highlightplaneat(persons[currentplayer].position);
+		//treeRecursive(persons[currentplayer].position.x,persons[currentplayer].position.y,persons[currentplayer].step);
+		highlightplaneat(persons[currentplayer].position);
 }
 
 function reset(){

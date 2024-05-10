@@ -1,37 +1,14 @@
 ﻿#pragma strict
-import System.Collections.Generic;
 
-public class planePath {
-	public var listOfPlanes:List.<plane>  = new List.<plane>();
-
-	public var costOfPath:int  = 0;	
-	
-	public var lastPlane:plane;
-	
-	public function planePath() {}
-	
-	public function planePath(tp:planePath ) {
-		listOfPlanes = tp.listOfPlanes;
-		costOfPath = tp.costOfPath;
-		lastPlane = tp.lastPlane;
-	}
-	
-	public function addPlane(t:plane) {
-		costOfPath += t.movecost;
-		listOfPlanes.Add(t);
-		lastPlane = t;
-	}
-}
-
-public class Highlights {
+public class PathFinder {
 	
 	
 	
-	public function Highlights () {
+	public function PathFinder () {
 		
 	}
 	
-	public static function  FindHighlight( originPlane:plane, step:int ):List.<plane> {
+	public static function  FindPath( originPlane:plane, step:int ):planePath {
 		var closed:List.<plane> = new List.<plane>();
 		var open:List.<planePath> = new List.<planePath>();
 		
