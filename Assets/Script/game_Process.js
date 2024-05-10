@@ -33,24 +33,32 @@ function Start () {
 	//	print(open[0].GetComponent.<plane>().LocX);
 }
 function Update () {
+		
+}
+
+function walk(){
+	var tomiddleofplane:Vector3=new Vector3(0,persons[currentplayer].transform.localScale.y/2,0);
 	if(startWalk==true){
-		reset();		
-	//	for(var i: int =0;i<stepList.length;i++){
-		//	targetPos = stepList[i].transform.position;
-			targetPos = mytarget.transform.position;
-			persons[currentplayer].transform.position = Vector3.MoveTowards(persons[currentplayer].transform.position, targetPos+Vector3(0,person.transform.localScale.y/2,0), 5*Time.deltaTime);
-			if(persons[currentplayer].transform.position==targetPos+Vector3(0,persons[currentplayer].transform.localScale.y/2,0)){
-				startWalk=false;
-				persons[currentplayer].GetComponent.<person>().setlocation(mytarget.gridPosition.x,mytarget.gridPosition.y);
-				mytarget=null;
-				if(currentplayer<persons.length-1)
-					currentplayer++;
-				else
-					currentplayer=0;
-				//person.GetComponent.<person>().incontrol=false;
+		reset();
+		for(var go:plane in PathFinder.FindPath(map[persons[currentplayer].position.x,persons[currentplayer].position.y],mytarget).listOfPlanes){
+			persons[currentplayer].toPlace.Add(go);
+		}
+		targetPos=mytarget.transform.position;
+		var count:int=0;
+		while(persons[currentplayer].transform.position!=targetPos+tomiddleofplane){
+		//	persons[currentplayer].transform.position=Vector3.Lerp(persons[currentplayer].transform.position,persons[currentplayer].toPlace[0].transform.position+Vector3(0,person.transform.localScale.y/2,0), Time.deltaTime);
+			persons[currentplayer].transform.position = Vector3.MoveTowards(persons[currentplayer].transform.position, persons[currentplayer].toPlace[count].transform.position+tomiddleofplane, 5*Time.deltaTime);
+			if(persons[currentplayer].transform.position==persons[currentplayer].toPlace[count].transform.position+tomiddleofplane){
+				count++;
 			}
-		//}
+			yield WaitForSeconds(0.01);
+		}
 	}
+	persons[currentplayer].setlocation(mytarget.gridPosition.x,mytarget.gridPosition.y);
+		if(currentplayer<persons.length-1)
+			currentplayer++;
+		else
+			currentplayer=0;
 }
 
 function SetUpLocation(){
@@ -65,6 +73,7 @@ function SetUpLocation(){
 			map[i,j].gridPosition = new Vector2(i,j);
 			//map[i,j].GetComponent.<Aset>().setUp(i,j);
 			map[i,j].setcanSelect(false);
+			
 		}
 	}
 }
@@ -77,36 +86,36 @@ function highlightplaneat(originLocation:Vector2){   //still useless now, simila
 		t.setcanSelect(true);
 	}
 }
-function treeRecursive(x:int,y:int,step:int){ // do the recursion to render which is OK in walk
+/*function treeRecursive(x:int,y:int,step:int){ // do the recursion to render which is OK in walk
 		if(step>0){
-				if((y-1>=0) /*&& map[x,y-1].GetComponent.<planeColor>().getcanSelect()==false*/){
+				if((y-1>=0) ){
 					//var other : plane = map[x,y-1].GetComponent(plane);
 					map[x,y-1].setcanSelect(true);
 					treeRecursive(x,y-1,step-1);
 				}	
 			
-			if((y+1<=sizeY-1) /*&& map[x,y+1].GetComponent.<planeColor>().getcanSelect()==false*/){
+			if((y+1<=sizeY-1) ){
 					//var other1 : plane = map[x,y+1].GetComponent(plane);
 					map[x,y+1].setcanSelect(true);
 					treeRecursive(x,y+1,step-1);
 			}
-			if((x-1>=0) /*&& map[x-1,y].GetComponent.<planeColor>().getcanSelect()==false*/){
+			if((x-1>=0) ){
 					//var other2 : plane = map[x-1,y].GetComponent(plane);
 					map[x-1,y].setcanSelect(true);
 					treeRecursive(x-1,y,step-1);
 			}
-			if((x+1<=sizeX-1) /*&& map[x+1,y].GetComponent.<planeColor>().getcanSelect()==false*/){
+			if((x+1<=sizeX-1) ){
 					var other3 : plane = map[x+1,y].GetComponent(plane);
 					map[x+1,y].setcanSelect(true);
 					treeRecursive(x+1,y,step-1);
 			}
 		}
-	}
+	}*/
 function getTargetPlace(map:plane){
 	mytarget=map;
 	//stepList=astar(mytarget.gridPosition.x,mytarget.gridPosition.y);
 	startWalk=true;
-	
+	walk();	
 }
 function ShowWalk(){
 		//treeRecursive(persons[currentplayer].position.x,persons[currentplayer].position.y,persons[currentplayer].step);

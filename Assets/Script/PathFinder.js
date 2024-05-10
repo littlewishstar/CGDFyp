@@ -8,7 +8,7 @@ public class PathFinder {
 		
 	}
 	
-	public static function  FindPath( originPlane:plane, step:int ):planePath {
+	public static function  FindPath( originPlane:plane, toPlane:plane ):/*planePath*/planePath {
 		var closed:List.<plane> = new List.<plane>();
 		var open:List.<planePath> = new List.<planePath>();
 		
@@ -24,19 +24,21 @@ public class PathFinder {
 			if (closed.Contains(current.lastPlane)) {
 				continue;
 			} 
-			if (current.costOfPath > step +1) {
-				continue;
-			}
+			if (current.lastPlane==toPlane) {
+				current.listOfPlanes.RemoveAt(0);
+				return current;
+			} 
 			
 			closed.Add(current.lastPlane);
 			
 			for ( var t:plane in current.lastPlane.neighbors) {				
 				var newPath:planePath = new planePath(current);
-				newPath.addPlane(t);
+				if(t.canStand==true){
+					newPath.addPlane(t);
+				}
 				open.Add(newPath);
 			}
 		}
-		closed.Remove(originPlane);
-		return closed;
+		return null;
 	}
 }

@@ -1,12 +1,17 @@
 ﻿#pragma strict
+import System.Collections.Generic;
+
 public var id:int;
 public var step:int=4;
 public var position:Vector2; //use vector2 instead of locX locY , I think better
 var incontrol : boolean=false;
 var controller: GameObject;
+var toPlace:List.<plane> = new List.<plane>();
+
 function Start () {
 controller=GameObject.Find("Main Game Controller");
 incontrol=false;
+toPlace = new List.<plane>();
 }
 
 function Update () {

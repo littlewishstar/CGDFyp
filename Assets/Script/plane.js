@@ -7,18 +7,33 @@ var onSelect : Material;
 var noSelect : Material;
 var XSelect:Material;
 var canSelect:boolean = false;
-var LocX : int;
-var LocY : int;
-var canStand:boolean = false;
+var canStand:boolean;
 var movecost:int=1;
 var neighbors:List.<plane> = new List.<plane>();
-var movecolor:Material;
+var status:List.<inside> = new List.<inside>();
 
 function Start () {
-	//canSelect=false;	
-	canStand=false;
+	canStand=true;
 	renderer.material = XSelect;
 	findneighbors();
+	status.Add(new inside("person",false));
+	status.Add(new inside("fire",false));
+	status.Add(new inside("ice",false));
+	status.Add(new inside("stone",false));
+	status.Add(new inside("nearfire",false));
+	status.Add(new inside("nearice",false));
+}
+
+public class inside{
+	public var whatsin:String;
+	public var ishere:boolean;
+	public function inside(a:String , b:boolean){
+		whatsin=a;
+		ishere=b;
+	}
+}
+function updatePlane(th:int , here:boolean){
+	status[th].ishere=here;
 }
 function findneighbors(){
 	if(gridPosition.y>0){
@@ -70,15 +85,24 @@ function OnMouseDown(){
 		//transform.parent.SendMessage("getTargetPlace",LocX,LocY);
 		transform.parent.SendMessage("getTargetPlace",gameObject.GetComponent.<plane>());
 	}
+	else{
+		canStand=canStand?false:true;
+		flap();
+		if(canStand==false){
+			renderer.material.color=Color.red;
+		}
+	}
 }
-function trySth(){
+function flap(){
+if(canStand==false)
 	canSelect=false;
 }
+
 function setcanSelect(a:boolean){
 	//yield WaitForSeconds(0.000001);
 	canSelect=a;
 	if(canSelect==true)
-	renderer.material = noSelect;
+		renderer.material = noSelect;
 	else
-	renderer.material = XSelect;
+		renderer.material = XSelect;
 }

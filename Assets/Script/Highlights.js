@@ -1,31 +1,7 @@
 ﻿#pragma strict
 import System.Collections.Generic;
 
-public class planePath {
-	public var listOfPlanes:List.<plane>  = new List.<plane>();
-
-	public var costOfPath:int  = 0;	
-	
-	public var lastPlane:plane;
-	
-	public function planePath() {}
-	
-	public function planePath(tp:planePath ) {
-		listOfPlanes = tp.listOfPlanes;
-		costOfPath = tp.costOfPath;
-		lastPlane = tp.lastPlane;
-	}
-	
-	public function addPlane(t:plane) {
-		costOfPath += t.movecost;
-		listOfPlanes.Add(t);
-		lastPlane = t;
-	}
-}
-
 public class Highlights {
-	
-	
 	
 	public function Highlights () {
 		
@@ -55,7 +31,9 @@ public class Highlights {
 			
 			for ( var t:plane in current.lastPlane.neighbors) {				
 				var newPath:planePath = new planePath(current);
-				newPath.addPlane(t);
+				if(t.canStand==true){
+					newPath.addPlane(t);
+				}
 				open.Add(newPath);
 			}
 		}
