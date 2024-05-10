@@ -1,5 +1,6 @@
 ﻿#pragma strict
-	import System.Collections.Generic;
+
+import System.Collections.Generic;
 
 public var selected : boolean = false;
 public var gridPosition : Vector2 = Vector2.zero; //use vector2 instead of locX locY , I think better
@@ -14,11 +15,13 @@ var status:List.<inside> = new List.<inside>();
 var gn:int=0;
 var hn:int=0;
 var fn:int=0;
+var posX:int=-1;
+var posY:int=-1;
 
 function Start () {
 	canStand=true;
 	renderer.material = XSelect;
-	findneighbors();
+	//findneighbors();
 	status.Add(new inside("person",false));
 	status.Add(new inside("ice",false));
 	status.Add(new inside("stone",false));
@@ -64,13 +67,15 @@ function findneighbors(){
 function setUp(x:int,y:int){
 	gridPosition.x=x;
 	gridPosition.y=y;
+	posX=x;
+	posY=y;
 }
 
 function Update () {
-	if(status[0].ishere==true || status[1].ishere==true || status[2].ishere==true)
+/*	if(status[0].ishere==true || status[1].ishere==true || status[2].ishere==true)
 		canStand=false;
 	else
-		canStand=true;
+		canStand=true;*/
 }
 function OnMouseEnter(){
 //print("x: "+LocX + "  "+"y: "+LocY);
@@ -95,17 +100,61 @@ function getcanSelect() : boolean {
 function OnMouseDown(){
 	if(canSelect==true){
 		//transform.parent.SendMessage("getTargetPlace",LocX,LocY);
-		transform.parent.SendMessage("walk",gameObject.GetComponent.<plane>());
+		//transform.parent.SendMessage("walk",gameObject.GetComponent.<plane>());
+		//transform.parent.SendMessage("walk2",posX,posY);
+		//transform.parent.SendMessage("walk2",this);
+		
+		if(transform.parent.GetComponent.<gameProcess>() != null){
+			if(transform.parent.GetComponent.<gameProcess>().startWalk == true){
+				//transform.parent.GetComponent.<gameProcess>().walk2(posX,posY);
+				transform.parent.GetComponent.<gameProcess>().SendMessage("walk2",this);
+			}
+			if(transform.parent.GetComponent.<gameProcess>().startSkill == true){
+				if(transform.parent.GetComponent.<gameProcess>().skillStage == 0){
+					print("magic");
+					transform.parent.GetComponent.<gameProcess>().usingSkill.setLand(posX, posY);
+					transform.parent.GetComponent.<gameProcess>().skillStage = 1;
+					transform.parent.GetComponent.<gameProcess>().SendMessage("useSkill2");
+					//bs.setLand(x2, y2);
+				}
+			}
+		}
+		else if(transform.parent.GetComponent.<MultipleGameProcess>() != null){
+			if(transform.parent.GetComponent.<MultipleGameProcess>().startWalk == true){
+				//transform.parent.GetComponent.<MultipleGameProcess>().walk2(posX,posY);
+				transform.parent.GetComponent.<MultipleGameProcess>().SendMessage("walk2",this);
+			}
+			if(transform.parent.GetComponent.<MultipleGameProcess>().startSkill == true){
+				if(transform.parent.GetComponent.<MultipleGameProcess>().skillStage == 0){
+					print("magic");
+					transform.parent.GetComponent.<MultipleGameProcess>().usingSkill.setLand(posX, posY);
+					transform.parent.GetComponent.<MultipleGameProcess>().skillStage = 1;
+					transform.parent.GetComponent.<MultipleGameProcess>().SendMessage("useSkill2");
+					//bs.setLand(x2, y2);
+				}
+			}
+		}
+		//transform.parent.GetComponent.<gameProcess>().walk2(posX,posY);
+		//yield WaitForSeconds(0);
+		//gameProcess.instance.walk2(posX,posY);
 	}
 }
 
 function setcanSelect(a:boolean){
 	//yield WaitForSeconds(0.000001);
 	canSelect=a;
-	if(canStand==true){
-		if(canSelect==true)
+	//print(canSelect);
+	//if(canStand==true){
+		if(canSelect==true){
+			yield WaitForSeconds(0);
+			//renderer.material.color = Color.green;
 			renderer.material = noSelect;
-		else
+						
+			//print("changed");
+			}
+		else{
+			//print("OH no!"+gridPosition);
 			renderer.material = XSelect;
-	}
+		}
+	//}
 }

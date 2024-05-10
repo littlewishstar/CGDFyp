@@ -15,10 +15,13 @@ private var mytarget : plane ;
 private var targetPos : Vector3 ;
 var startWalk : boolean = false;
 var icepre:GameObject;
+var sth : skill = new basicAttack(persons[0]);
+
 
 function Awake(){
 	instance=this;
 }
+
 function Start () {
 	SetUpLocation();
 	//print(board(0).transform.position.x);
@@ -30,6 +33,7 @@ function Start () {
 			firstchapter();
 	for(var per:person in persons)
 		map[per.gridPosition.x,per.gridPosition.y].status[0].ishere=true;
+		
 }
 function updateTurn(){
 	persons[currentplayer].incontrol=false;
@@ -62,42 +66,42 @@ function askaction(){
 
 function firstchapter(){ //insert chatacter
 		var mywar : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CD1.prefab", GameObject),map[4,2].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		mywar.person(0,5,60,2300,3,650,390,0,90);
+		mywar.person(0,"war 1",5,60,2300,3,650,390,0,90,0,1);
 		mywar.setlocation(4,2);
 		persons[0]=mywar;
 		
 		var enemywar : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CD2.prefab", GameObject),map[2,10].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		enemywar.person(1,5,65,2300,3,650,390,0,90);
+		enemywar.person(1,"war 2", 5,65,2300,3,650,390,0,90,0,2);
 		enemywar.setlocation(2,10);
 		persons[1]=enemywar;
 		
 		var myassissan : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CA1.prefab", GameObject),map[3,2].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		myassissan.person(2,5,80,1000,4,1000,150,50,300);
+		myassissan.person(2,"assissan 1",5,80,1000,4,1000,150,50,300,1,1);
 		myassissan.setlocation(3,2);
 		persons[2]=myassissan;
 		
 		var enemyassissan : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CA2.prefab", GameObject),map[4,10].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		enemyassissan.person(3,5,75,1000,4,1000,150,50,300);
+		enemyassissan.person(3,"assissan 2",5,75,1000,4,1000,150,50,300,1,2);
 		enemyassissan.setlocation(4,10);
 		persons[3]=enemyassissan;
 		
 		var mymagic : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CC1.prefab", GameObject),map[4,1].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		mymagic.person(4,5,40,1400,2,100,200,1000,460);
+		mymagic.person(4,"magic 1",5,40,1400,2,100,200,1000,460,2,1);
 		mymagic.setlocation(4,1);
 		persons[4]=mymagic;
 		
 		var enemymagic : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CC2.prefab", GameObject),map[3,11].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		enemymagic.person(5,5,45,1400,2,100,200,1000,460);
+		enemymagic.person(5,"magic 2",5,45,1400,2,100,200,1000,460,2,2);
 		enemymagic.setlocation(3,11);
 		persons[5]=enemymagic;
 		
 		var myhealer : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CB1.prefab", GameObject),map[3,1].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		myhealer.person(6,5,50,1800,2,100,250,800,350);
+		myhealer.person(6,"healer 1",5,50,1800,2,100,250,800,350,3,1);
 		myhealer.setlocation(3,1);
 		persons[6]=myhealer;
 		
 		var enemyhealer : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CB2.prefab", GameObject),map[1,11].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		enemyhealer.person(7,5,45,1800,2,100,250,800,350);
+		enemyhealer.person(7,"healer 2",5,45,1800,2,100,250,800,350,3,2);
 		enemyhealer.setlocation(1,11);
 		persons[7]=enemyhealer;
 }

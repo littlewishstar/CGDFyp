@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\person.js">
+    <Files>
+      <File FileName="Assets\Script\Neo\gameProcess.js" Line="634" Column="2" />
+      <File FileName="Assets\Script\person.js" Line="188" Column="6" />
+      <File FileName="Assets\Script\Neo\board.js" Line="57" Column="201" />
+      <File FileName="Assets\Script\Skill\assist\poison.js" Line="12" Column="122" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

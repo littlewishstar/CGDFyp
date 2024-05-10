@@ -1,0 +1,20 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Neo\Calculating.js">
+    <Files>
+      <File FileName="Assets\Script\game_Process.js" Line="135" Column="2" />
+      <File FileName="Assets\Script\box.js" Line="129" Column="1" />
+      <File FileName="Assets\Script\plane.js" Line="111" Column="14" />
+      <File FileName="Assets\Script\planePath.js" Line="22" Column="17" />
+      <File FileName="Assets\Script\person.js" Line="63" Column="13" />
+      <File FileName="Assets\Script\Neo\board.js" Line="21" Column="1" />
+      <File FileName="Assets\Script\Neo\Calculating.js" Line="391" Column="3" />
+      <File FileName="Assets\Script\Neo\gameProcess.js" Line="881" Column="10" />
+      <File FileName="Assets\Script\Neo\mySet.js" Line="19" Column="10" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

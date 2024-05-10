@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{06E22FF0-75DA-4808-04D9-A4DB0CB1148C}</ProjectGuid>
+	<ProjectGuid>{DD427534-F523-AFE3-7DC3-26AC60637031}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_5_1;UNITY_4_5;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,20 +39,65 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>D:/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>D:/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\For multiple game play\MultipleGameProcess.js" />
+     <Compile Include="Assets\Script\For multiple game play\stage\stage01.js" />
+     <Compile Include="Assets\Script\For multiple game play\stage\stageSample.js" />
+     <Compile Include="Assets\Script\For multiple game play\team\team01.js" />
+     <Compile Include="Assets\Script\For multiple game play\team\teamSample.js" />
      <Compile Include="Assets\Script\Highlights.js" />
+     <Compile Include="Assets\Script\Job\Assissan.js" />
+     <Compile Include="Assets\Script\Job\Healer.js" />
+     <Compile Include="Assets\Script\Job\Magician.js" />
+     <Compile Include="Assets\Script\Job\Warrior.js" />
+     <Compile Include="Assets\Script\Neo\Calculating.js" />
+     <Compile Include="Assets\Script\Neo\board.js" />
+     <Compile Include="Assets\Script\Neo\mySet.js" />
      <Compile Include="Assets\Script\PathFinder.js" />
+     <Compile Include="Assets\Script\Skill\assist.js" />
+     <Compile Include="Assets\Script\Skill\assist\autoHeal.js" />
+     <Compile Include="Assets\Script\Skill\assist\buff and debuff\addPhyDam.js" />
+     <Compile Include="Assets\Script\Skill\assist\buff and debuff\addSelfPhyDam.js" />
+     <Compile Include="Assets\Script\Skill\assist\buff and debuff\delPhyDam.js" />
+     <Compile Include="Assets\Script\Skill\assist\buff and debuff\downPhyDam.js" />
+     <Compile Include="Assets\Script\Skill\assist\build Object\buildTree.js" />
+     <Compile Include="Assets\Script\Skill\assist\hide.js" />
+     <Compile Include="Assets\Script\Skill\assist\poison.js" />
+     <Compile Include="Assets\Script\Skill\assist\protectSomeone.js" />
+     <Compile Include="Assets\Script\Skill\assist\provocative.js" />
+     <Compile Include="Assets\Script\Skill\assist\selfTeleport.js" />
+     <Compile Include="Assets\Script\Skill\assist\simpleKnockBack.js" />
+     <Compile Include="Assets\Script\Skill\assist\slowDownSomeone.js" />
+     <Compile Include="Assets\Script\Skill\attack.js" />
+     <Compile Include="Assets\Script\Skill\basicAttack.js" />
+     <Compile Include="Assets\Script\Skill\heal.js" />
+     <Compile Include="Assets\Script\Skill\heal\basicHeal.js" />
+     <Compile Include="Assets\Script\Skill\heal\bigAreaHeal.js" />
+     <Compile Include="Assets\Script\Skill\heal\longHeal.js" />
+     <Compile Include="Assets\Script\Skill\heal\twoWayHeal.js" />
+     <Compile Include="Assets\Script\Skill\magic.js" />
+     <Compile Include="Assets\Script\Skill\magic\hugeFireExplosion.js" />
+     <Compile Include="Assets\Script\Skill\magic\magicAttack.js" />
+     <Compile Include="Assets\Script\Skill\magic\magicLongAttack.js" />
+     <Compile Include="Assets\Script\Skill\magic\thunderLink.js" />
+     <Compile Include="Assets\Script\Skill\physical\highRoundAttack.js" />
+     <Compile Include="Assets\Script\Skill\physical\hurt time x n\doubleTimeAttack.js" />
+     <Compile Include="Assets\Script\Skill\physical\hurt x n\superAttack.js" />
+     <Compile Include="Assets\Script\Skill\physical\roundAttack.js" />
+     <Compile Include="Assets\Script\Skill\skill.js" />
      <Compile Include="Assets\Script\box.js" />
+     <Compile Include="Assets\Script\gameProcess.js" />
      <Compile Include="Assets\Script\game_Process.js" />
      <Compile Include="Assets\Script\person.js" />
      <Compile Include="Assets\Script\plane.js" />
      <Compile Include="Assets\Script\planePath.js" />
+     <Compile Include="Assets\Script\stoneSelfRotate.js" />
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\CameraRelativeControl.js" />
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\FirstPersonControl.js" />
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\FollowTransform.js" />
@@ -78,12 +123,15 @@
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Only.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap AlphaTest.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/user/Desktop/finalyear/Fyp 15-1-2015 1215 samuel work adding a star new/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/Users/30183353/Desktop/Fyp 18-2-2015 1535 private UI/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{CA620EB8-067D-921D-53AF-49FAD7E3D426}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{1C7565C2-7FFF-B420-302D-C1B816350E91}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

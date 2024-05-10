@@ -37,6 +37,7 @@ public class Highlights {
 				open.Add(newPath);
 			}
 		}
+		print("yy");
 		closed.Remove(originPlane);
 		return closed;
 	}

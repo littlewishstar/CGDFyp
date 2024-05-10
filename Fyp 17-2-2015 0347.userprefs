@@ -1,0 +1,20 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\For muitiple game play\MuitipleGameProcess.js">
+    <Files>
+      <File FileName="Assets\Script\For muitiple game play\MuitipleGameProcess.js" Line="257" Column="3" />
+      <File FileName="Assets\Script\gameProcess.js" Line="1078" Column="2" />
+      <File FileName="Assets\Script\For muitiple game play\team\team01.js" Line="32" Column="80" />
+      <File FileName="Assets\Script\For muitiple game play\team\teamSample.js" Line="12" Column="26" />
+      <File FileName="Assets\Script\For muitiple game play\stage\stageSample.js" Line="21" Column="17" />
+      <File FileName="Assets\Script\For muitiple game play\stage\stage01.js" Line="20" Column="19" />
+      <File FileName="Assets\Script\Neo\board.js" Line="39" Column="1" />
+      <File FileName="Assets\Script\person.js" Line="312" Column="9" />
+      <File FileName="Assets\Script\plane.js" Line="106" Column="62" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
