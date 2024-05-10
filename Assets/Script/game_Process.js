@@ -4,7 +4,6 @@ import System.Collections.Generic;
 var sizeX:int =8;
 var sizeY:int=13;
 var persons:person[] = new person[8];
-var person:GameObject;
 var box:GameObject;
 //var pstep:int=0;
 var map : plane[,] = new plane[sizeX,sizeY];
@@ -23,36 +22,91 @@ function Awake(){
 function Start () {
 	SetUpLocation();
 	//print(board(0).transform.position.x);
-	for(var x:int=0;x<persons.length;x++){
-		var personx : person = (GameObject.Instantiate(person,map[x,x].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
-		persons[x]=personx;
-		persons[x].setlocation(x,x);
-		persons[x].id=x;
-		//persons[x].transform.position=map[x,4].transform.position+Vector3(0,0.5,0);
-	}
 	yield WaitForSeconds(0.0000001);
 	Awake();
 	var ice : GameObject=Instantiate(icepre, map[2,4].transform.position, Quaternion.Euler(new Vector3()));
 		ice.renderer.material.color=Color.blue;
-	updatePlane();
+	map[2,4].status[1].ishere=true;
+			firstchapter();
+	for(var per:person in persons)
+		map[per.gridPosition.x,per.gridPosition.y].status[0].ishere=true;
 }
-function updatePlane(){
-	for(var j:int =0;j<sizeY;j++)
-		for(var i:int=0;i<sizeX;i++)
-			if(map[i,j].gridPosition==persons[i].position){
-				map[i,j].status[0].ishere=true;
-			}
-			else
-				map[i,j].status[0].ishere=false;
+function updateTurn(){
+	persons[currentplayer].incontrol=false;
+		if(currentplayer<persons.length-1)
+			currentplayer++;
+		else
+			currentplayer=0;
 }
 
 function Update () {
-updatePlane();
+
 }
 
-function walk(){
+function askaction(){
+	var haveWalk:boolean=false;
+	var skillUsed:boolean=false;
+	var endTurn:boolean=false;
+	if(/*something like button clicked && */haveWalk==false){
+		highlightplaneat(persons[currentplayer].gridPosition);
+		haveWalk = true;
+		// askaction after finish walking
+	}
+	if(/*something like button clicked && */ skillUsed==false){
+		
+	}
+	if(/*something like button clicked && */ endTurn==false){
+		updateTurn();
+	}
+}
+
+function firstchapter(){ //insert chatacter
+		var mywar : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CD1.prefab", GameObject),map[4,2].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
+		mywar.person(0,5,60,2300,3,650,390,0,90);
+		mywar.setlocation(4,2);
+		persons[0]=mywar;
+		
+		var enemywar : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CD2.prefab", GameObject),map[2,10].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
+		enemywar.person(1,5,65,2300,3,650,390,0,90);
+		enemywar.setlocation(2,10);
+		persons[1]=enemywar;
+		
+		var myassissan : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CA1.prefab", GameObject),map[3,2].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
+		myassissan.person(2,5,80,1000,4,1000,150,50,300);
+		myassissan.setlocation(3,2);
+		persons[2]=myassissan;
+		
+		var enemyassissan : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CA2.prefab", GameObject),map[4,10].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
+		enemyassissan.person(3,5,75,1000,4,1000,150,50,300);
+		enemyassissan.setlocation(4,10);
+		persons[3]=enemyassissan;
+		
+		var mymagic : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CC1.prefab", GameObject),map[4,1].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
+		mymagic.person(4,5,40,1400,2,100,200,1000,460);
+		mymagic.setlocation(4,1);
+		persons[4]=mymagic;
+		
+		var enemymagic : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CC2.prefab", GameObject),map[3,11].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
+		enemymagic.person(5,5,45,1400,2,100,200,1000,460);
+		enemymagic.setlocation(3,11);
+		persons[5]=enemymagic;
+		
+		var myhealer : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CB1.prefab", GameObject),map[3,1].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
+		myhealer.person(6,5,50,1800,2,100,250,800,350);
+		myhealer.setlocation(3,1);
+		persons[6]=myhealer;
+		
+		var enemyhealer : person = (GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/GameObject(Create by Skin)/CB2.prefab", GameObject),map[1,11].transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()))).GetComponent.<person>();
+		enemyhealer.person(7,5,45,1800,2,100,250,800,350);
+		enemyhealer.setlocation(1,11);
+		persons[7]=enemyhealer;
+}
+
+function walk(target:plane){
+	mytarget=target;
+	startWalk=true;
 	var tomiddleofplane:Vector3=new Vector3(0,persons[currentplayer].transform.localScale.y/2,0);
-	var now:plane=map[persons[currentplayer].position.x,persons[currentplayer].position.y];
+	var now:plane=map[persons[currentplayer].gridPosition.x,persons[currentplayer].gridPosition.y];
 	now.status[0].ishere=false;
 	if(startWalk==true){
 		reset();
@@ -63,19 +117,19 @@ function walk(){
 		var count:int=0;
 		while(persons[currentplayer].transform.position!=targetPos+tomiddleofplane){
 		//	persons[currentplayer].transform.position=Vector3.Lerp(persons[currentplayer].transform.position,persons[currentplayer].toPlace[0].transform.position+Vector3(0,person.transform.localScale.y/2,0), Time.deltaTime);
-			persons[currentplayer].transform.position = Vector3.MoveTowards(persons[currentplayer].transform.position, persons[currentplayer].toPlace[count].transform.position+tomiddleofplane, 5*Time.deltaTime);
-			if(persons[currentplayer].transform.position==persons[currentplayer].toPlace[count].transform.position+tomiddleofplane){
-				count++;
+			persons[currentplayer].transform.position = Vector3.MoveTowards(persons[currentplayer].transform.position, persons[currentplayer].toPlace[0].transform.position+tomiddleofplane, 5*Time.deltaTime);
+			if(persons[currentplayer].transform.position==persons[currentplayer].toPlace[0].transform.position+tomiddleofplane){
+				persons[currentplayer].toPlace.RemoveAt(0);
 			}
 			yield WaitForSeconds(0.01);
 		}
 	}
+	startWalk=false;
 	persons[currentplayer].setlocation(mytarget.gridPosition.x,mytarget.gridPosition.y);
-	mytarget.status[0].ishere=true;
-		if(currentplayer<persons.length-1)
-			currentplayer++;
-		else
-			currentplayer=0;
+	map[mytarget.gridPosition.x,mytarget.gridPosition.y].status[0].ishere=true;
+	persons[currentplayer].setlocation(mytarget.gridPosition.x,mytarget.gridPosition.y);
+	mytarget=null;
+	updateTurn();  // will go to other place
 }
 
 function SetUpLocation(){
@@ -127,14 +181,9 @@ function highlightplaneat(originLocation:Vector2){   //still useless now, simila
 			}
 		}
 	}*/
-function getTargetPlace(map:plane){
-	mytarget=map;
-	startWalk=true;
-	walk();	
-}
 function ShowWalk(){
 		//treeRecursive(persons[currentplayer].position.x,persons[currentplayer].position.y,persons[currentplayer].step);
-		highlightplaneat(persons[currentplayer].position);
+		highlightplaneat(persons[currentplayer].gridPosition);
 }
 
 function reset(){

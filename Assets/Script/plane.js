@@ -11,7 +11,9 @@ var canStand:boolean;
 var movecost:int=1;
 var neighbors:List.<plane> = new List.<plane>();
 var status:List.<inside> = new List.<inside>();
-
+var gn:int=0;
+var hn:int=0;
+var fn:int=0;
 
 function Start () {
 	canStand=true;
@@ -32,6 +34,13 @@ public class inside {
 		whatsin=a;
 		ishere=b;
 	}
+}
+
+function getF(originPlane:plane , toPlane:plane):int{
+	gn= parseInt(Vector3.Distance(originPlane.transform.position,transform.position));
+	hn= parseInt(Vector3.Distance(transform.position,toPlane.transform.position));
+	fn=gn+hn;
+	return fn;
 }
 
 function findneighbors(){
@@ -86,13 +95,7 @@ function getcanSelect() : boolean {
 function OnMouseDown(){
 	if(canSelect==true){
 		//transform.parent.SendMessage("getTargetPlace",LocX,LocY);
-		transform.parent.SendMessage("getTargetPlace",gameObject.GetComponent.<plane>());
-	}
-	else{
-		canStand=false;
-		if(canStand==false){
-			renderer.material.color=Color.red;
-		}
+		transform.parent.SendMessage("walk",gameObject.GetComponent.<plane>());
 	}
 }
 

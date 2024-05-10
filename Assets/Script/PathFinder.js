@@ -8,7 +8,7 @@ public class PathFinder {
 		
 	}
 	
-	public static function  FindPath( originPlane:plane, toPlane:plane ):/*planePath*/planePath {
+	public static function  FindPath( originPlane:plane, toPlane:plane ):planePath {
 		var closed:List.<plane> = new List.<plane>();
 		var open:List.<planePath> = new List.<planePath>();
 		
@@ -24,10 +24,10 @@ public class PathFinder {
 			if (closed.Contains(current.lastPlane)) {
 				continue;
 			} 
-			if (current.lastPlane==toPlane) {
+			if (current.lastPlane == toPlane ) {
 				current.listOfPlanes.RemoveAt(0);
 				return current;
-			} 
+			}
 			
 			closed.Add(current.lastPlane);
 			
