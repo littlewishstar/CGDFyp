@@ -1,24 +1,32 @@
 ﻿#pragma strict
 
+var personUI : UI.Button;
+var icon : Sprite;
+var cube : GameObject;
+
 function Start () {
 	personShowStone = GameObject.Instantiate(Resources.Load("Prefabs/personShowStone") as GameObject);
 	
-	canvasSkill = GameObject.Find("Canvas/skill").GetComponent("Animator");
+	canvasSkill = GameObject.Find("Canvas/skill").GetComponent("Animator") as Component;
 	canvasSkill.enabled = false;
+	
+	//personUI = GameObject.Find("Canvas/Icon") as UI.Button;
+	icon = Resources.Load("iconcircle/move")as Sprite;
+	//WaitForSeconds(0);
+	//personUI.image.overrideSprite = icon;
 	
 	//gameProcess(8,13);
 	insertStage(new stage01());
 	insertTeam(new team01());
 	gameStart();
-	Awake();	
+	cube=GameObject.Find("Cube");
+	print(cube);
 }
-static function Awake(){
-	instance=this;
-}
-function Update () {
 
+function Update () {
+	cube.GetComponent.<Poring>();
 }
-static var instance: MultipleGameProcess;
+
 var canvasSkill :Animator; // control the skill button Animator
 
 static var stageValue : stageSample; // the variable to record the value of this stage
@@ -31,7 +39,6 @@ var bd :board; // create board variable
 public var plane :GameObject; // collect gameObejct plane which used to be plane
 
 var speed:int[]; // record the character speed
-//var speed: List.<int> = new List.<int>();
 var round :int=0;
 
 var haveWalk:boolean=false; // have you already walk in this round ?
@@ -212,6 +219,11 @@ function showPerson(){ // show to the user that easy understand who is the curre
 	showWalk();
 	canvasSkill.enabled = true;
 	
+	/*if(ps[playlist[round]].icon != null){
+		var image:UI.Image = GameObject.Find("Canvas/Icon").GetComponent("Image"); 
+		image.sprite = ps[playlist[round]].getIcon();
+		print("I have run");
+	}*/
 }
 
 public function askAction(ans:int){ // ask play the action of walk ? skills? know the info? or wait?
@@ -703,6 +715,7 @@ public function endTurnProcess(){
 	for(var id:int=0;id<ps.Count();id++){
 		bd.whatFunction(ps[id]);
 		ps[id].endTurncheck();
+		print(ps[id].getHp());
 	}
 	if(findDie()){
 		for(var i:int=0;i<ps.Count();i++){
@@ -727,10 +740,19 @@ public function endTurnProcess(){
 	startSkill=false;
 	startWalk=false;
 	showPerson();
+	
+	guy = ps[playlist[round]]; // record the new character which can have action in this turn
+	if(guy.getIsPlayer() == false){
+	// write down
+		// the coding
+			// which process
+				// the AI script
+	}
+	
 	//ps[playlist[round]].isMe();
 	//cal = new Calculating(bd);
 	//askAction(1);
-	
+		
 }
 
 public function findDie():boolean{ // check anyone die

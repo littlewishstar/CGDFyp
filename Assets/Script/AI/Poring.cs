@@ -11,10 +11,13 @@ public class Poring : FSM {
 		Dead,
 	}
 
+	public int chaseDistance = 4;
 	public FSMState curState;
 	private float health=1000.0f;
 	private float maxHealth = 1000.0f;
 	private bool saving;
+	private PoringKing King;
+	private GameObject target;
 
 	public float getHealth(){
 		return health;
@@ -22,6 +25,8 @@ public class Poring : FSM {
 
 	protected override void Initialize () 
 	{
+		King = GameObject.FindWithTag ("PoringKing").GetComponent<PoringKing>();
+
 		curState = FSMState.Chase;
 	}
 	// Use this for initialization
@@ -40,6 +45,10 @@ public class Poring : FSM {
 			if (health <= 0)
 				curState = FSMState.Dead;
 		}
+
+	protected void setTarget(){
+		//foreach(person ps in controller.GetComponent(MultipleGameProcess).ps)
+	}
 	protected void UpdateChaseState(){
 
 	}
@@ -47,7 +56,8 @@ public class Poring : FSM {
 
 	}
 	protected void UpdateSaveKingState(){
-
+		if (King.getHelp () == true)
+						target = GameObject.FindWithTag("PoringKing");
 	}
 	protected void UpdateDeadState(){
 		Destroy (gameObject);
@@ -56,3 +66,4 @@ public class Poring : FSM {
 		Destroy (gameObject);
 	}
 }
+

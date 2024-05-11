@@ -15,10 +15,14 @@ public class PoringKing : FSM {
 	private float health=10000.0f;
 	private float maxHealth=10000.0f;
 	private bool healed;
-
+	private bool help;
 
 	public float getHealth(){
 		return health;
+	}
+
+	public bool getHelp(){
+		return help;
 	}
 
 	public void setHealth(int add){
@@ -45,7 +49,7 @@ public class PoringKing : FSM {
 	}
 	public FSMState curstate;
 	// Use this for initialization
-	void Initialize() {
+	protected override void Initialize() {
 		curstate = FSMState.Normal;
 	}
 
@@ -54,6 +58,7 @@ public class PoringKing : FSM {
 			curstate = FSMState.Berserk;
 	}
 	protected void UpdateBerserkState(){
+
 		if (health <= maxHealth * 0.2f) 
 				if (healed == false)
 						curstate = FSMState.Heal;
@@ -68,8 +73,11 @@ public class PoringKing : FSM {
 	protected void UpdateCallHelperState(){
 		//for(Poring on board)
 			//Poring.saving=true;
-			if(health>maxHealth*0.3f)
-				curState=FSMState.Berserk;
+		help = true;
+			if (health > maxHealth * 0.3f) {
+				help = false;
+				curState = FSMState.Berserk;
+			}
 	}
 	protected void UpdateDeadState(){
 		Destroy (gameObject);

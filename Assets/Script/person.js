@@ -9,14 +9,16 @@ import System.Collections.Generic;
 	var myName : String; // name of this character
 	var star:int=0; // how many star of this character
 	var sp:int=0; // how fast are this character
-	var step:int=0; // how many step of this character
 	var hp:int=0; // hp of this character
+	var step:int=0; // how many step of this character
 	var pa:int=0; // physical attack of this character
 	var pd:int=0; // physical defend of this character
 	var ma:int=0; // magical attack of this character
 	var md:int=0; // magic defend of this character
-	var job:int;
-	var team:int;
+	var job:int; // which job you are ?
+	var team:int; // which team you are ? in the game play all character will allocate to two team
+	
+	var isPlayer:boolean=true;
 	
 	// record your location
 	var locationX:int;
@@ -64,6 +66,8 @@ import System.Collections.Generic;
 	var toPlace:List.<plane> = new List.<plane>();
 	
 	var model : GameObject;
+	var icon : Sprite;
+	//var AI: AI;
 	
 	public function person(id:int,myName:String,star:int,sp:int,hp:int,step:int,pa:int,pd:int,ma:int,md:int,job:int,team:int){
 			this.id=id;
@@ -98,6 +102,26 @@ import System.Collections.Generic;
 			
 			return this;
 	}
+	public function insertDetail(pr:person):person{
+			this.id=pr.id;
+			this.myName=pr.myName;
+			this.star = pr.star;
+			this.sp = pr.sp;
+			this.hp = pr.hp;  
+			this.step = pr.step;
+			this.pa = pr.pa;
+			this.pd = pr.pd;
+			this.ma = pr.ma;
+			this.md = pr.md;
+			this.job = pr.job;
+			dead = false;
+			this.team = pr.team;
+			
+			setModel(pr.model);
+			setIcon(pr.icon);
+			
+			return this;
+	}
 	public function setTeam(team:int){
 		this.team = team;
 	}
@@ -114,6 +138,19 @@ import System.Collections.Generic;
 	function getModel():GameObject{
 		return model;
 	}
+	function setIcon(icon:Sprite){
+		this.icon = icon;
+	}
+	function getIcon():Sprite{
+		return icon;
+	}
+	function getIsPlayer(){
+		return isPlayer;
+	}
+	function setIsPlayer(playerOrAI:boolean){
+		isPlayer = playerOrAI;
+	}
+	
 	public function getId():int{
 		return id;
 	}

@@ -98,7 +98,8 @@ public function whatFunction(pr:person){
 	}
 	if(tools[7]){
 		pr.getHurt(box[x,y].liveTree());
-	}	
+	}
+		
 }
 function findNeighbors(x:int,y:int){
 	if(x-1 > 0){

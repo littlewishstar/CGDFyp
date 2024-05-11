@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{DD427534-F523-AFE3-7DC3-26AC60637031}</ProjectGuid>
+	<ProjectGuid>{7350E0E1-BBB2-E9BA-4263-B3118B54AFC5}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -46,6 +46,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\Characters\first class\enemyAssissan.js" />
+     <Compile Include="Assets\Script\Characters\first class\enemyHealer.js" />
+     <Compile Include="Assets\Script\Characters\first class\enemyMagician.js" />
+     <Compile Include="Assets\Script\Characters\first class\enemyWarrior.js" />
+     <Compile Include="Assets\Script\Characters\first class\myAssissan.js" />
+     <Compile Include="Assets\Script\Characters\first class\myHealer.js" />
+     <Compile Include="Assets\Script\Characters\first class\myMagician.js" />
+     <Compile Include="Assets\Script\Characters\first class\myWarrior.js" />
      <Compile Include="Assets\Script\For multiple game play\MultipleGameProcess.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stage01.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stageSample.js" />
@@ -123,7 +131,7 @@
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Only.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap AlphaTest.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/30183353/Desktop/Fyp 18-2-2015 1535 private UI/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/Users/30183353/Desktop/Fyp 11-3-2015 1913 finish first eight character srcipt/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
@@ -131,7 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{1C7565C2-7FFF-B420-302D-C1B816350E91}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{17A06373-A921-0D9E-341C-52946E28412E}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
