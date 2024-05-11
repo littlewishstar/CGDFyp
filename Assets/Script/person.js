@@ -19,7 +19,7 @@ import System.Collections.Generic;
 	var team:int; // which team you are ? in the game play all character will allocate to two team
 	
 	var isPlayer:boolean=true;
-	
+	var AI:FSM;
 	// record your location
 	var locationX:int;
 	var locationY:int;
@@ -150,7 +150,9 @@ import System.Collections.Generic;
 	function setIsPlayer(playerOrAI:boolean){
 		isPlayer = playerOrAI;
 	}
-	
+	function setAI(AI:FSM){
+		this.AI=AI;
+	}
 	public function getId():int{
 		return id;
 	}

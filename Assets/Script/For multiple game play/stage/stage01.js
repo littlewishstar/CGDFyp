@@ -35,7 +35,7 @@ class stage01 extends stageSample{
 		
 		// set enemy
 		enemy = new person[4];
-		enemy[0] = new enemyWarrior();
+		enemy[0] = new Poring();
 		enemy[0].setLocation(2,10);
 		/*enemy[0] = new person();
 		enemy[0].insertDetail(10,"war 2", 5,65,2300,3,650,390,0,90,0,2);

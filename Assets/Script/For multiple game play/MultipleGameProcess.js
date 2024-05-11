@@ -24,7 +24,6 @@ function Start () {
 }
 
 function Update () {
-	cube.GetComponent.<Poring>();
 }
 
 var canvasSkill :Animator; // control the skill button Animator
@@ -313,6 +312,19 @@ function walk2(pln:plane){ // walk to the location this you choose after click t
 	cal = new Calculating(bd);
 	haveWalk=true;
 	//endTurnProcess();
+	if(guy.getIsPlayer() == false){
+	// write down
+		// the coding
+			// which process
+				// the AI script
+		var guyEnemy : List.<person> = new List.<person>();
+		for(var i=0;i<ps.Count;i++)
+			if(guy.team != ps[i].team){
+				guyEnemy.Add(ps[i]);
+			}
+		guy.setEnemy(guyEnemy);
+		guy.AI.FSMFixedUpdate();		
+	}
 }
 
 function resetSelectPlane(){ // let all plane return to the normal state and color
@@ -521,6 +533,19 @@ public function useSkill2(){
 		}
 		skillUsed = true;
 		startSkill=false;
+		if(guy.getIsPlayer() == false){
+		// write down
+			// the coding
+				// which process
+					// the AI script
+			var guyEnemy : List.<person> = new List.<person>();
+			for(var i=0;i<ps.Count;i++)
+				if(guy.team != ps[i].team){
+					guyEnemy.add(ps[i]);
+				}
+			guy.setEnemy(guyEnemy);
+			guy.AI.FSMFixedUpdate();		
+		}
 	}
 }
 
@@ -747,6 +772,13 @@ public function endTurnProcess(){
 		// the coding
 			// which process
 				// the AI script
+		var guyEnemy : List.<person> = new List.<person>();
+		for(var i=0;i<ps.Count;i++)
+			if(guy.team != ps[i].team){
+				guyEnemy.add(ps[i]);
+			}
+		guy.setEnemy(guyEnemy);
+		guy.AI.FSMFixedUpdate();		
 	}
 	
 	//ps[playlist[round]].isMe();

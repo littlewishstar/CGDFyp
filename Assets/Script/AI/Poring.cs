@@ -26,7 +26,6 @@ public class Poring : FSM {
 	protected override void Initialize () 
 	{
 		King = GameObject.FindWithTag ("PoringKing").GetComponent<PoringKing>();
-
 		curState = FSMState.Chase;
 	}
 	// Use this for initialization
@@ -47,7 +46,7 @@ public class Poring : FSM {
 		}
 
 	protected void setTarget(){
-		//foreach(person ps in controller.GetComponent(MultipleGameProcess).ps)
+
 	}
 	protected void UpdateChaseState(){
 
