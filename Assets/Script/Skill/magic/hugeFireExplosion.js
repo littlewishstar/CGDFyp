@@ -12,6 +12,7 @@ public class hugeFireExplosion extends magic{ // no special bonus attack
 		// SecondToZ = 0; // in fact is no need to set , but write down it as being reminder 
 		needScan=true;
 		
+		skill_name = "hugeFireExplosion";
 		small_SkillType[3] = true;
 	}
 	public function action(){

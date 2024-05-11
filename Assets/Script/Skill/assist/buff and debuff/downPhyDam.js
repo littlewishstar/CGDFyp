@@ -5,6 +5,7 @@ public class downPhyDam extends assist{ // upgrade self physical attack
 	public function downPhyDam(a:person){
 		setUser(a);
 		
+		skill_name = "downPhyDam";
 		small_SkillType[5] = true;
 	}
 	public function functions(){

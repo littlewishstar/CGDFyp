@@ -24,5 +24,10 @@ public class enemyWarrior extends person{
 		
 		setModel(Resources.Load("Prefabs/Characters/CD2") as GameObject);
 		icon = (Resources.Load.<Sprite>("iconcircle/Characters/e1"));
+		
+		skill_List.Add(new addSelfPhyDam(this));
+		skill_List.Add(new simpleKnockBack(this));
+		skill_List.Add(new roundAttack(this));
+		skill_List.Add(new protectSomeone(this));
 	}
 }

@@ -24,6 +24,11 @@ public class myAssissan extends person{
 		
 		setModel(Resources.Load("Prefabs/Characters/CA1") as GameObject);
 		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t2"));
+		
+		skill_List.Add(new doubleTimeAttack(this));
+		skill_List.Add(new poison(this));
+		skill_List.Add(new hide(this));
+		skill_List.Add(new highRoundAttack(this));
 	}
 	
 }

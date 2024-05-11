@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{955A9504-10B2-D507-31F1-CD33EF705DC7}") = "Fyp 13-05-2015 1758 create skill select button", "Assembly-CSharp-firstpass-vs.csproj", "{7AF2035B-F2CD-17F9-AC06-CA375FCD70A7}"
+EndProject
+Project("{955A9504-10B2-D507-31F1-CD33EF705DC7}") = "Fyp 13-05-2015 1758 create skill select button", "Assembly-CSharp-vs.csproj", "{41BC30BC-BE15-D633-4550-7B62F206129A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7AF2035B-F2CD-17F9-AC06-CA375FCD70A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF2035B-F2CD-17F9-AC06-CA375FCD70A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF2035B-F2CD-17F9-AC06-CA375FCD70A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF2035B-F2CD-17F9-AC06-CA375FCD70A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41BC30BC-BE15-D633-4550-7B62F206129A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41BC30BC-BE15-D633-4550-7B62F206129A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41BC30BC-BE15-D633-4550-7B62F206129A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41BC30BC-BE15-D633-4550-7B62F206129A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+			GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal

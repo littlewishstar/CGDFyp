@@ -1,0 +1,19 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Skill\physical\roundAttack.js">
+    <Files>
+      <File FileName="Assets\Script\person.js" Line="424" Column="67" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSelectButtonCreate.js" Line="26" Column="2" />
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="834" Column="38" />
+      <File FileName="Assets\Script\Neo\Calculating.js" Line="259" Column="4" />
+      <File FileName="Assets\Script\game_Process.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\Skill\physical\roundAttack.js" Line="14" Column="18" />
+      <File FileName="Assets\Script\Skill\attack.js" Line="22" Column="2" />
+      <File FileName="Assets\Script\Skill\physical\highRoundAttack.js" Line="15" Column="8" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

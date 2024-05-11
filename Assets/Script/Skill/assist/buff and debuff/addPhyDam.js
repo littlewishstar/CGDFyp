@@ -6,6 +6,7 @@ public class addPhyDam extends assist{ // buff somebody  physical attack
 		setUser(a);
 		allowMyself=true;
 		
+		skill_name = "addPhyDam";
 		small_SkillType[0] = true;
 	}
 	public function functions(){

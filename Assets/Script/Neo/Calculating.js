@@ -258,6 +258,7 @@ public function aroundPeople(x:int,y:int ,range:int){
 			}
 		}
 	}
+	//OKBoard[x,y] = false;
 }
 public function getOKBoard():boolean[,]{ // return OKBoard
 	return OKBoard;

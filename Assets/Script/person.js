@@ -73,6 +73,10 @@ import System.Collections.Generic;
 	var model : GameObject;
 	var icon : Sprite;
 	
+	public function person(){
+		;
+	}
+	
 	public function person(id:int,myName:String,star:int,sp:int,hp:int,step:int,pa:int,pd:int,ma:int,md:int,job:int,team:int){
 			this.id=id;
 			this.myName=myName;
@@ -134,6 +138,9 @@ import System.Collections.Generic;
 	}
 	function setID(id:int){
 		this.id = id;
+		if(model != null){
+			model.GetComponent.<person>().SendMessage("setID",this.id);
+		}
 	}
 	/*function setMeUp(pr:person){
 		this. = pr;
@@ -381,19 +388,19 @@ import System.Collections.Generic;
 		gridPosition.y=y;
 	}
 	function OnMouseDown(){
-			//transform.parent.SendMessage("getTargetPlace",LocX,LocY);
-			//if(id==game_Process.instance.GetComponent.<game_Process>().currentplayer){
-				/*if(incontrol==false){
-					//var pl:GameObject = new GameObject("pl");
-					//pl.setUp(19,19);
-					Highlights.FindHighlight(newplane(),4);
-					//game_Process.instance.SendMessage("ShowWalk"); 					//will change to askaction();
-					incontrol=true;
-				}
-				else{
-					//game_Process.instance.SendMessage("reset");
-					incontrol=false;
-				}*/
+		//transform.parent.SendMessage("getTargetPlace",LocX,LocY);
+		//if(id==game_Process.instance.GetComponent.<game_Process>().currentplayer){
+			/*if(incontrol==false){
+				//var pl:GameObject = new GameObject("pl");
+				//pl.setUp(19,19);
+				Highlights.FindHighlight(newplane(),4);
+				//game_Process.instance.SendMessage("ShowWalk"); 					//will change to askaction();
+				incontrol=true;
+			}
+			else{
+				//game_Process.instance.SendMessage("reset");
+				incontrol=false;
+			}*/
 		var controller : GameObject= GameObject.Find("Main Game Controller");
 
 		if(controller.GetComponent.<gameProcess>() != null){
@@ -408,12 +415,20 @@ import System.Collections.Generic;
 			}
 		}else if(controller.GetComponent.<MultipleGameProcess>() != null){
 			if(controller.GetComponent.<MultipleGameProcess>().skillStage==2){
-					print(locationX+" "+locationY+" "+""+controller.GetComponent.<MultipleGameProcess>().bd.getBox(locationX,locationY).thisPlane.canSelect );
+					//print(locationX+" "+locationY+" "+""+controller.GetComponent.<MultipleGameProcess>().bd.getBox(locationX,locationY).thisPlane.canSelect );
+					//print(controller.GetComponent.<MultipleGameProcess>().bd.getBox(locationX,locationY).thisPlane.canSelect);
+					var this_box:box = controller.GetComponent.<MultipleGameProcess>().bd.getBoxByPersonID(id);
+					if(this_box != null){
+						if(this_box.thisPlane.canSelect == true){
+							print(controller.GetComponent.<MultipleGameProcess>().skillStage);
+							controller.GetComponent.<MultipleGameProcess>().skAddTarget(id);
+						}
+					}
 					if(controller.GetComponent.<MultipleGameProcess>().bd.getBox(locationX,locationY).thisPlane.canSelect == true){
 						print(controller.GetComponent.<MultipleGameProcess>().skillStage);
 						controller.GetComponent.<MultipleGameProcess>().skAddTarget(this);
 					}
-					controller.GetComponent.<MultipleGameProcess>().resetSelectPlane();
+					//controller.GetComponent.<MultipleGameProcess>().resetSelectPlane();
 					controller.GetComponent.<MultipleGameProcess>().skillStage=0;
 			}
 			else if(controller.GetComponent.<MultipleGameProcess>().startSkill == false){

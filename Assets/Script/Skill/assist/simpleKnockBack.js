@@ -7,7 +7,8 @@ public class simpleKnockBack extends assist{ // knock back somebody but no hurt
 		knockBackFunction = 1;
 		//needChoose = true;
 		
-		small_SkillType[5] = true;
+		skill_name = "simpleKnockBack";
+		small_SkillType[7] = true;
 	}
 	public function functions(){
 		if(de.getLocationX()==at.getLocationX()){
