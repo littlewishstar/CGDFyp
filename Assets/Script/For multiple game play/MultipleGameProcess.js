@@ -5,9 +5,11 @@ var icon : Sprite;
 
 function Start () {
 	// testing function
-	//var skillSelectBtn : GameObject = GameObject.Find("Canvas/skillSelection/skill01");
-	//skillSelectBtn.SendMessage("setUpThisSkill",new roundAttack(new person()));
-	
+	var skillSelectBtn : GameObject = GameObject.Find("Canvas/skillSelection/skill01");
+	skillSelectBtn.SendMessage("setUpThisSkill",new roundAttack(new person()));
+
+	var skillSelectBtn2 : GameObject = GameObject.Find("Canvas/skillSelection/skill_btn");
+	skillSelectBtn2.SendMessage("setUpThisSkill",new selfTeleport(new person()));
 
 	personShowStone = GameObject.Instantiate(Resources.Load("Prefabs/personShowStone") as GameObject);
 	
@@ -21,7 +23,7 @@ function Start () {
 	personUI.image.overrideSprite = icon;
 	
 	//gameProcess(8,13);
-	insertStage(new stage01());
+	insertStage(new stageFinal());
 	insertTeam(new team01());
 	gameStart();
 	
@@ -60,7 +62,6 @@ var personShowStone : GameObject;
 
 var infoShow : boolean = false;
 var btnSkillShow: boolean = false;
-var SkillSelectionShow: boolean = false;
 
 var followPersonShow : followingRoundDisplay;
 function insertStage(stage:stageSample){ // insert the stage
@@ -104,9 +105,6 @@ public function firstSetting(){ // do every setting with the first time
 	TeamSetting();
 	for(i=0;i<ps.Count;i++){
 		inStanceCharacter(ps[i]);
-		
-		// set the character ID equal to the num of the (int list)ps
-		ps[i].setID(i);
 	}
 	
 	speed=new int[ps.Count()];
@@ -138,19 +136,24 @@ function stageSetting(){
 			bd.setLifeTree(stageValue.tree[i].x, stageValue.tree[i].y);
 		}
 	}
+	if(stageValue.haveSpondPoint){
+		for(i=0;i<stageValue.spondPoint.length;i++){
+			bd.setLifeTree(stageValue.spondPoint[i].x, stageValue.spondPoint[i].y);
+		}
+	}
 }
 
 function TeamSetting(){
 	
 	for(var i:int=0;i<myTeam.teammate.length;i++){
 		ps.Add(myTeam.teammate[i]);
-		//ps[i].setID(ps.Count-1);
+		ps[i].setID(ps.Count-1);
 		setLocation(ps[i],ps[i].getLocationX(),ps[i].getLocationY());
 		ps[i].getModel().transform.Rotate(0,90,0);
 	}
 	for(i=0;i<stageValue.enemy.length;i++){
 		ps.Add(stageValue.enemy[i]);
-		//ps[ps.Count-1].setID(ps.Count-1);
+		ps[ps.Count-1].setID(ps.Count-1);
 		setLocation(ps[ps.Count-1],ps[ps.Count-1].getLocationX(),ps[ps.Count-1].getLocationY());
 		//ps[1].getModel().transform.Rotate(0,-90,0);
 		if(ps[ps.Count-1].getIsPlayer() == false){
@@ -432,20 +435,6 @@ public function useSkill01(whichSkill:int){ // first
 	}
 }
 
-public function useSkill01(thisSkill:skill){
-	if(skillUsed ==false){
-			var pr:person = ps[playlist[round]];
-			
-			var bs:skill = thisSkill;
-
-			usingSkill=bs;
-			bs.setUser(pr);
-			startSkill = true;
-			print("I am Skill now");
-			useSkill2();
-	}
-}
-
 public function useSkill2(){
 	var bs: skill = usingSkill;
 	var pr:person =ps[playlist[round]];
@@ -467,6 +456,7 @@ public function useSkill2(){
 	}
 	if(skillStage == 2){	// Skill Stage 2 = the stage to find the target
 		if(bs.needChoose==true){
+			
 			if(skillTarget.Count() < bs.targetNumber){
 				skTargetChoose();
 			}else{
@@ -544,21 +534,19 @@ public function useSkill2(){
 				var target2:person=bs.setTarget(skillTarget[j]);
 				for(i=0;i<bs.runTimes;i++){
 					bs.action();
-					print("Have hurt calculating ! ");
+					print("Have hurt calculating !");
 					if(target2.team == pr.team){
 						if(bs.attackTeamate == true){
 							print("high "+bs.attackTeamate);
 							target2.getHurt(bs.damage());
-							print((bs.damage()>0)?target2.getName()+" : hp -"+ bs.damage():target2.getName()+" : hp +"+ (-bs.damage()));
 						}
 					}else{
 						if(bs.attackEmery == true){
-							print("high "+bs.attackTeamate);
+						print("high "+bs.attackTeamate);
 							target2.getHurt(bs.damage());
-							print((bs.damage()>0)?target2.getName()+" : hp -"+ bs.damage():target2.getName()+" : hp +"+ (-bs.damage()));
 						}
 					}
-					
+					print((bs.damage()>0)?target2.getName()+" : hp -"+ bs.damage():target2.getName()+" : hp +"+ (-bs.damage()));
 				}
 			}
 		}
@@ -617,7 +605,8 @@ public function useSkill2(){
 				setLocation(bs.de,bs.targetX,bs.targetY,bs.de.getLocationX(),bs.de.getLocationY());
 			}
 		}
-		skillFinish();
+		skillUsed = true;
+		startSkill=false;
 		
 		//if(guy.getIsPlayer() == false){
 		// write down
@@ -666,24 +655,6 @@ public function showBoard(OKBoard:boolean[,]){ // show out the plane which can s
 
 // this function help to record the target
 public function skAddTarget(tar:person){
-	//print("Now in add target");
-	if(tar.protector == -1){
-		skillTarget.Add(tar);
-	}
-	else{
-		//print(ps[board[x2,y2]].protector);
-		skillTarget.Add(ps[tar.protector]);
-		tar.checkProtect();
-	}
-	// means this character is already been selected to be a target
-	skillTarget[skillTarget.Count()-1].isSelectedBy = true;
-	useSkill2();
-}
-
-// this function help to record the target
-public function skAddTarget(thisPersonID:int){
-	var tar:person = ps[thisPersonID];
-	//print("Now in add target");
 	if(tar.protector == -1){
 		skillTarget.Add(tar);
 	}
@@ -699,7 +670,6 @@ public function skAddTarget(thisPersonID:int){
 
 // each skill will have its own range, it is the method to calll the function to calculate the area
 public function getSkillOKBoard( bs:skill, target:person, type:int):boolean[,]{
-	//print("function get Skill OKBoard");
 	var cal:Calculating =new Calculating(bd);
 	var x:int=target.getLocationX();
 	var y:int=target.getLocationY();
@@ -874,9 +844,6 @@ public function endTurnProcess(){
 	btnSkillShow = false;
 	skillAnim.SetBool("skillShow",btnSkillShow);
 	
-	if(SkillSelectionShow == true){
-		destroySkillSelectBtn();
-	}
 	haveWalk=false;
 	skillUsed = false;
 	skillTarget = new List.<person>();
@@ -909,12 +876,8 @@ public function endTurnProcess(){
 			}
 		}*/
 		print("AI");
-		
-		setUpSkillSelection();
-		
 		guy.AI.setEnemyAndFd(ps);
 		guy.AI.FSMFixedUpdate(bd);
-
 	}
 	
 	
@@ -992,28 +955,6 @@ public function setInfoContent(pr:person){
 	md.text = pr.getMd().ToString();
 }
 
-public function setUpSkillSelection(){
-	if(skillUsed ==false){
-		SkillSelectionShow = true;
-		var skillSelection : GameObject = GameObject.Find("Canvas/skillSelection");
-		skillSelection.SendMessage("recieveCharacter",ps[playlist[round]]);
-	}
-}
-
-public function skillFinish(){
-	destroySkillSelectBtn();
-	skillUsed = true;
-	startSkill=false;
-	if(haveWalk==false){
-		showWalk();
-	}
-}
-
-public function destroySkillSelectBtn(){
-	var skillSelection : GameObject = GameObject.Find("Canvas/skillSelection");
-	skillSelection.SendMessage("resetToEmpty");
-	SkillSelectionShow = false;
-}
 
 
 

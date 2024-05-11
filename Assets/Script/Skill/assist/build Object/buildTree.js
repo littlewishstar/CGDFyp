@@ -9,7 +9,6 @@ public class buildTree extends assist{
 		needChoose = false;
 		buildObject = 4;
 		
-		skill_name = "buildTree";
 		small_SkillType[3] = true;
 	}
 	public function functions(){

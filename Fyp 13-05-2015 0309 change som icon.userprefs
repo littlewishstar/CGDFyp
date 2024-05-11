@@ -1,16 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Characters\first class\myMagician.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Menu.cs">
     <Files>
-      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSelectButtonCreate.js" Line="24" Column="2" />
-      <File FileName="Assets\Script\Skill\skill.js" Line="73" Column="6" />
-      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSmallIcon.js" Line="28" Column="31" />
-      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSelectBtn.js" Line="84" Column="46" />
-      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="12" Column="79" />
-      <File FileName="Assets\Script\person.js" Line="77" Column="4" />
-      <File FileName="Assets\Script\Characters\first class\myMagician.js" Line="28" Column="32" />
-      <File FileName="Assets\Script\Job\Magician.js" Line="11" Column="24" />
-      <File FileName="Assets\Script\Skill\magic\hugeFireExplosion.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\Skill\skill.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSmallIcon.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSelectBtn.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="936" Column="2" />
+      <File FileName="Assets\Script\person.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSelectButtonCreate.js" Line="1" Column="1" />
+      <File FileName="Assets\ChangeScene.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\stage\stage01.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\stage\stageFinal.js" Line="29" Column="14" />
+      <File FileName="Assets\Script\Neo\board.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\box.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\stage\stageSample.js" Line="1" Column="1" />
+      <File FileName="Assets\Menu.cs" Line="22" Column="96" />
+      <File FileName="Assets\MenuManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

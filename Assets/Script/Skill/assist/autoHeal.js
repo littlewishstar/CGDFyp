@@ -4,8 +4,6 @@
 public class autoHeal extends assist{ 
 	public function autoHeal(a:person){
 		setUser(a);
-		
-		skill_name = "autoHeal";
 	}
 	public function functions(){
 		de.isAutoHeal=true;

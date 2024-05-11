@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour {
 	private Animator _animator;
@@ -17,6 +18,8 @@ public class Menu : MonoBehaviour {
 
 		var rect = GetComponent<RectTransform>();
 		rect.offsetMax = rect.offsetMin = new Vector2(0,0);
+		for (int i=0; i<GameObject.Find("hurt").transform.childCount; i++)
+			GameObject.Find("hurt").transform.GetChild(i).GetComponent<Text>().color=new Color(0,0,0,0);
 	}
 	public void Updata(){
 		if (!_animator.GetCurrentAnimatorStateInfo(0).IsName ("Open")){

@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{54DCF218-ACCD-00A0-4F2C-CA9DA4FE79EA}</ProjectGuid>
+	<ProjectGuid>{86FB3A8C-AC9D-BD57-1A3F-0C59707113E6}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -69,6 +69,7 @@
      <Compile Include="Assets\Script\For multiple game play\TeamControllerInMenu.js" />
      <Compile Include="Assets\Script\For multiple game play\followingRoundDisplay.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stage01.js" />
+     <Compile Include="Assets\Script\For multiple game play\stage\stageFinal.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stageSample.js" />
      <Compile Include="Assets\Script\For multiple game play\team\emptyTeam.js" />
      <Compile Include="Assets\Script\For multiple game play\team\team01.js" />
@@ -147,7 +148,7 @@
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Only.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap AlphaTest.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/30165276/Desktop/Fyp 15-05-2015 1156 skill btn can use/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/Users/30165276/Desktop/Fyp 13-05-2015 0309 change som icon/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
@@ -155,7 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{970352B2-C8A0-4CB7-8E0A-87A5D90D5087}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{5088620C-7A27-518E-4F3F-5647D4472AC2}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

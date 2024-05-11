@@ -6,8 +6,6 @@ public class thunderLink extends magic{ // no special bonus attack
 		setUser(a);
 		isContinuousSearchingTarget=true;
 		continueToZ=4;
-		
-		skill_name = "thunderLink";
 	}
 	public function action(){
 		hurt=MagHurt()/2;

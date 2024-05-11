@@ -101,8 +101,3 @@ function checkWhichIcon(){
 	
 }
 
-function sendSkillAndStartUse(){
-	var gameController : MultipleGameProcess = GameObject.Find("Main Game Controller").GetComponent.<MultipleGameProcess>();
-	gameController.SendMessage("useSkill01",thisSkill);
-}
-

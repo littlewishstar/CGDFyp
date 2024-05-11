@@ -24,11 +24,6 @@ public class myMagician extends person{
 		
 		setModel(Resources.Load("Prefabs/Characters/CC1") as GameObject);
 		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t3"));
-		
-		skill_List.Add(new downPhyDam(this));
-		skill_List.Add(new magicLongAttack(this));
-		skill_List.Add(new thunderLink(this));
-		skill_List.Add(new hugeFireExplosion(this));
 	}
 	
 }

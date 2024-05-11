@@ -8,8 +8,6 @@ public class hide extends assist{
 		at.noShowRound = 5;
 		skillRange = 0;
 		needChoose=false;
-		
-		skill_name = "hide";
 	}
 	public function functions(){
 		

@@ -10,7 +10,6 @@ public class selfTeleport extends assist{ // teleport means move the a place sud
 		isPlaceChange = true;
 		de =at;
 		
-		skill_name = "selfTelport";
 		small_SkillType[3] = true;
 		small_SkillType[7] = true;
 	}

@@ -24,6 +24,7 @@ public function box(){
 	whatsThis.Add("near Fire");	//5
 	whatsThis.Add("near Ice");	// 6
 	whatsThis.Add("near LiveTree");	//7
+	whatsThis.Add("spondPoint");
 
 	shortForm.Add("");
 	shortForm.Add("S");

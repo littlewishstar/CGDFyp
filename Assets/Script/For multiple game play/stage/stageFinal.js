@@ -14,8 +14,24 @@
 		// set environment
 		haveStone = true;
 		stone = new Vector2[38];
-		for(var k:int=0;k<38;k++)
-			stone[k]=new Vector2(0,1);
+		var index:int=0;
+		for(var i:int=0;i<boardSizeX;i++)
+			for(var j:int=0;j<boardSizeY;j++)
+				if((i>0&&i<boardSizeX-1) && (j>0&&j<boardSizeY-1))
+					continue;
+				else{
+					stone[index]=new Vector2(i,j);
+					index++;
+				}
+				index=0;
+		haveSpondPoint=true;
+		spondPoint=new Vector2[6];
+		for(i=5;i<8;i++){
+			spondPoint[index]=new Vector2(1,i);
+			index++;
+			spondPoint[index]=new Vector2(6,i);
+			index++;
+		}
 		
 		enemy = new person[1];
 		enemy[0]=new PoringKing();

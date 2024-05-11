@@ -20,19 +20,6 @@ public function getBox(x:int,y:int):box{
 	//System.out.println(box.length);
 	return box[x,y];
 }
-
-public function getBoxByPersonID(id:int):box{
-	//System.out.println(box.length);
-	for(var i:int=0;i<box.GetLength(0);i++){
-		for(var j:int=0;j<box.GetLength(1);j++){
-			if(box[i,j].ps ==id){
-				return box[i,j];
-			}
-		}
-	}
-	return null;
-}
-
 public function getSizeX():int{
 	return box.GetLength(0);
 }
@@ -129,7 +116,9 @@ function findNeighbors(x:int,y:int){
 	}
 }
 
-
+function setSpondPoint(x:int ,y:int){
+	getBox(x,y).setUpFunction(8);
+}
 
 
 

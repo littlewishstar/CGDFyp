@@ -10,7 +10,6 @@ public class addSelfPhyDam extends assist{ // upgrade self physical attack
 		at.phyAtTime++;
 		//print("add phy");
 		
-		skill_name = "addSelfPhyDam";
 		small_SkillType[0] = true;
 	}
 	public function functions(){

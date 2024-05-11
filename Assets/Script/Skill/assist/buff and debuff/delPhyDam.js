@@ -5,7 +5,6 @@ public class delPhyDam extends assist{ // let somebody no physical buff
 	public function delPhyDam(a:person){
 		setUser(a);
 		
-		skill_name = "delPhyDam";
 		small_SkillType[5] = true;
 	}
 	public function functions(){
