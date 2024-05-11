@@ -2,6 +2,8 @@
 
 var team : teamSample;
 public var a :int=0;
+var goingStage : int;
+
 function Start () {
 	
 	
@@ -28,4 +30,15 @@ function setTeam(){
 	
 	a = 1;
 
+}
+
+function setStage(stageNum:int){
+	setTeam();
+	DontDestroyOnLoad (gameObject);
+	goingStage = stageNum;
+}
+
+function destroyMe(){
+	Debug.Log("delete");
+	Destroy(gameObject);
 }

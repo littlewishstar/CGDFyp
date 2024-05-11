@@ -1,0 +1,21 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\AI\PoringFSM.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="300" Column="21" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillInfoButtonCreate.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillInfoBtn.js" Line="85" Column="31" />
+      <File FileName="Assets\Script\For multiple game play\UI\info_Controller.js" Line="80" Column="21" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSelectButtonCreate.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\Neo\Calculating.js" Line="18" Column="23" />
+      <File FileName="Assets\Script\AI\PoringFSM.js" Line="70" Column="39" />
+      <File FileName="Assets\Script\Characters\first class\PoringKing.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\Neo\board.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\box.js" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

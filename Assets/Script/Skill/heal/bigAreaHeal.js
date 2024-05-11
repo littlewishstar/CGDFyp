@@ -8,9 +8,12 @@ public class bigAreaHeal extends heal{ // heal all the people in zone
 		skillRange = 5;
 		needChoose = false;
 		needScan=true;
+		
+		skill_name = "bigAreaHeal";
 	}
 	public function action(){
 		cure = Heal();
+		at.ourAnimationPlay(5);	// animation play
 	}
 	
 function Start () {

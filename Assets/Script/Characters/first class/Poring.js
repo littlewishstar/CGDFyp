@@ -24,8 +24,10 @@ public class Poring extends person{
 		
 		AI = new PoringFSM();
 		
+		skill_List.Add(new basicAttack(this));
+		
 		setModel(Resources.Load("Prefabs/Characters/Poring") as GameObject);
-		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t1"));
+		icon = (Resources.Load.<Sprite>("iconcircle/Characters/poring_icon"));//"iconcircle/Characters/t1"));
 	}
 	
 }

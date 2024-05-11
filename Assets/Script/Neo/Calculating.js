@@ -258,6 +258,7 @@ public function aroundPeople(x:int,y:int ,range:int){
 			}
 		}
 	}
+	//OKBoard[x,y] = false;
 }
 public function getOKBoard():boolean[,]{ // return OKBoard
 	return OKBoard;
@@ -363,14 +364,14 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 		close.Add(open[0]);
 		open.RemoveAt(0);
 		//Debug.Log("open.Count() "+open.Count());
-		var smallest:int=0;
+		/*var smallest:int=0;
 		for(var in1:int =1;in1<open.Count();in1++){
 			if(open[in1].getF()<open[smallest].getF())
 				smallest=in1;
 		}
 		var tmp:mySet=open[smallest];
 		open[smallest]= open[0];
-		open[0]= tmp;
+		open[0]= tmp;*/
 		
 		//Debug.Log("open[0]: "+open[0].x+","+open[0].y);
 		//Debug.Log("close[end]: "+close[close.Count()-1].x+","+close[close.Count()-1].y);
@@ -381,6 +382,7 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 		fin.Add(tool3);
 		tool3=tool3.prev;
 	}
+	
 	var fin2:mySet[]=new mySet[fin.Count()];
 	for(var j = 0;j<fin2.length;j++){
 		fin2[fin.Count()-j-1]=fin[j];
@@ -486,6 +488,7 @@ public function go2(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fi
 		fin.Add(tool3);
 		tool3=tool3.prev;
 	}
+
 	var fin2:mySet[]=new mySet[fin.Count()];
 	for(var j = 0;j<fin2.length;j++){
 		fin2[fin.Count()-j-1]=fin[j];

@@ -4,7 +4,10 @@
 public class downPhyDam extends assist{ // upgrade self physical attack
 	public function downPhyDam(a:person){
 		setUser(a);
+		phyAtTime = -1;
+		phyAtBonus = 0.8;
 		
+		skill_name = "downPhyDam";
 		small_SkillType[5] = true;
 	}
 	public function functions(){
@@ -17,11 +20,12 @@ public class downPhyDam extends assist{ // upgrade self physical attack
 			}
 		}
 		else{
-			de.phyAtBonus=0.8;
+			de.phyAtBonus=phyAtBonus;
 			de.phyAtBuff=true;
-			de.phyAtTime--;
+			de.phyAtTime+=phyAtTime;
 		}
-		//print("del phy");
+		var downD:GameObject=GameObject.Instantiate(Resources.Load("Prefabs/Group 1/downphy"), de.model.transform.position, de.model.transform.rotation);
+		downD.transform.SetParent(de.model.transform);
 	}	
 function Start () {
 

@@ -5,11 +5,10 @@ var icon : Sprite;
 
 function Start () {
 	// testing function
-	var skillSelectBtn : GameObject = GameObject.Find("Canvas/skillSelection/skill01");
-	skillSelectBtn.SendMessage("setUpThisSkill",new roundAttack(new person()));
+	//var skillSelectBtn : GameObject = GameObject.Find("Canvas/skillSelection/skill01");
+	//skillSelectBtn.SendMessage("setUpThisSkill",new roundAttack(new person()));
+	//		Debug.Log(Resources.Load("Prefabs/Group 1/add"));
 
-	var skillSelectBtn2 : GameObject = GameObject.Find("Canvas/skillSelection/skill_btn");
-	skillSelectBtn2.SendMessage("setUpThisSkill",new selfTeleport(new person()));
 
 	personShowStone = GameObject.Instantiate(Resources.Load("Prefabs/personShowStone") as GameObject);
 	
@@ -23,16 +22,15 @@ function Start () {
 	personUI.image.overrideSprite = icon;
 	
 	//gameProcess(8,13);
-	insertStage(new stageFinal());
+	insertStage(new stage01());//Final());
 	insertTeam(new team01());
 	gameStart();
 	
 }
 
 function Update () {
-
+	//winLose();
 }
-var win:boolean;
 
 var canvasSkill :Animator; // control the skill button Animator
 
@@ -44,8 +42,6 @@ var ps :List.<person> = new List.<person>(); // record 8 character
 
 var bd :board; // create board variable
 public var plane :GameObject; // collect gameObejct plane which used to be plane
-
-var toStage:stageSample;
 
 var speed:int[]; // record the character speed
 var round :int=0;
@@ -60,15 +56,60 @@ var cal:Calculating; // the calculating object
 var usingSkill:skill; // the skill which used in this turn
 var skillTarget:List.<person> = new List.<person>(); // the target list because it will be having chances that you have more than one target
 var skillStage : int = 0; // when you using skill, there have a lot of stage.
+var skillOf_createNewCharacter : boolean = false;
 
 var personShowStone : GameObject;
 
 var infoShow : boolean = false;
 var btnSkillShow: boolean = false;
+var SkillSelectionShow: boolean = false;
+var SkillInfoShow: boolean = false;
+var EndTurnBtnShow: boolean = true;
+
+var EndTurnBtn : GameObject;
 
 var followPersonShow : followingRoundDisplay;
+
+var win:boolean =false;
+var lose:boolean=false; 
+
+function winLose(){
+	var enemyCount:int=0;
+	var playerCount:int=0;
+	for(var i:int=0;i<ps.Count;i++){
+		if(!ps[i].dead)
+			if(ps[i].team==1){
+				playerCount++;
+			}
+			else if(ps[i].team==2){
+				enemyCount++;
+			}
+	}
+	if(playerCount<=0){
+		lose=true;
+		Debug.Log("Lose");
+	}
+	else if(enemyCount<=0){
+	 win=true;
+	 Debug.Log("Win");
+	}
+	else{
+		win=false;
+		lose=false;
+	}
+}
+
+
 function insertStage(stage:stageSample){ // insert the stage
-	stageValue = stage;
+	if(GameObject.Find("teamController") != null){
+		var tool:GameObject = GameObject.Find("teamController");
+		var stageNum : int = tool.GetComponent.<TeamControllerInMenu>().goingStage;
+		Debug.Log("stageNum "+stageNum);
+		stageValue = stageList.getStage(stageNum);
+	}
+	else{
+		stageValue = stage;
+	}
 }
 
 function insertTeam(myTeam : teamSample){
@@ -86,7 +127,6 @@ function insertTeam(myTeam : teamSample){
 function gameStart(){
 	bd=new board(stageValue.boardSizeX,stageValue.boardSizeY);
 	firstSetting();
-	
 }
 
 public function firstSetting(){ // do every setting with the first time
@@ -95,7 +135,7 @@ public function firstSetting(){ // do every setting with the first time
 
 	for(var i:int=0;i<stageValue.boardSizeY;i++){
 		for(var j:int=0;j<stageValue.boardSizeX;j++){
-			var newplane : plane = (GameObject.Instantiate(plane, new Vector3(i,-1, j), Quaternion.Euler(new Vector3()))).GetComponent.<plane>();
+			var newplane : plane = (GameObject.Instantiate(plane, new Vector3(i,-1, j), Quaternion.Euler(new Vector3(0,0,0)))).GetComponent.<plane>();
 			newplane.transform.position = this.transform.position + Vector3(i,-1,j);
 			newplane.transform.parent = this.transform;
 			newplane.setUp(j,i);		
@@ -107,7 +147,7 @@ public function firstSetting(){ // do every setting with the first time
 	stageSetting();
 	TeamSetting();
 	for(i=0;i<ps.Count;i++){
-		inStanceCharacter(ps[i]);
+		characterStartSetting(i);
 	}
 	
 	speed=new int[ps.Count()];
@@ -115,6 +155,7 @@ public function firstSetting(){ // do every setting with the first time
 
 	followPersonShow = GameObject.Find("followingRounds2").GetComponent.<followingRoundDisplay>();
 	followPersonShow.SendMessage("setPsList",ps);	
+	followPersonShow.SendMessage("followingRoundAnimationController",true);	
 	
 	showPerson();
 }
@@ -139,10 +180,14 @@ function stageSetting(){
 			bd.setLifeTree(stageValue.tree[i].x, stageValue.tree[i].y);
 		}
 	}
-	if(stageValue.haveSpondPoint){
-		for(i=0;i<stageValue.spondPoint.length;i++){
-			bd.setLifeTree(stageValue.spondPoint[i].x, stageValue.spondPoint[i].y);
+	if(stageValue.haveSpawnPoint){
+		for(i=0;i<stageValue.spawnPoint.length;i++){
+			bd.setSpawnPoint(stageValue.spawnPoint[i].x, stageValue.spawnPoint[i].y);
 		}
+	}
+	if(stageValue.haveLight){
+		for(i=0;i<stageValue.light.length;i++)
+			bd.setLight(stageValue.light[i].x, stageValue.light[i].y);
 	}
 }
 
@@ -150,23 +195,27 @@ function TeamSetting(){
 	
 	for(var i:int=0;i<myTeam.teammate.length;i++){
 		ps.Add(myTeam.teammate[i]);
-		ps[i].setID(ps.Count-1);
-		setLocation(ps[i],ps[i].getLocationX(),ps[i].getLocationY());
-		ps[i].getModel().transform.Rotate(0,90,0);
+		//ps[i].setID(ps.Count-1);
+		//setLocation(ps[i],ps[i].getLocationX(),ps[i].getLocationY());
+		//ps[i].getModel().transform.Rotate(0,90,0);
 	}
 	for(i=0;i<stageValue.enemy.length;i++){
 		ps.Add(stageValue.enemy[i]);
-		ps[ps.Count-1].setID(ps.Count-1);
-		setLocation(ps[ps.Count-1],ps[ps.Count-1].getLocationX(),ps[ps.Count-1].getLocationY());
-		//ps[1].getModel().transform.Rotate(0,-90,0);
 		if(ps[ps.Count-1].getIsPlayer() == false){
 			ps[ps.Count-1].AI.insertStatus(ps[ps.Count-1]);
 		}
 	}
 }
 
+
+function setBossLocation(pr:person, x:int,y:int){
+	for(var i:int=x-1;i<=x+1;i++)
+		for(var j:int=y-1;j<=y+1;j++)
+			bd.getBox(i, j).standIn(pr.getId());
+}
+
 function inStanceCharacter(pr:person){
-	pr.model = GameObject.Instantiate(pr.getModel(),bd.getBox(pr.getLocationX(),pr.getLocationY()).thisPlane.transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()));
+	pr.model = GameObject.Instantiate(pr.getModel(),bd.getBox(pr.getLocationX(),pr.getLocationY()).thisPlane.transform.position, Quaternion.Euler(new Vector3()));
 	if(pr.team == 1){
 		pr.model.transform.Rotate(0,90,0);
 	}
@@ -175,17 +224,30 @@ function inStanceCharacter(pr:person){
 	}
 }
 
+function characterStartSetting(personNum:int){
+	var pr : person = ps[personNum];
+	inStanceCharacter(pr);
+		
+	// set the character ID equal to the num of the (int list)ps
+	pr.setID(personNum);
+	if(pr.boss)
+		setBossLocation(pr,pr.getLocationX(),pr.getLocationY());
+	else
+		setLocation(pr,pr.getLocationX(),pr.getLocationY());
+	pr.deathRound=1000;
+}
+
 public function renderList(){ // render out the list of action
 	if(round == 0){
 		for(var i:int=0;i<speed.length;i++){
-			speed[i]=ps[i].getSp();
+				speed[i]=ps[i].getSp();
 		}
 	}
 	playlist = new List.<int>();
 	//print(playlist.Count());
 	do{
 		for(var j:int=0;j<speed.length;j++){
-			speed[j]--;
+				speed[j]--;
 		}
 		var ZeroPerson:List.<int> = new List.<int>();
 		for(j=0;j<speed.length;j++){
@@ -206,22 +268,29 @@ public function renderList(){ // render out the list of action
 }
 
 // render out the list of action when the number of character is increasing
-public function reRenderList(number:int){ // number is the number of charcter increased
+public function reRenderList(){//number:int){ // number is the number of charcter increased
 	// reset your speed
 	speed = new int[ps.Count];
-	for(var i:int=0;i<speed.length-number;i++){
+	for(var i:int=0;i<speed.length;i++){
 		speed[i]=ps[i].getSp();
 	}
 	playlist = new List.<int>();
-	print(playlist.Count());
+					Debug.Log(speed.length);
+	//print(playlist.Count());
+	Debug.Log(speed.Length);
 	do{
-		for(var j:int=0;j<speed.length-number;j++){
-			speed[j]--;
+		for(var j:int=0;j<speed.length;j++){
+			if(playlist.Count >= ps[j].getBornRound()){
+				if(round<ps[j].deathRound)
+					speed[j]--;
+			}
 		}
 		var ZeroPerson:List.<int> = new List.<int>();
-		for(j=0;j<speed.length-number;j++){
-			if(speed[j]==0){
-				ZeroPerson.Add(j);
+		for(j=0;j<speed.length;j++){
+			if(playlist.Count >= ps[j].getBornRound()){
+				if(speed[j]==0){
+					ZeroPerson.Add(j);
+				}
 			}
 		}
 		var max : int = ZeroPerson.Count();
@@ -233,35 +302,17 @@ public function reRenderList(number:int){ // number is the number of charcter in
 			ZeroPerson.RemoveAt(num);
 			//print("ch"+(playlist.Count()-1)+" : "+playlist[(playlist.Count()-1)]);
 		}
-	}while(playlist.Count() < round);
-	do{
-		for(j=0;j<speed.length;j++){
-			speed[j]--;
-		}
-		ZeroPerson = new List.<int>();
-		for(j=0;j<speed.length;j++){
-			if(speed[j]==0){
-				ZeroPerson.Add(j);
-			}
-		}
-		max = ZeroPerson.Count();
-		for(j=0;j<max;j++){
-			num = Random.Range(0,ZeroPerson.Count());
-			playlist.Add(ZeroPerson[num]);
-			speed[ZeroPerson[num]] += ps[ZeroPerson[num]].getSp();
-			ZeroPerson.RemoveAt(num);
-			//print("ch"+(playlist.Count()-1)+" : "+playlist[(playlist.Count()-1)]);
-		}
 	}while(playlist.Count() < 300);
 }
 
 function showPerson(){ // show to the user that easy understand who is the current character
 	
-	//print(ps[playlist[round]].getName());
 	//charName.text="寵"+ps[playlist[round]].getId().ToString();
-	personShowStone.transform.position = ps[playlist[round]].model.transform.position+ Vector3(0,1,0);
+	personShowStone.transform.position = ps[playlist[round]].model.transform.position+ Vector3(0,3,0);
 	showWalk();
 	canvasSkill.enabled = true;
+	
+	ps[playlist[round]].ourAnimationPlay(0); // play animation
 	
 	if(ps[playlist[round]].icon != null){
 		//var image:UI.Image = GameObject.Find("Canvas/Icon").GetComponent("Image"); 
@@ -307,7 +358,7 @@ public function askAction(ans:int){ // ask play the action of walk ? skills? kno
 		}
 }
 
-public function showWalk():boolean{ //show the area that which you can go to // walk method
+public function showWalk(){ //show the area that which you can go to // walk method
 	resetSelectPlane();
 	cal =new Calculating(bd);
 	var pr:person = ps[playlist[round]];
@@ -331,19 +382,17 @@ public function showWalk():boolean{ //show the area that which you can go to // 
 	for(var t:plane in OKList){
 		t.setcanSelect(true);
 	}
-	
-	return true;
 }
 function walk2(pln:plane){ // walk to the location this you choose after click the plane
 	
 	var pr:person = ps[playlist[round]];
 	var mytarget : plane = pln;
-	var tomiddleofplane:Vector3=new Vector3(0,pr.model.transform.localScale.y/2,0);
+	var tomiddleofplane:Vector3=Vector3.zero;//new Vector3(0,pr.model.transform.localScale.y/2,0);
 	var now:plane=bd.getBox(pr.getLocationX(),pr.getLocationY()).thisPlane;
 
 	//if(startWalk==true){
 		resetSelectPlane();
-		print(pr.getLocationX()+","+pr.getLocationY());
+		//print(pr.getLocationX()+","+pr.getLocationY());
 		//var OKList:mySet[] = cal.go(pr.getLocationX(),pr.getLocationY(),x,y);
 		var OKList:mySet[] = cal.go(pr.getLocationX(),pr.getLocationY(),mytarget.posX,mytarget.posY);
 		for(var i:int=0;i<OKList.length;i++){
@@ -352,25 +401,32 @@ function walk2(pln:plane){ // walk to the location this you choose after click t
 		/*for(var go:plane in PathFinder.FindPath(now,mytarget).listOfPlanes){
 			pr.toPlace.Add(go);
 		}*/
-		print("first one "+pr.model.transform.position);
+		//print("first one "+pr.model.transform.position);
 		var targetPos:Vector3=mytarget.transform.position;
+		
+		var sth : int = 0;
+		
 		while(pr.model.transform.position!=targetPos+tomiddleofplane){
 		//	pr.transform.position=Vector3.Lerp(pr.transform.position,pr.toPlace[0].transform.position+Vector3(0,person.transform.localScale.y/2,0), Time.deltaTime);
-		
+			pr.ourAnimationPlay(1);
 			pr.model.transform.position = Vector3.MoveTowards(pr.model.transform.position, pr.toPlace[0].transform.position+tomiddleofplane, 5*Time.deltaTime);
 			if(pr.model.transform.position==pr.toPlace[0].transform.position+tomiddleofplane){
 				pr.toPlace.RemoveAt(0);
+				
 				if(pr.toPlace.Count >0){
 					var rotationPos = (pr.toPlace[0].transform.position+tomiddleofplane) - pr.model.transform.position;
+					//rotationPos.y =0;// pr.model.transform.position.y;
 					var rotation = Quaternion.LookRotation(rotationPos);
 					//rotation.z = 0;
 					pr.model.transform.rotation = rotation;
+
 				}
 			}
 			yield WaitForSeconds(0);
 			//print(pr.model.transform.position);
 		}
-			
+		
+		pr.ourAnimationPlay(0);
 	setLocation(pr,mytarget.posX,mytarget.posY,pr.getLocationX(),pr.getLocationY());
 	mytarget=null;
 	//updateTurn();  // will go to other place
@@ -380,23 +436,14 @@ function walk2(pln:plane){ // walk to the location this you choose after click t
 	haveWalk=true;
 	//endTurnProcess();
 	
-	//if(guy.getIsPlayer() == false){
+	
 	// write down
 		// the coding
 			// which process
 				// the AI script
-		//var guyEnemy : List.<person> = new List.<person>();
-		//for(var i:int;i<ps.Count;i++){
-		//	if(guy.team != ps[i].team){
-		//		guyEnemy.add(ps[i]);
-		//	}
-		//}
-		//guy.AI.setEnemy(guyEnemy);
-		//guy.AI.FSMFixedUpdate();
-	//}
 	if(pr.getIsPlayer()==false){
 		pr.AI.setEnemyAndFd(ps);
-		pr.AI.FixedUpdate();
+		pr.AI.FSMFixedUpdate(bd);
 	}
 }
 
@@ -438,7 +485,22 @@ public function useSkill01(whichSkill:int){ // first
 	}
 }
 
+public function useSkill01(thisSkill:skill){
+	if(skillUsed ==false){
+		var pr:person = ps[playlist[round]];
+		
+		var bs:skill = thisSkill;
+
+		usingSkill=bs;
+		bs.setUser(pr);
+		startSkill = true;
+		print("I am Skill now");
+		useSkill2();
+	}
+}
+
 public function useSkill2(){
+	Debug.Log("skillStage : " +skillStage);
 	var bs: skill = usingSkill;
 	var pr:person =ps[playlist[round]];
 	if(skillStage == 0){	// Skill Stage 0 = just start using skill
@@ -459,11 +521,11 @@ public function useSkill2(){
 	}
 	if(skillStage == 2){	// Skill Stage 2 = the stage to find the target
 		if(bs.needChoose==true){
-			
 			if(skillTarget.Count() < bs.targetNumber){
 				skTargetChoose();
 			}else{
 				skillStage=3;
+				useSkill2();
 			}
 		}
 		else{
@@ -479,10 +541,11 @@ public function useSkill2(){
 				}
 			}
 			skillStage = 3;
+			useSkill2();
 		}
 	}
 	// skill Stage 3 = the process that to check the target that do you have choose the right target.
-	if(skillStage == 3){	
+	else if(skillStage == 3){	
 		var isRightPerson:boolean = true;
 		if(pr.mustTarget>-1 && bs.needHurtCal==true){
 			for(i=0;i<skillTarget.Count();i++){				
@@ -501,14 +564,15 @@ public function useSkill2(){
 			}
 			else{
 				skillStage = 4;
+				useSkill2();
 			}
 		}
 		else{
 			skillStage = 4;
-			//useSkill2();
+			useSkill2();
 		}
 	}
-	if(skillStage==4){	
+	else if(skillStage==4){	
 		// SKill Stage 4 = the stage which start to do everything related with the content of the skill such as hurt somebody or start the function
 		// if this skill need to continue to search more target after the first round of choosing target
 		// this operation will start
@@ -520,9 +584,11 @@ public function useSkill2(){
 					OKBoard = getSkillOKBoard(bs,skillTarget[i],bs.continueToZ); // return the OKBoard of skill to the method 
 					var newTarget:person[] = bs.scan2(OKBoard,bd,ps);
 					for(var j:int=0;j<newTarget.length;j++){
-						if(newTarget[j].isSelectedBy == false && newTarget[j] != pr){
+						Debug.Log("get add"+ newTarget[j].getName() + newTarget[j].isSelectedBy);
+						if(newTarget[j].isSelectedBy == false){
 							skillTarget.Add(newTarget[j]);
 							skillTarget[skillTarget.Count()-1].isSelectedBy = true;
+							
 						}
 					}
 				}
@@ -535,21 +601,43 @@ public function useSkill2(){
 			for(j=0;j<skillTarget.Count();j++){
 				//person target2=bs.setTarget(ps.get(board[x2,y2]));
 				var target2:person=bs.setTarget(skillTarget[j]);
+				
+				var tomiddleofplane:Vector3=Vector3.zero;
+				var rotationPos = (target2.model.transform.position+tomiddleofplane) - pr.model.transform.position;
+				//rotationPos.y =0;// pr.model.transform.position.y;
+				var rotation = Quaternion.LookRotation(rotationPos);
+				//rotation.z = 0;
+				pr.model.transform.rotation = rotation;
+					
 				for(i=0;i<bs.runTimes;i++){
 					bs.action();
-					print("Have hurt calculating !");
+					print("Have hurt calculating ! ");
 					if(target2.team == pr.team){
 						if(bs.attackTeamate == true){
-							print("high "+bs.attackTeamate);
-							target2.getHurt(bs.damage());
+							var hurt : int=1;
+							if(bs.isHeal == false){
+								if(bs.damage() > 1){
+									hurt = bs.damage();
+								}
+							}else{
+								hurt = bs.damage();
+							}
+							target2.getHurt(hurt);
 						}
 					}else{
 						if(bs.attackEmery == true){
-						print("high "+bs.attackTeamate);
-							target2.getHurt(bs.damage());
+							hurt =1;
+							if(bs.isHeal == false){
+								if(bs.damage() > 1){
+									hurt = bs.damage();
+								}
+							}else{
+								hurt = bs.damage();
+							}
+							target2.getHurt(hurt);
 						}
 					}
-					print((bs.damage()>0)?target2.getName()+" : hp -"+ bs.damage():target2.getName()+" : hp +"+ (-bs.damage()));
+					
 				}
 			}
 		}
@@ -559,6 +647,14 @@ public function useSkill2(){
 			if(bs.needChoose == true){
 				for(j=0;j<skillTarget.Count();j++){
 					bs.setTarget(skillTarget[j]);
+					
+					tomiddleofplane =Vector3.zero;
+					rotationPos = (skillTarget[j].model.transform.position+tomiddleofplane) - pr.model.transform.position;
+					//rotationPos.y =0;// pr.model.transform.position.y;
+					rotation = Quaternion.LookRotation(rotationPos);
+					//rotation.z = 0;
+					pr.model.transform.rotation = rotation;
+					
 					bs.functions();
 					print("haveFunction");
 					//if this skill has a knock back function, start this operation
@@ -590,6 +686,10 @@ public function useSkill2(){
 						}
 					}
 				}
+			}else{
+				if(bs.havingParticle == true){
+					bs.functions();
+				}
 			}
 			if(bs.buildObject>-1){
 				switch (bs.buildObject){
@@ -603,31 +703,49 @@ public function useSkill2(){
 							break;
 				}
 			}
+			if(bs.spawnCharacter>-1){
+			//spawn character
+				// get the value of the new character
+				var newPerson : person = characterList.getCharacter(bs.spawnCharacter);
+				// insert the new character to the list
+				ps.Add(newPerson);
+				// set up its location
+				setLocation(ps[ps.Count-1], bs.targetX, bs.targetY);
+				// set up its team as same as its caller
+				ps[ps.Count-1].setTeam(bs.at.getTeam());
+				// instance model, set ID, set up location again
+				characterStartSetting(ps.Count-1);
+				// set up born round for calculating the playlist
+				ps[ps.Count-1].setBornRound(round+1);
+				// set is it having AI or controlled by player
+				ps[ps.Count-1].setIsPlayer(bs.spawnPlayerControl);
+				if(bs.spawnPlayerControl == false){
+					ps[ps.Count-1].getAI().insertStatus(ps[ps.Count-1]);
+				}
+				// reRender the playlist again
+				skillOf_createNewCharacter = true; 
+			}
 			if(bs.isPlaceChange==true && bs.needChoose == false){
 				bs.functions();
 				setLocation(bs.de,bs.targetX,bs.targetY,bs.de.getLocationX(),bs.de.getLocationY());
 			}
 		}
-		skillUsed = true;
-		startSkill=false;
-		
+		skillFinish();
+		if(findDie()){
+			for(i=0;i<ps.Count();i++){
+				if(checkDie(i)){
+					skipDie(i,round);
+				}
+			}
+		}
 		//if(guy.getIsPlayer() == false){
 		// write down
 			// the coding
 				// which process
 					// the AI script
-			//var guyEnemy : List.<person> = new List.<person>();
-			//for(var i:int;i<ps.Count;i++){
-			//	if(guy.team != ps[i].team){
-			//		guyEnemy.add(ps[i]);
-			//	}
-			//}
-			//guy.AI.setEnemy(guyEnemy);
-			//guy.AI.FSMFixedUpdate();
-		//}
 		if(pr.getIsPlayer()==false){
 			pr.AI.setEnemyAndFd(ps);
-			pr.AI.FixedUpdate();
+			pr.AI.FSMFixedUpdate(bd);
 		}
 	}
 }
@@ -658,6 +776,24 @@ public function showBoard(OKBoard:boolean[,]){ // show out the plane which can s
 
 // this function help to record the target
 public function skAddTarget(tar:person){
+	//print("Now in add target");
+	if(tar.protector == -1){
+		skillTarget.Add(tar);
+	}
+	else{
+		//print(ps[board[x2,y2]].protector);
+		skillTarget.Add(ps[tar.protector]);
+		tar.checkProtect();
+	}
+	// means this character is already been selected to be a target
+	skillTarget[skillTarget.Count()-1].isSelectedBy = true;
+	useSkill2();
+}
+
+// this function help to record the target
+public function skAddTarget(thisPersonID:int){
+	var tar:person = ps[thisPersonID];
+	//print("Now in add target");
 	if(tar.protector == -1){
 		skillTarget.Add(tar);
 	}
@@ -673,6 +809,7 @@ public function skAddTarget(tar:person){
 
 // each skill will have its own range, it is the method to calll the function to calculate the area
 public function getSkillOKBoard( bs:skill, target:person, type:int):boolean[,]{
+	//print("function get Skill OKBoard");
 	var cal:Calculating =new Calculating(bd);
 	var x:int=target.getLocationX();
 	var y:int=target.getLocationY();
@@ -727,7 +864,7 @@ public function knockBack(direction:int, range:int, target:person ){
 	switch (direction){
 		case 0 :	//y2-=range;
 					for(var i:int=1;i<=range;i++){
-						if(bd.getBox(x,y-i).isEmpty() == false){
+						if(bd.getBox(x,y-i).CanMeStand() == false){
 							stop=true;
 							break;
 						}
@@ -737,7 +874,7 @@ public function knockBack(direction:int, range:int, target:person ){
 					break;
 		case 1 :	//x2+=range;
 					for( i=1;i<=range;i++){
-						if(bd.getBox(x+i,y).isEmpty() == false){
+						if(bd.getBox(x+i,y).CanMeStand() == false){
 							stop=true;
 							break;
 						}
@@ -747,7 +884,7 @@ public function knockBack(direction:int, range:int, target:person ){
 					break;
 		case 2 :	//y2+=range;
 					for( i=1;i<=range;i++){
-						if(bd.getBox(x,y+i).isEmpty() == false){
+						if(bd.getBox(x,y+i).CanMeStand() == false){
 							stop=true;
 							break;
 						}
@@ -757,19 +894,19 @@ public function knockBack(direction:int, range:int, target:person ){
 					break;
 		case 3 :	//x2-=range;
 					for( i=1;i<=range;i++){
-						if(bd.getBox(x-i,y).isEmpty() == false){
+						if(bd.getBox(x-i,y).CanMeStand() == false){
 							stop=true;
 							break;
 						}
-						x--;
+						x2--;
 					}
 					print("x2 " +x2);
 					break;
 	}
-	var tomiddleofplane:Vector3=new Vector3(0,target.transform.localScale.y/2,0);
+	var tomiddleofplane:Vector3=new Vector3(0,0,0);
 	var targetPos:Vector3=bd.getBox(x2,y2).thisPlane.transform.position;
-	while(target.transform.position!=targetPos+tomiddleofplane){
-		target.transform.position = Vector3.MoveTowards(target.transform.position, bd.getBox(x2,y2).thisPlane.transform.position+tomiddleofplane, 5*Time.deltaTime);
+	while(target.model.transform.position!=targetPos+tomiddleofplane){
+		target.model.transform.position = Vector3.MoveTowards(target.model.transform.position, bd.getBox(x2,y2).thisPlane.transform.position+tomiddleofplane, 5*Time.deltaTime);
 		yield WaitForSeconds(0);
 	}
 	setLocation(target,x2,y2,x,y);
@@ -793,9 +930,10 @@ public function listSwap( first:int, second:int){
 public function skTargetChoose(){
 	skillStage = 2;
 	var pr:person = ps[playlist[round]];
-	print(pr.getIsPlayer());
+	print("player ? "+pr.getIsPlayer());
 	
 	if(pr.getIsPlayer() == true){
+		
 		var bs: skill = usingSkill;
 		var OKBoard:boolean[,]  = getSkillOKBoard(usingSkill,pr,bs.ToZ); 
 		if(usingSkill.allowMyself == true){
@@ -825,12 +963,13 @@ public function skTargetChoose(){
 }
 
 // end turn function
-public function endTurnProcess(){	
+public function endTurnProcess(){
 	var guy:person = ps[playlist[round]];
 	for(var id:int=0;id<ps.Count();id++){
-		bd.whatFunction(ps[id]);
-		ps[id].endTurncheck();
-		//print(ps[id].getHp());
+		if(ps[id].getHp()> 0){
+			bd.whatFunction(ps[id]);
+			ps[id].endTurncheck();
+		}
 	}
 	if(findDie()){
 		for(var i:int=0;i<ps.Count();i++){
@@ -847,14 +986,41 @@ public function endTurnProcess(){
 	btnSkillShow = false;
 	skillAnim.SetBool("skillShow",btnSkillShow);
 	
+	if(SkillSelectionShow == true){
+		destroySkillSelectBtn();
+	}
+	if(SkillInfoShow == true){
+		destroySkillInfoBtn();
+	}
+	if(skillOf_createNewCharacter == true){
+		reRenderList();
+		skillOf_createNewCharacter = false;
+		if(findDie()){
+			for(i=0;i<ps.Count();i++){
+				if(checkDie(i)){
+					skipDie(i,round);
+				}
+			}
+		}
+	}
+	if(EndTurnBtnShow == false){
+		EndTurnBtn.active = true;
+		EndTurnBtnShow = true;
+	}
+	
 	haveWalk=false;
 	skillUsed = false;
 	skillTarget = new List.<person>();
 	skillStage=0;
 	cal = new Calculating(bd);
 	
+	guy.ourAnimationPlay(0);	// animation play
+	
 	round++;
 	if(round > 300){
+		for(var theCharacter:int=0; theCharacter<ps.Count; theCharacter++){
+			ps[theCharacter].setBornRound(0);
+		}
 		renderList();
 		round=0;
 	}
@@ -862,25 +1028,28 @@ public function endTurnProcess(){
 	startWalk=false;
 	showPerson();
 	if(infoShow==true){
-		setInfoContent(ps[playlist[round]]);
+		//setInfoContent(ps[playlist[round]]);
+		setAllInfoContent();
 	}
 	
 	guy = ps[playlist[round]]; // record the new character which can have action in this turn
-//	print(guy.getIsPlayer());
+	//	print(guy.getIsPlayer());
 	if(guy.getIsPlayer() == false){
 	// write down
 		// the coding
 			// which process
 				// the AI script
-		/*var guyEnemy : List.<person> = new List.<person>();
-		for(var i:int;i<ps.Count;i++){
-			if(guy.team != ps[i].team){
-				guyEnemy.add(ps[i]);
-			}
-		}*/
 		print("AI");
+		
+		//setUpSkillSelection();
+		if(EndTurnBtnShow == true){
+			EndTurnBtn.active = false;
+			EndTurnBtnShow = false;
+		}
+	
 		guy.AI.setEnemyAndFd(ps);
 		guy.AI.FSMFixedUpdate(bd);
+
 	}
 	
 	
@@ -894,19 +1063,21 @@ public function findDie():boolean{ // check anyone die
 	var dead:boolean = false;
 	for(var i:int=0;i<ps.Count();i++){
 		if(ps[i].deadOrNot() == false){
-			if(ps[i].getHp() <= 0){
-				dead = true;
+			if(ps[i].getDeathRound() > round){
+				if(ps[i].getHp() <= 0){
+					dead = true;
+				}
 			}
 		}
 	}
 	return dead;
 }
 public function checkDie(i:int):boolean{ // check anyone die
-		if(ps[i].deadOrNot() == false){
-			if(ps[i].getHp() <= 0){
-				return true;
-			}
+	if(ps[i].deadOrNot() == false){
+		if(ps[i].getHp() <= 0){
+			return true;
 		}
+	}
 	return false;
 }
 public function skipDie(id:int,round:int){ // delete the person who have already died in the list
@@ -916,32 +1087,34 @@ public function skipDie(id:int,round:int){ // delete the person who have already
 			playlist.RemoveAt(i);
 		}
 	}
-	ps[id].youDie();
 	print(ps[id].getName()+" is dead");
-	bd.getBox(ps[id].getLocationX(),ps[id].getLocationY()).leaveIt();
-	/*for(i=0;i<stageValue.boardSizeY;i++){
-		for(var j:int=0;j<stageValue.boardSizeX;j++){
-			if(bd.getBox(j,i).havePerson()== true && bd.getBox(j,i).getMan==id){
-				//board[j,i]=-1;
-				//if(bd.getBox(j,i).haveFun()==false){
-				//	bd.getBox(j,i).clearThisSquare();
-				//}
-				bd.getBox(j,i).leaveIt();
-			}
-		}
-	}*/
-	//Destroy(ps[playlist[i]].model);
+	bd.getBox(ps[id].getLocationX(),ps[id].getLocationY()).leaveIt();	
+	ps[id].setDeathRound(round);
+	ps[id].youDie();
 	
+	winLose();
 }
 //public var hp:UI.Text;//UI.Text;
-public function PopInInfo(){
-	var pr : person = ps[playlist[round]];
-	setInfoContent(pr);
+public function PopInInfo(){	
+	followPersonShow = GameObject.Find("followingRounds2").GetComponent.<followingRoundDisplay>();
+	followPersonShow.SendMessage("followingRoundAnimationController",infoShow);	
+	
 	//hp.text = "hihi";//pr.getHp().ToString + "/" + pr.fullHp;
 	var infoAnim:Animator = GameObject.Find("Canvas/info").GetComponent("Animator") as Component;
 	infoShow = !infoShow;
 	infoAnim.SetBool("infoShow",infoShow);
+	
+	setAllInfoContent();
+	resetSelectPlane();
 }
+
+public function setAllInfoContent(){
+	var pr : person = ps[playlist[round]];
+	setInfoContent(pr);
+	setUpSkillInfomation();
+	setUpHpValuePage();
+}
+
 public function setInfoContent(pr:person){
 
 	var infoIcon: UI.Image = GameObject.Find("Canvas/info/icon").GetComponent.<UI.Image>();	// icon in info
@@ -958,12 +1131,90 @@ public function setInfoContent(pr:person){
 	md.text = pr.getMd().ToString();
 }
 
-public function winOrLose(){
-	for(var i:int=0;i<ps.Count;i++)
-		if(ps[i]==stageValue.enemy){
-			win=false;
-			return;
+public function setUpSkillSelection(){
+
+	if(skillUsed == false){
+		var skillSelectionAnim : Animator = GameObject.Find("Canvas/skillSelection").GetComponent("Animator") as Component;
+		if(SkillSelectionShow == false){
+			startWalk = false;	// walk will not run with the skill together
+			
+			resetSelectPlane();
+			SkillSelectionShow = true;
+			var skillSelection : GameObject = GameObject.Find("Canvas/skillSelection");
+			skillSelection.SendMessage("recieveCharacter",ps[playlist[round]]);
+			
+			skillSelectionAnim.SetBool("skillSelectionShow", true);
 		}
+		else{
+			if(haveWalk==false){
+				showWalk();
+			}
+			SkillSelectionShow = false;
+			skillSelection = GameObject.Find("Canvas/skillSelection");
+			skillSelection.SendMessage("resetToEmpty");
+			
+			skillSelectionAnim.SetBool("skillSelectionShow", false);
+		}
+	}
+}
+
+public function skillFinish(){
+	if(SkillSelectionShow == true){
+		destroySkillSelectBtn();
+	}
+	skillUsed = true;
+	startSkill=false;
+	if(haveWalk==false){
+		showWalk();
+	}
+	
+	var skillAnim:Animator = GameObject.Find("Canvas/skill").GetComponent("Animator") as Component;
+	btnSkillShow = false;
+	skillAnim.SetBool("skillShow",btnSkillShow);
+	
+}
+
+public function skillStop(){
+	skillUsed = false;
+	startSkill=false;
+	resetSelectPlane();
+}
+
+public function destroySkillSelectBtn(){
+	var skillSelection : GameObject = GameObject.Find("Canvas/skillSelection");
+	skillSelection.SendMessage("resetToEmpty");
+	SkillSelectionShow = false;
+}
+
+public function setUpSkillInfomation(){
+	if(skillUsed == false){
+		SkillInfoShow = true;
+		var skillInfomation : GameObject = GameObject.Find("Canvas/info/skillDetail");
+		skillInfomation.SendMessage("recieveCharacter",ps[playlist[round]]);
+	}
+}
+
+public function destroySkillInfoBtn(){
+	var skillInfomation : GameObject = GameObject.Find("Canvas/info/skillDetail");
+	skillInfomation.SendMessage("resetToEmpty");
+	SkillInfoShow = false;
+}
+
+public function setUpHpValuePage(){
+	var hpPage:GameObject = GameObject.Find("Canvas/info/HpBarPage/Mask/HpPanel") as GameObject;
+	//hpPage.SendMessage("resetToEmpty");
+	hpPage.SendMessage("showOutTheFullHpList", ps);
+}
+
+public function deleteTeamController(){
+	var TC : GameObject = GameObject.Find("teamController");
+	if(TC != null){		
+		TC.SendMessage("destroyMe");
+	}
+}
+
+function zoom(){
+ 	GameObject.Find("Main Camera").GetComponent.<MainCameraController>().SendMessage("GetCP",ps[playlist[round]].getModel());
 }
 
 

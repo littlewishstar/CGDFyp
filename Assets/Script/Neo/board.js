@@ -20,6 +20,25 @@ public function getBox(x:int,y:int):box{
 	//System.out.println(box.length);
 	return box[x,y];
 }
+
+public function getBoxByPersonID(id:int):box{
+	//System.out.println(box.length);
+	for(var i:int=0;i<box.GetLength(0);i++){
+		for(var j:int=0;j<box.GetLength(1);j++){
+			if(box[i,j].ps ==id){
+				return box[i,j];
+			}
+		}
+	}
+	return null;
+}
+
+public function setLight(x:int,y:int){
+	box[x,y].canStand = false;
+	box[x,y].setUpFunction(9);
+	GameObject.Instantiate( Resources.Load("Prefabs/Group 1/add3") as GameObject,box[x,y].thisPlane.transform.position+Vector3(0,0,0), Quaternion.Euler(new Vector3()));
+}
+
 public function getSizeX():int{
 	return box.GetLength(0);
 }
@@ -116,12 +135,10 @@ function findNeighbors(x:int,y:int){
 	}
 }
 
-function setSpondPoint(x:int ,y:int){
+
+function setSpawnPoint(x:int ,y:int){
 	getBox(x,y).setUpFunction(8);
 }
-
-
-
 
 
 

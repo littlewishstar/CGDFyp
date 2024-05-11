@@ -49,23 +49,31 @@ public class PoringFSM extends FSM {
 
 	override function FSMFixedUpdate(bd :board){
 		
-		
 		this.bd = bd;
 		cal =new Calculating(bd);
 		setTarget();
+//			Debug.Log(status.getLocationX()+' '+status.getLocationY()+' '+target.getLocationX()+' '+target.getLocationY());
+		distance=Mathf.Abs(status.getLocationX()-target.getLocationX())+Mathf.Abs(status.getLocationY()-target.getLocationY());
 //		print("disn "+distance);
 //		print("me "+status.getLocationX()+","+status.getLocationY()+" tar "+target.getLocationX()+target.getLocationY());
-		Debug.Log(King.getHelp());
-		if(haveKing == true && King.getHelp()==true)
+		//Debug.Log(King.getHelp());
+		if(haveKing == true && King.getHelp()==true){
 			curState=FSMState.saveKing;
-		else if (hp <= 0)
+		}
+		else if (hp <= 0){
 			curState = FSMState.Dead;
-		else if(distance==1 && attacked==false)
+		}
+		else if(distance==1 && attacked==false){
 			curState=FSMState.Attack;
-		else if(walked==false)		
+		}
+		else if(walked==false){	
 			curState=FSMState.Walk;
-		else curState=FSMState.EndTurn;
-				print("Poring update " + curState);
+		}
+		else {
+			curState=FSMState.EndTurn;
+		}
+		
+//		print("Poring "+status.getId()+" update " + curState);
 		switch (curState)
 		{
 			case FSMState.Walk: UpdateWalkState(); break;
@@ -80,21 +88,32 @@ public class PoringFSM extends FSM {
 		var id:int=0;
 			//print(status.getLocationX()+","+status.getLocationY()+","+enemy[0].getLocationX()+","+enemy[0].getLocationY());
 		if(walked == false){
-			if(curState==FSMState.saveKing)
-				target = GameObject.FindWithTag("PoringKing").GetComponent.<person>();
-			else{
+			
+			if(curState==FSMState.saveKing){
+				if(haveKing==true)
+					target = GameObject.FindWithTag("PoringKing").GetComponent.<person>();
+			}else{
+				
+				var smallest:int=100;
 		//		print("setTarget: "+status.getLocationX()+","+status.getLocationY()+","+enemy[0].getLocationX()+","+enemy[0].getLocationY());
-				var OKList:mySet[] = cal.go2(status.getLocationX(),status.getLocationY(),enemy[0].getLocationX(),enemy[0].getLocationY());
-				var smallest:int = OKList.length;
-				for(var i:int =id;i<enemy.Count;i++){
-					var OKList2:mySet[] = cal.go2(status.getLocationX(),status.getLocationY(),enemy[i].getLocationX(),enemy[i].getLocationY());
-					var small:int = OKList2.length;
-					if(small<smallest)
-						id=i;
+				if(!enemy[0].dead){
+					var OKList:mySet[] = cal.go2(status.getLocationX(),status.getLocationY(),enemy[0].getLocationX(),enemy[0].getLocationY());
+					smallest = OKList.length;
+				}
+				for(var i:int =1;i<enemy.Count;i++){
+				//Debug.Log("set target loop");
+					if(!enemy[i].dead){
+						var OKList2:mySet[] = cal.go2(status.getLocationX(),status.getLocationY(),enemy[i].getLocationX(),enemy[i].getLocationY());
+						var small:int = OKList2.length;
+						if(small<smallest){
+							id=i;
+							smallest=small;
+						}
+					}
 				}
 			}
-				//print (id);
-				target = enemy[id];
+//			print ("target enemy id : "+id);
+			target = enemy[id];
 
 			distance=Mathf.Abs(status.getLocationX()-target.getLocationX())+Mathf.Abs(status.getLocationY()-target.getLocationY());
 		}
@@ -105,49 +124,66 @@ public class PoringFSM extends FSM {
 	}
 	
 	protected function UpdateWalkState(){
-		print("Poring walk");
+		//print("Poring walk");
 		//setTarget();
 		walked=true;
-		var realOKList:mySet[]=cal.go2(status.getLocationX(),status.getLocationY(),target.getLocationX(),target.getLocationY());
-		if(realOKList.length<=4){
-			Debug.Log("reach");
-			controller = GameObject.Find("Main Game Controller");
-			for(var i:int =0;i<realOKList.Length;i++)
-				print(realOKList[i].x+","+realOKList[i].y);
-			controller.GetComponent.<MultipleGameProcess>().SendMessage("walk2",bd.getBox(realOKList[realOKList.Length-2].x,realOKList[realOKList.Length-2].y).thisPlane);
-			status.setLocation(realOKList[realOKList.Length-2].x,realOKList[realOKList.Length-2].y);
-		}
-		else{
-			Debug.Log("going");
-			controller = GameObject.Find("Main Game Controller");
-			controller.GetComponent.<MultipleGameProcess>().SendMessage("walk2",bd.getBox(realOKList[3].x,realOKList[3].y).thisPlane);
-			status.setLocation(realOKList[3].x,realOKList[3].y);
+		cal.treeRecursive(status.getLocationX(),status.getLocationY(),status.getSt());
+		var OKList : List.<plane> = cal.getOKList();
+		var id:int=0;
+		//walkTo=OKList[id];
+		if(!target.dead){
+			var smallest:float=Vector3.Distance(OKList[id].gameObject.transform.position,target.model.transform.position);
+//			Debug.Log("testing Count " +OKList.Count);
+			for(var i:int=1;i<OKList.Count;i++){
+				//Debug.Log("testing id " +id);
+				var small:float=Vector3.Distance(OKList[i].gameObject.transform.position,target.model.transform.position);
+				if(small<smallest){
+					id=i;
+					smallest=small;
+				}
 			}
-		distance=Mathf.Abs(status.getLocationX()-target.getLocationX())+Mathf.Abs(status.getLocationY()-target.getLocationY());
+//			Debug.Log("testing id " +id);
+			walkTo=OKList[id];
+			controller = GameObject.Find("Main Game Controller");
+			controller.GetComponent.<MultipleGameProcess>().SendMessage("walk2",walkTo);
+		}else{
+			walked = false;
+			//FSMFixedUpdate(bd);
+		}
+		print("Poring "+status.getId()+" walk" + walked);
 	}
 	
 	protected function UpdateAttackState(){
 		Debug.Log("Poring attack");
-				attacked=true;
-		controller.GetComponent.<MultipleGameProcess>().useSkill01(0);
+		attacked=true;
+		controller.GetComponent.<MultipleGameProcess>().useSkill01(status.skill_List[0]);
 	}
 	
 	protected function UpdateSaveKingState(){
 		print("Poring SaveK");
-		setTarget();
-		var realOKList=cal.go2(status.getLocationX(),status.getLocationY(),target.getLocationX(),target.getLocationY());
-		if(realOKList.length<=4)
-			controller.GetComponent.<MultipleGameProcess>().walk2(bd.getBox(target.getLocationX(),target.getLocationY()).thisPlane);
-		else
-			controller.GetComponent.<MultipleGameProcess>().walk2(bd.getBox(realOKList[3].x,realOKList[3].y).thisPlane);
-		if(King.getHelp()==false)
-			curState=FSMState.Attack;
+		walked=true;
+		cal.treeRecursive(status.getLocationX(),status.getLocationY(),status.getSt());
+		var OKList : List.<plane> = cal.getOKList();
+		var id:int=0;
+		walkTo=OKList[id];
+		var smallest:float=Vector3.Distance(OKList[id].gameObject.transform.position,target.model.transform.position);
+		for(var i:int=1;i<OKList.Count;i++){
+			var small:float=Vector3.Distance(OKList[i].gameObject.transform.position,target.model.transform.position);
+			if(small<smallest){
+				id=i;
+				smallest=small;
+			}
+		}
+		walkTo=OKList[id];
+		controller = GameObject.Find("Main Game Controller");
+		controller.GetComponent.<MultipleGameProcess>().SendMessage("walk2",walkTo);
 	}
 	
 	function UpdateEndTurnState(){
 		attacked=false;
 		walked=false;
-		controller.GetComponent.<MultipleGameProcess>().endTurnProcess();
+		controller = GameObject.Find("Main Game Controller");
+		controller.GetComponent.<MultipleGameProcess>().SendMessage("endTurnProcess");
 	}
 	protected function UpdateDeadState(){
 		GameObject.Destroy(gameObject);

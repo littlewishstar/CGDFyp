@@ -12,30 +12,31 @@
 		boardSizeY = 13;
 		
 		// set environment
-		haveStone = true;
-		stone = new Vector2[4];
 		var index:int=0;
-		for(var i:int=0;i<boardSizeX;i++)
-			for(var j:int=0;j<boardSizeY;j++)
-				if(i==0 || i==boardSizeX-1)
-					if(j==0 || j==boardSizeY-1){
-						stone[index]=new Vector2(i,j);
-						index++;
-					}
-					
-				index=0;
-		haveSpondPoint=true;
-		spondPoint=new Vector2[6];
+		
+		haveSpawnPoint=true;
+		spawnPoint=new Vector2[6];
 		for(i=5;i<8;i++){
-			spondPoint[index]=new Vector2(1,i);
+			spawnPoint[index]=new Vector2(1,i);
 			index++;
-			spondPoint[index]=new Vector2(6,i);
+			spawnPoint[index]=new Vector2(6,i);
 			index++;
 		}
-		index++;
+		haveLight=true;
+		light= new Vector2[4];
+		light[0]=Vector2(0,0);
+		light[1]=Vector2(boardSizeX-1,0);
+		light[2]=Vector2(boardSizeX-1,boardSizeY-1);
+		light[3]=Vector2(0,boardSizeY-1);
 		enemy = new person[1];
 		enemy[0]=new PoringKing();
 		enemy[0].setIsPlayer(false);
-		enemy[0].setLocation(3,9);
+		enemy[0].boss=true;
+		//enemy[0].setLocation(3,10);
+		enemy[0].setLocation(3,10);
+		
+		for(i=0;i<enemy.length;i++){
+			enemy[i].setTeam(2);
+		}
 	}
 }

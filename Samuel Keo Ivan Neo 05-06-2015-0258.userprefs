@@ -1,0 +1,20 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Characters\first class\PoringKing.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="110" Column="3" />
+      <File FileName="Assets\Script\Skill\skill.js" Line="67" Column="17" />
+      <File FileName="Assets\Script\Skill\magic.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\Skill\magic\thunderLink.js" Line="18" Column="33" />
+      <File FileName="Assets\Script\person.js" Line="255" Column="1" />
+      <File FileName="Assets\Script\Menu\Team_menu.js" Line="23" Column="2" />
+      <File FileName="Assets\Script\For multiple game play\TeamControllerInMenu.js" Line="6" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\UI\HpValueCreator.js" Line="27" Column="1" />
+      <File FileName="Assets\Script\Characters\first class\PoringKing.js" Line="34" Column="57" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

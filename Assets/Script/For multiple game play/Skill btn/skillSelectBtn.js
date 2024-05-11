@@ -98,6 +98,14 @@ function checkWhichIcon(){
 		}
 	}
 	createAllSmallIcon(IconList);
-	
+}
+
+function sendSkillAndStartUse(){
+	var gameController : MultipleGameProcess = GameObject.Find("Main Game Controller").GetComponent.<MultipleGameProcess>();
+	if(gameController.startSkill == false){
+		gameController.SendMessage("useSkill01",thisSkill);
+	}else{
+		gameController.SendMessage("skillStop");
+	}
 }
 

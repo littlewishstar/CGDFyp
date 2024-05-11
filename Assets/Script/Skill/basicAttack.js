@@ -8,6 +8,7 @@ public class basicAttack extends attack{ // no special bonus attack
 	}
 	public function action(){
 		hurt=PhyHurt();
+		at.ourAnimationPlay(3);	// animation play
 	}
 	
 function Start () {

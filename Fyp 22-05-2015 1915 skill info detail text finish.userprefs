@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\For multiple game play\MultipleGameProcess.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="893" Column="37" />
+      <File FileName="Assets\Script\person.js" Line="180" Column="23" />
+      <File FileName="Assets\Script\Skill\assist\build monster\buildPoring.js" Line="12" Column="28" />
+      <File FileName="Assets\Script\Skill\skill.js" Line="78" Column="112" />
+      <File FileName="Assets\Script\Skill\assist\build Object\buildTree.js" Line="4" Column="38" />
+      <File FileName="Assets\Script\Characters\characterList.js" Line="34" Column="11" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

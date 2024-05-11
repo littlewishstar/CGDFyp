@@ -22,8 +22,13 @@ public class myHealer extends person{
 		md=350;
 		job=3;
 		
-		setModel(Resources.Load("Prefabs/Characters/CB1") as GameObject);
-		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t4"));
+		setModel(Resources.Load("Prefabs/Characters/healer") as GameObject);
+		icon = (Resources.Load.<Sprite>("iconcircle/Characters/healer_Icon"));
+		
+		skill_List.Add(new slowDownSomeone(this));
+		skill_List.Add(new addPhyDam(this));
+		skill_List.Add(new twoWayHeal(this));
+		skill_List.Add(new autoHeal(this));
 	}
 	
 }

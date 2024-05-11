@@ -14,7 +14,7 @@ public class assist extends skill{
 	public function functions(){
 	
 	}
-
+	
 
 function Start () {
 

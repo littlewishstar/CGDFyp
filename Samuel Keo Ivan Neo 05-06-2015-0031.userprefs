@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\For multiple game play\Skill btn\skillInfoBtn.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="304" Column="45" />
+      <File FileName="Assets\Script\For multiple game play\MainCameraController.js" Line="2" Column="1" />
+      <File FileName="Assets\Script\Characters\first class\PoringKing.js" Line="34" Column="72" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillInfoBtn.js" Line="14" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

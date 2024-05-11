@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{403FD519-E69C-2BB7-D125-D0E8A54259FC}</ProjectGuid>
+	<ProjectGuid>{3974E766-EAD8-61E7-4D72-5330367D69EF}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_4;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_IL2CPP;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;UNITY5_SCRIPTING_IN_UNITY4;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,13 +39,19 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\FT_FreeSample\Script\AnimationScrollTexture.js" />
+     <Compile Include="Assets\FT_FreeSample\Script\AnimationSpriteSheet.js" />
+     <Compile Include="Assets\FT_FreeSample\Script\DeadTime.js" />
+     <Compile Include="Assets\FT_FreeSample\Script\SampleSceneGUI.js" />
+     <Compile Include="Assets\FT_FreeSample\Script\StopCAM.js" />
+     <Compile Include="Assets\FT_FreeSample\Script\VisibleBG.js" />
      <Compile Include="Assets\Script\AI\FSM.js" />
      <Compile Include="Assets\Script\AI\PoringFSM.js" />
      <Compile Include="Assets\Script\AI\PoringKingFSM.js" />
@@ -62,14 +68,19 @@
      <Compile Include="Assets\Script\Characters\first class\myWarrior.js" />
      <Compile Include="Assets\Script\For multiple game play\MainCameraController.js" />
      <Compile Include="Assets\Script\For multiple game play\MultipleGameProcess.js" />
+     <Compile Include="Assets\Script\For multiple game play\Skill btn\skillInfoBtn.js" />
+     <Compile Include="Assets\Script\For multiple game play\Skill btn\skillInfoButtonCreate.js" />
      <Compile Include="Assets\Script\For multiple game play\Skill btn\skillSelectBtn.js" />
      <Compile Include="Assets\Script\For multiple game play\Skill btn\skillSelectButtonCreate.js" />
      <Compile Include="Assets\Script\For multiple game play\Skill btn\skillSmallIcon.js" />
-     <Compile Include="Assets\Script\For multiple game play\TeamBoxes.js" />
      <Compile Include="Assets\Script\For multiple game play\TeamControllerInMenu.js" />
+     <Compile Include="Assets\Script\For multiple game play\UI\HpValueCreator.js" />
+     <Compile Include="Assets\Script\For multiple game play\UI\characterHpValue.js" />
+     <Compile Include="Assets\Script\For multiple game play\UI\info_Controller.js" />
      <Compile Include="Assets\Script\For multiple game play\followingRoundDisplay.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stage01.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stageFinal.js" />
+     <Compile Include="Assets\Script\For multiple game play\stage\stageList.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stageSample.js" />
      <Compile Include="Assets\Script\For multiple game play\team\emptyTeam.js" />
      <Compile Include="Assets\Script\For multiple game play\team\team01.js" />
@@ -81,6 +92,9 @@
      <Compile Include="Assets\Script\Job\Warrior.js" />
      <Compile Include="Assets\Script\Job\poring.js" />
      <Compile Include="Assets\Script\Job\poringKing.js" />
+     <Compile Include="Assets\Script\Menu\TeamBoxes.js" />
+     <Compile Include="Assets\Script\Menu\Team_menu.js" />
+     <Compile Include="Assets\Script\Menu\menuCharacterSelect.js" />
      <Compile Include="Assets\Script\Neo\Calculating.js" />
      <Compile Include="Assets\Script\Neo\board.js" />
      <Compile Include="Assets\Script\Neo\mySet.js" />
@@ -92,6 +106,8 @@
      <Compile Include="Assets\Script\Skill\assist\buff and debuff\delPhyDam.js" />
      <Compile Include="Assets\Script\Skill\assist\buff and debuff\downPhyDam.js" />
      <Compile Include="Assets\Script\Skill\assist\build Object\buildTree.js" />
+     <Compile Include="Assets\Script\Skill\assist\build monster\spawnAIPoring.js" />
+     <Compile Include="Assets\Script\Skill\assist\build monster\spawnPoring.js" />
      <Compile Include="Assets\Script\Skill\assist\hide.js" />
      <Compile Include="Assets\Script\Skill\assist\poison.js" />
      <Compile Include="Assets\Script\Skill\assist\protectSomeone.js" />
@@ -123,6 +139,7 @@
      <Compile Include="Assets\Script\plane.js" />
      <Compile Include="Assets\Script\planePath.js" />
      <Compile Include="Assets\Script\stoneSelfRotate.js" />
+     <Compile Include="Assets\Script\threeSecondDestroy.js" />
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\CameraRelativeControl.js" />
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\FirstPersonControl.js" />
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\FollowTransform.js" />
@@ -135,27 +152,27 @@
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\SmoothFollow2D.js" />
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\ZoomCamera.js" />
      <Compile Include="Assets\Standard Assets (Mobile)\Scripts\tapcontrol.js" />
+     <Compile Include="Assets\shoot.js" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
-     <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
+     <None Include="Assets\Resources\Prefabs\Group 1\IGSoft_Resources\ToolResources\EffectShader\FXMaker_Mask Additive Tint.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Detail.shader" />
      <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
      <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
-     <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Reflective.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Particles Additive Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Only.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap AlphaTest.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.4/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{D219F4B4-44DD-630B-6B5F-9C22600FB154}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{0FBB20EB-204F-322A-C573-205F01B391F2}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
-      <Project>{96E2034B-E165-B97E-3B4F-0DADBF0013DA}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
+      <Project>{E2A7E1BF-0AFE-7A25-3AF2-6E4D01647719}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

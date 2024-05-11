@@ -17,8 +17,13 @@ import System.Collections.Generic;
 	var md:int=0; // magic defend of this character
 	var job:int; // which job you are ?
 	var team:int; // which team you are ? in the game play all character will allocate to two team
+	var deathRound:int = 0;
 	
 	var fullHp:int=0;
+	var bornRound: int=0;
+	
+	// to record the no of the monster
+	var monster_no : int;
 	
 	var isPlayer:boolean=true;
 	var AI : FSM;
@@ -42,6 +47,7 @@ import System.Collections.Generic;
 	var phyDeTime:int=0; // how many rounds you have phy def buff
 	var magAtTime:int=0; // how many rounds you have mag att buff
 	var magDeTime:int=0; // how many rounds you have mag def buff
+	var boss:boolean = false;
 	
 	
 	var dead:boolean =false; // are you  dead ?
@@ -56,6 +62,8 @@ import System.Collections.Generic;
 	var autoHealNum:int =0; // the num of heal of this auto heal
 	var autoHealRound:int =0; // how many rounds you will auto heal
 	var noShowRound:int=0; // how many rounds you will hide
+	var spawned:boolean =false;
+	var anim:Animation;	
 	
 	var mustTarget:int=-1; 
 	// must target means this character must attack this character in next Attack,
@@ -72,6 +80,10 @@ import System.Collections.Generic;
 	
 	var model : GameObject;
 	var icon : Sprite;
+	
+	public function start(){
+		anim = GetComponent.<Animation>();
+	}
 	
 	public function person(id:int,myName:String,star:int,sp:int,hp:int,step:int,pa:int,pd:int,ma:int,md:int,job:int,team:int){
 			this.id=id;
@@ -132,8 +144,14 @@ import System.Collections.Generic;
 	public function setTeam(team:int){
 		this.team = team;
 	}
+	public function getTeam():int{
+		return team;
+	}
 	function setID(id:int){
 		this.id = id;
+		if(model != null){
+			model.GetComponent.<person>().SendMessage("setID",this.id);
+		}
 	}
 	/*function setMeUp(pr:person){
 		this. = pr;
@@ -144,6 +162,12 @@ import System.Collections.Generic;
 	}
 	function getModel():GameObject{
 		return model;
+	}
+	function setDeathRound(deathRound:int){
+		this.deathRound = deathRound;
+	}
+	function getDeathRound():int{
+		return deathRound;
 	}
 	function setIcon(icon:Sprite){
 		this.icon = icon;
@@ -165,6 +189,12 @@ import System.Collections.Generic;
 	}
 	function getAI():FSM{
 		return AI;
+	}
+	function setBornRound(bornTime : int){
+		bornRound = bornTime;
+	}
+	function getBornRound():int{
+		return bornRound;
 	}
 	
 	
@@ -210,6 +240,19 @@ import System.Collections.Generic;
 	}
 	public function getHurt(hurt:int){
 		hp-=hurt;
+		//anim.Play();
+		var hurtText:GameObject = Instantiate(Resources.Load("damagePrefabCanvas"), getModel().transform.position+new Vector3(0.25,0,0), new Quaternion());//getModel().transform.position
+		
+		//hurtText.transform.parent = GameObject.Find("Canvas").transform;
+		if(hurt > 0){
+			hurtText.transform.GetChild(0).GetChild(0).GetComponent.<UI.Text>().text = "-"+hurt.ToString();
+		}else{
+			hurtText.transform.GetChild(0).GetChild(0).GetComponent.<UI.Text>().text = "+"+hurt.ToString();
+		}
+		
+		ourAnimationPlay(2);	// animation play
+		
+		print(getName()+" : hp -"+ hurt);
 	}
 	public function slowDown(){
 		inIce = true;
@@ -308,14 +351,16 @@ import System.Collections.Generic;
 			if(poisonRound==0){
 				poisonHurt=0;
 				isPoison=false;
+				Destroy(model.transform.FindChild("keepposion(Clone)").gameObject);
 			}
 		}
 		if(isAutoHeal){
 			getHurt(-autoHealNum);
-			poisonRound--;
+			autoHealRound--;
 			if(autoHealRound==0){
 				autoHealNum=0;
 				isAutoHeal=false;
+				Destroy(model.transform.FindChild("autoHeal1(Clone)").gameObject);
 			}
 		}
 		if(isNoShow){
@@ -332,11 +377,14 @@ import System.Collections.Generic;
 			}
 			else{
 				protector = -1;
+				Destroy(model.transform.FindChild("protect(Clone)").gameObject);
 			}
 		}
 		if(isSelectedBy){
 			isSelectedBy = false;
 		}
+		if(spawned==true)
+			spawned=false;
 	}
 	public function checkProtect(){
 		if(protectedHit>0){
@@ -344,7 +392,7 @@ import System.Collections.Generic;
 				protector = -1;
 			}
 			protectedHit--;
-		}		
+		}
 	}
 	public function getSkill():skill{ // uncompleted
 		print("1/2, protect or attack");
@@ -375,27 +423,45 @@ import System.Collections.Generic;
 		
 	****/
 	
+	function ourAnimationPlay(num:int){
+		var modelAnim : Animator = getModel().GetComponent.<Animator>() ;
+		//Debug.Log(modelAnim);
+		/*switch (num){
+			case 1:  modelAnim.CrossFade("walk");break;
+			case 2:  modelAnim.CrossFade("getHurt");break;
+			case 3:  modelAnim.CrossFade("normal_Att");break;
+			case 4:  modelAnim.CrossFade("magic_Att");break;
+			case 5:  modelAnim.CrossFade("pray_magic");break;
+			case 6:  modelAnim.CrossFade("round_Att");break;
+			case 7:  modelAnim.CrossFade("knock_back");break;
+			case 8:  modelAnim.CrossFade("nerf");break;
+			default :  modelAnim.CrossFade("idle");break;
+			  
+		}*/
+		if(modelAnim != null){
+			modelAnim.SetInteger("action",num);
+		}
+	}
 	
 	function setlocation(x:int,y:int){
 		gridPosition.x=x;
 		gridPosition.y=y;
 	}
 	function OnMouseDown(){
-			//transform.parent.SendMessage("getTargetPlace",LocX,LocY);
-			//if(id==game_Process.instance.GetComponent.<game_Process>().currentplayer){
-				/*if(incontrol==false){
-					//var pl:GameObject = new GameObject("pl");
-					//pl.setUp(19,19);
-					Highlights.FindHighlight(newplane(),4);
-					//game_Process.instance.SendMessage("ShowWalk"); 					//will change to askaction();
-					incontrol=true;
-				}
-				else{
-					//game_Process.instance.SendMessage("reset");
-					incontrol=false;
-				}*/
+		//transform.parent.SendMessage("getTargetPlace",LocX,LocY);
+		//if(id==game_Process.instance.GetComponent.<game_Process>().currentplayer){
+			/*if(incontrol==false){
+				//var pl:GameObject = new GameObject("pl");
+				//pl.setUp(19,19);
+				Highlights.FindHighlight(newplane(),4);
+				//game_Process.instance.SendMessage("ShowWalk"); 					//will change to askaction();
+				incontrol=true;
+			}
+			else{
+				//game_Process.instance.SendMessage("reset");
+				incontrol=false;
+			}*/
 		var controller : GameObject= GameObject.Find("Main Game Controller");
-
 		if(controller.GetComponent.<gameProcess>() != null){
 			if(controller.GetComponent.<gameProcess>().skillStage==2){
 				print(locationX+" "+locationY+" "+""+controller.GetComponent.<gameProcess>().bd.getBox(locationX,locationY).thisPlane.canSelect );
@@ -407,17 +473,26 @@ import System.Collections.Generic;
 				gameProcess.instance.skillStage=0;
 			}
 		}else if(controller.GetComponent.<MultipleGameProcess>() != null){
+			
 			if(controller.GetComponent.<MultipleGameProcess>().skillStage==2){
-					print(locationX+" "+locationY+" "+""+controller.GetComponent.<MultipleGameProcess>().bd.getBox(locationX,locationY).thisPlane.canSelect );
-					if(controller.GetComponent.<MultipleGameProcess>().bd.getBox(locationX,locationY).thisPlane.canSelect == true){
-						print(controller.GetComponent.<MultipleGameProcess>().skillStage);
-						controller.GetComponent.<MultipleGameProcess>().skAddTarget(this);
+					var this_box:box = controller.GetComponent.<MultipleGameProcess>().bd.getBoxByPersonID(id);
+					if(this_box != null){
+						if(this_box.thisPlane.canSelect == true){
+							controller.GetComponent.<MultipleGameProcess>().skAddTarget(id);
+						}
 					}
-					controller.GetComponent.<MultipleGameProcess>().resetSelectPlane();
-					controller.GetComponent.<MultipleGameProcess>().skillStage=0;
+					//if(controller.GetComponent.<MultipleGameProcess>().bd.getBox(locationX,locationY).thisPlane.canSelect == true){
+					//	//print(controller.GetComponent.<MultipleGameProcess>().skillStage);
+					//	controller.GetComponent.<MultipleGameProcess>().skAddTarget(this);
+					//}
+					//controller.GetComponent.<MultipleGameProcess>().resetSelectPlane();
+					//controller.GetComponent.<MultipleGameProcess>().skillStage=0;
 			}
 			else if(controller.GetComponent.<MultipleGameProcess>().startSkill == false){
 				//controller.GetComponent.<MultipleGameProcess>().canvasSkill.enabled = false;
+				controller.GetComponent.<MultipleGameProcess>().SendMessage("zoom");
+				//GameObject.Find("Main Camera").GetComponent.<MainCameraController>().SendMessage("GetCP",this.gameObject);
+				
 			}
 		}
 			//}

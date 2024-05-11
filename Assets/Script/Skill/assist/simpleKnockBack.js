@@ -7,9 +7,12 @@ public class simpleKnockBack extends assist{ // knock back somebody but no hurt
 		knockBackFunction = 1;
 		//needChoose = true;
 		
-		small_SkillType[5] = true;
+		skill_name = "simpleKnockBack";
+		small_SkillType[7] = true;
 	}
 	public function functions(){
+		at.ourAnimationPlay(7);	// animation play
+		
 		if(de.getLocationX()==at.getLocationX()){
 			if(de.getLocationY() > at.getLocationY()){
 				knockBackDirection = 2;
@@ -26,6 +29,9 @@ public class simpleKnockBack extends assist{ // knock back somebody but no hurt
 				knockBackDirection = 3;
 			}
 		}
+		var pr : GameObject = de.getModel();
+		var knock:GameObject=GameObject.Instantiate(Resources.Load("Prefabs/Group 1/KnockBack"), pr.transform.position, pr.transform.rotation);
+		GameObject.Destroy(knock,0.5);
 	}	
 function Start () {
 

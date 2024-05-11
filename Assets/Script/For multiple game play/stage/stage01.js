@@ -43,22 +43,31 @@ class stage01 extends stageSample{
 		enemy[0].insertDetail(10,"war 2", 5,65,2300,3,650,390,0,90,0,2);
 		enemy[0].setModel(Resources.Load("Prefabs/Characters/CD2") as GameObject);*/
 		
-		enemy[1] = new enemyAssissan();
-		//enemy[1].insertDetail(11,"assissan 2",5,75,1000,4,1000,150,50,300,1,2);
+		enemy[1]= new Poring();
+		enemy[1].setIsPlayer(false);
 		enemy[1].setLocation(4,10);
+		//enemy[1] = new enemyAssissan();
+		//enemy[1].insertDetail(11,"assissan 2",5,75,1000,4,1000,150,50,300,1,2);
+		//enemy[1].setLocation(4,10);
 		//enemy[1].setModel(Resources.Load("Prefabs/Characters/CA2") as GameObject);
 		
-		enemy[2]= new PoringKing();
+		enemy[2]= new Poring();
 		enemy[2].setIsPlayer(false);
+		enemy[2].setLocation(3,11);
+		//enemy[2]= new PoringKing();
+		//enemy[2].setIsPlayer(false);
 		//enemy[2] = new enemyMagician();
 		//enemy[2].insertDetail(12,"magic 2",5,45,1400,2,100,200,1000,460,2,2);
-		enemy[2].setLocation(3,11);
+	//	enemy[2].setLocation(3,11);
 		//enemy[2].setModel(Resources.Load("Prefabs/Characters/CC2") as GameObject);
 		
-		enemy[3] = new enemyHealer();
+		enemy[3]= new Poring();
+		enemy[3].setIsPlayer(false);
+		enemy[3].setLocation(5,11);
+		//enemy[3] = new enemyHealer();
 		//enemy[3] = new person();
 		//enemy[3].insertDetail(13,"healer 2",5,45,1800,2,100,250,800,350,3,2);
-		enemy[3].setLocation(2,11);
+		//enemy[3].setLocation(2,11);
 		//enemy[3].setModel(Resources.Load("Prefabs/Characters/CB2") as GameObject);
 		
 		for(var i:int =0;i<enemy.length;i++){

@@ -10,7 +10,7 @@ function Update () {
 
 }
 
-function getCharacter(id:int):person{
+static function getCharacter(id:int):person{
 	switch(id){
 		case 0: return new myWarrior();
 				break;
@@ -28,7 +28,10 @@ function getCharacter(id:int):person{
 				break;
 		case 7: return new enemyHealer();
 				break;
-				
+		case 8: return new Poring();
+				break;
+		case 9: return new PoringKing();
+				break;
 	}
 }
 

@@ -70,6 +70,16 @@ public class skill{
 	var attackTeamate:boolean = true; // can this skiil attack your teamate
 	var attackEmery : boolean = true; // can this skill attack your emery
 	
+	var phyAtBonus : float = 0.0f;
+	var phyAtTime : int = 0;
+	var autoRound_Hp : int = 0;
+	
+	// is this skill this call out a new monster ?
+	var spawnCharacter : int = -1;// -1 = nothing, n>0 create the character as like as recorded on the character list
+	var spawnPlayerControl : boolean = true;
+	
+	var havingParticle : boolean = true;
+	
 	var small_SkillType :boolean[] = [false,false,false,false,false,false,false,false,false];
 	/*
 		buff = 0;

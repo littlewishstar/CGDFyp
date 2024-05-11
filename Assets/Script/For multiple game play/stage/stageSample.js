@@ -16,13 +16,15 @@ class stageSample{
 	var haveIce:boolean = false;
 	var haveStone:boolean = false;
 	var haveTree:boolean = false;
-	var haveSpondPoint:boolean = false;
+	var haveSpawnPoint:boolean=false;
+	var haveLight:boolean = false;
 	
 	var fire:Vector2[];
 	var ice:Vector2[];
 	var stone:Vector2[];
 	var tree:Vector2[];
-	var spondPoint:Vector2[];
+	var spawnPoint:Vector2[];
+	var light:Vector2[];
 	
 	
 	var enemy : person[];

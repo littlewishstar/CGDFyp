@@ -22,8 +22,13 @@ public class myWarrior extends person{
 		md=90;
 		job=0;
 		
-		setModel(Resources.Load("Prefabs/Characters/CD1") as GameObject);
-		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t1"));
+		setModel(Resources.Load("Prefabs/Characters/warrior") as GameObject);
+		icon = (Resources.Load.<Sprite>("iconcircle/Characters/warrior_icon"));
+		
+		skill_List.Add(new addSelfPhyDam(this));
+		skill_List.Add(new simpleKnockBack(this));
+		skill_List.Add(new roundAttack(this));
+		skill_List.Add(new protectSomeone(this));
 	}
 	
 }

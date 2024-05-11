@@ -3,13 +3,13 @@
 public class PoringKingFSM extends FSM {
 	enum  FSMState{None,Normal,Berserk,Heal,CallHelper,Dead,EndTurn};
 	private var curState:FSMState;
-	private var lastState:FSMState;
-	private var maxHealth:int;
+	//private var lastState:FSMState;
 	private var healed:boolean;
 	private var help:boolean;
 	private var hit:boolean;
 	var enemy : List.<person> = new List.<person>();
 	var fd : List.<person> = new List.<person>();
+	private var target:person;
 
 	public function getHealth():int{
 		return status.hp;
@@ -30,21 +30,22 @@ public class PoringKingFSM extends FSM {
 	}
 	
 	private function addHealth(increase:int ){
-		if (increase + status.hp < maxHealth)
+		if (increase + status.hp < status.fullHp)
 					status.hp += increase;
 				else
-					status.hp = maxHealth;
+					status.hp = status.fullHp;
 	}
 
 	override function FSMFixedUpdate(bd :board)
 	{
-		if(status.hp > maxHealth*0.4f)
+		Debug.Log("king hp: "+status.hp);
+		if( status.hp > status.fullHp*0.4f || curState==FSMState.Berserk || curState==FSMState.Heal)
 			curState = FSMState.EndTurn;
-		else if (status.hp <= maxHealth * 0.4f) {
+		else if (status.hp <= status.fullHp * 0.4f && status.hp > status.fullHp * 0.2f) {
 			help = false;
 			curState = FSMState.Berserk;
 		}
-		else if (status.hp <= maxHealth * 0.2f){
+		else if (status.hp <= status.fullHp * 0.2f){
 			if (healed == false)
 				curState = FSMState.Heal;
 			else
@@ -70,33 +71,41 @@ public class PoringKingFSM extends FSM {
 	// Use this for initialization
 	protected override function Initialize() {
 		curState = FSMState.Normal;
-		maxHealth=status.fullHp;
-		Debug.Log("maxHealth : "+maxHealth+" health: "+status.hp);
+		Debug.Log("status.fullHp : "+status.fullHp+" health: "+status.hp);
 	}
 
 	protected function UpdateNormalState(){
-		lastState=curState;
+		//lastState=curState;
 		Debug.Log("King Normal");
 		curState = FSMState.EndTurn;
 	}
 	
 	protected function UpdateBerserkState(){
-		lastState=curState;
+		//lastState=curState;
+		
 		Debug.Log("KingBerserk");
 		controller = GameObject.Find("Main Game Controller");
-		controller.GetComponent.<MultipleGameProcess>().useSkill01(Random.Range(0,2));
-		curState = FSMState.EndTurn;
+		//Debug.Log(curState);
+		controller.GetComponent.<MultipleGameProcess>().useSkill01(status.skill_List[0]);
 	}
 	
+	function FSMgetTarget(){
+		var num:int;
+		do{
+			num=Random.Range(0,enemy.Count);
+			target=enemy[num];
+		}while(enemy[num].dead==true);
+		controller.GetComponent.<MultipleGameProcess>().skAddTarget(target);
+	}
 	
 	protected function UpdateHealState(){
-		addHealth(maxHealth * 0.4f);
+		addHealth(status.fullHp * 0.6f);
 		healed = true;
-		curState = FSMState.Normal;
+		controller.GetComponent.<MultipleGameProcess>().SendMessage("endTurnProcess");
 	}
 	
 	protected function UpdateCallHelperState(){
-		lastState=curState;
+		//lastState=curState;
 		help = true;
 		Debug.Log("calling");
 	}
