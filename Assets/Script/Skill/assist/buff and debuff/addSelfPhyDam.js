@@ -19,6 +19,8 @@ public class addSelfPhyDam extends assist{ // upgrade self physical attack
 
 	}
 	public function functions(){
+		at.ourAnimationPlay(5);	// animation play
+		
 		var pr : GameObject = at.getModel();
 		Debug.Log(Resources.Load("Prefabs/Group 1/add") + at.myName);
 		var addD:GameObject=GameObject.Instantiate(Resources.Load("Prefabs/Group 1/add"), pr.transform.position, pr.transform.rotation);

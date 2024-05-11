@@ -26,7 +26,7 @@ function setTeam(){
 	team.teamStore[1] = pet02.GetComponent.<TeamBoxes>().myID;
 	team.teamStore[2] = pet03.GetComponent.<TeamBoxes>().myID;
 	team.teamStore[3] = pet04.GetComponent.<TeamBoxes>().myID;
-	print("team 01 id :"+team.teamStore[0]);
+	//print("team 01 id :"+team.teamStore[0]);
 	
 	a = 1;
 

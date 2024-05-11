@@ -120,19 +120,18 @@ function OnMouseDown(){
 			}
 		}
 		else if(transform.parent.GetComponent.<MultipleGameProcess>() != null){
-			if(transform.parent.GetComponent.<MultipleGameProcess>().startWalk == true){
-				//transform.parent.GetComponent.<MultipleGameProcess>().walk2(posX,posY);
-				transform.parent.GetComponent.<MultipleGameProcess>().SendMessage("walk2",this);
-			}
 			if(transform.parent.GetComponent.<MultipleGameProcess>().startSkill == true){
 				if(transform.parent.GetComponent.<MultipleGameProcess>().skillStage == 0){
-					print("magic");
 					transform.parent.GetComponent.<MultipleGameProcess>().usingSkill.setLand(posX, posY);
 					transform.parent.GetComponent.<MultipleGameProcess>().skillStage = 1;
 					transform.parent.GetComponent.<MultipleGameProcess>().SendMessage("useSkill2");
 					//bs.setLand(x2, y2);
 				}
+			}else if(transform.parent.GetComponent.<MultipleGameProcess>().startWalk == true){
+				//transform.parent.GetComponent.<MultipleGameProcess>().walk2(posX,posY);
+				transform.parent.GetComponent.<MultipleGameProcess>().SendMessage("walk2",this);
 			}
+			
 		}
 		//transform.parent.GetComponent.<gameProcess>().walk2(posX,posY);
 		//yield WaitForSeconds(0);

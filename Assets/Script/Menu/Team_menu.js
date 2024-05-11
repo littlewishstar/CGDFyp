@@ -11,7 +11,7 @@ function Start () {
 	for(var i:int=0;i<4;i++){
 		for(var j:int=0;j<3;j++){
 			allPet.Add(i);
-			Debug.Log(allPet[allPet.Count-1]);
+			//Debug.Log(allPet[allPet.Count-1]);
 		}
 	}
 	setUpTeam();

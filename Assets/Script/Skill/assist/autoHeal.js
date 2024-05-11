@@ -9,6 +9,7 @@ public class autoHeal extends assist{
 		skill_name = "autoHeal";
 	}
 	public function functions(){
+		at.ourAnimationPlay(5);	// animation play
 		
 		var pr : GameObject = de.getModel();
 		var h:GameObject=GameObject.Instantiate(Resources.Load("Prefabs/Group 1/autoHeal1"), pr.transform.position, pr.transform.rotation);

@@ -89,6 +89,7 @@ public function standIn(i:int){
 public function leaveIt(){
 	canStand = true;
 	thisPlane.canSelect = true;
+	thisPlane.canStand=true;
 	ps=-1;
 }
 public function getMan():int{
@@ -147,6 +148,7 @@ function Update () {
 
 function insertPlane(tool:plane){
 	thisPlane = tool;
+	tool.canStand=canStand;
 }
 
 }

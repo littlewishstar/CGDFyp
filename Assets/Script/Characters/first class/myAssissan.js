@@ -27,7 +27,7 @@ public class myAssissan extends person{
 		
 		skill_List.Add(new doubleTimeAttack(this));//new doubleTimeAttack(this)); //
 		skill_List.Add(new poison(this));
-		skill_List.Add(new provocative(this));//hide(this));
+		skill_List.Add(new selfTeleport(this));//provocative(this));//hide(this));
 		skill_List.Add(new highRoundAttack(this));
 	}
 	

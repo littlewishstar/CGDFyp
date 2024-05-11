@@ -132,14 +132,18 @@ public class PoringFSM extends FSM {
 		var id:int=0;
 		//walkTo=OKList[id];
 		if(!target.dead){
-			var smallest:float=Vector3.Distance(OKList[id].gameObject.transform.position,target.model.transform.position);
-//			Debug.Log("testing Count " +OKList.Count);
+			if(OKList[id].canStand){
+				var smallest:float=Vector3.Distance(OKList[id].gameObject.transform.position,target.model.transform.position);
+	//			Debug.Log("testing Count " +OKList.Count);
+			}
 			for(var i:int=1;i<OKList.Count;i++){
 				//Debug.Log("testing id " +id);
-				var small:float=Vector3.Distance(OKList[i].gameObject.transform.position,target.model.transform.position);
-				if(small<smallest){
-					id=i;
-					smallest=small;
+				if(OKList[id].canStand){
+					var small:float=Vector3.Distance(OKList[i].gameObject.transform.position,target.model.transform.position);
+					if(small<smallest){
+						id=i;
+						smallest=small;
+					}
 				}
 			}
 //			Debug.Log("testing id " +id);

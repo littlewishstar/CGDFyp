@@ -24,7 +24,7 @@ public class hugeFireExplosion extends magic{ // no special bonus attack
 		var pr : GameObject = at.getModel();
 		if(GameObject.Find("Bbigfire(Clone)") == null){
 			var bigfire : GameObject = GameObject.Instantiate(Resources.Load("Prefabs/Group 1/Bbigfire"), new Vector3(targetY,0,targetX), pr.transform.rotation);
-			GameObject.Destroy(bigfire,10);
+			GameObject.Destroy(bigfire,5);
 		}
 	}
 	

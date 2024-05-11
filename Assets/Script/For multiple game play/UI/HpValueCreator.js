@@ -11,7 +11,9 @@ function Update () {
 }
 
 function showOutTheFullHpList(ps:List.<person>){
-	resetToEmpty ();
+	if(transform.childCount >= ps.Count){
+		resetToEmpty ();
+	}
 	for(var i=0;i<ps.Count;i++){
 		var personHpValue : GameObject = Instantiate(Resources.Load("Prefabs/UI gameObject/personHpValue")) as GameObject;
 		personHpValue.transform.parent = this.transform;

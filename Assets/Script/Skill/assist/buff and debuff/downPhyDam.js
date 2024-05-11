@@ -11,6 +11,9 @@ public class downPhyDam extends assist{ // upgrade self physical attack
 		small_SkillType[5] = true;
 	}
 	public function functions(){
+		at.ourAnimationPlay(5);	// animation play
+		de.ourAnimationPlay(8);	// animation play
+	
 		if(de.phyAtBuff == true){
 			if(de.phyAtBonus>1){
 				de.phyAtTime--;

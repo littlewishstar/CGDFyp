@@ -1,0 +1,24 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\For multiple game play\UI\HpValueCreator.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillInfoBtn.js" Line="66" Column="4" />
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="1236" Column="42" />
+      <File FileName="Assets\Script\Skill\magic\hugeFireExplosion.js" Line="27" Column="32" />
+      <File FileName="Assets\Script\plane.js" Line="130" Column="86" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSelectBtn.js" Line="109" Column="43" />
+      <File FileName="Assets\Script\Skill\assist\protectSomeone.js" Line="13" Column="23" />
+      <File FileName="Assets\Script\Skill\assist\slowDownSomeone.js" Line="9" Column="15" />
+      <File FileName="Assets\Script\Menu\Team_menu.js" Line="14" Column="6" />
+      <File FileName="Assets\Script\For multiple game play\TeamControllerInMenu.js" Line="29" Column="4" />
+      <File FileName="Assets\Script\person.js" Line="465" Column="32" />
+      <File FileName="Assets\Script\For multiple game play\Skill btn\skillSelectButtonCreate.js" Line="37" Column="1" />
+      <File FileName="Assets\Script\Neo\board.js" Line="21" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\UI\HpValueCreator.js" Line="14" Column="26" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

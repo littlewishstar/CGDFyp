@@ -13,6 +13,8 @@ public class addPhyDam extends assist{ // buff somebody  physical attack
 		small_SkillType[0] = true;
 	}
 	public function functions(){
+		at.ourAnimationPlay(5);	// animation play
+	
 		de.phyAtBonus=phyAtBonus;
 		de.phyAtBuff=true;
 		de.phyAtTime+=phyAtTime;

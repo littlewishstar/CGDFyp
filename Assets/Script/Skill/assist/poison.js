@@ -14,6 +14,8 @@ public class poison extends assist{ // Poison 10 round hurt the person automatic
 		de.poisonHurt=(at.physicalDamage()-de.physicalDef())/10;
 		de.poisonRound=autoRound_Hp;
 		
+		at.ourAnimationPlay(3);	// animation play
+		
 		var pr : GameObject = at.getModel();
 		var poison:GameObject=GameObject.Instantiate(Resources.Load("Prefabs/Group 1/keepposion"), de.model.transform.position, de.model.transform.rotation);
 		poison.transform.SetParent(de.model.transform);

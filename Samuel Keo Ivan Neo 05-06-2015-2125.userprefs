@@ -1,0 +1,13 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\For multiple game play\MultipleGameProcess.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="801" Column="2" />
+      <File FileName="Assets\Script\Neo\board.js" Line="38" Column="28" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

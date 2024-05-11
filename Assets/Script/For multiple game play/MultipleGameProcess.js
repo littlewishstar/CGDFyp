@@ -115,7 +115,7 @@ function insertStage(stage:stageSample){ // insert the stage
 function insertTeam(myTeam : teamSample){
 	if(GameObject.Find("teamController") != null){
 		var tool:GameObject = GameObject.Find("teamController");
-		print(tool.GetComponent.<TeamControllerInMenu>().team.teamStore[1]);
+		//print(tool.GetComponent.<TeamControllerInMenu>().team.teamStore[1]);
 		this.myTeam = tool.GetComponent.<TeamControllerInMenu>().team;
 		this.myTeam.pickUpTeam();
 		this.myTeam.setUpLocation();
@@ -156,6 +156,17 @@ public function firstSetting(){ // do every setting with the first time
 	followPersonShow = GameObject.Find("followingRounds2").GetComponent.<followingRoundDisplay>();
 	followPersonShow.SendMessage("setPsList",ps);	
 	followPersonShow.SendMessage("followingRoundAnimationController",true);	
+	
+	if(ps[playlist[0]].getIsPlayer() == false){
+	// write down
+		// the coding
+			// which process
+				// the AI script
+	
+		ps[playlist[0]].AI.setEnemyAndFd(ps);
+		ps[playlist[0]].AI.FSMFixedUpdate(bd);
+
+	}
 	
 	showPerson();
 }
@@ -410,6 +421,8 @@ function walk2(pln:plane){ // walk to the location this you choose after click t
 		//	pr.transform.position=Vector3.Lerp(pr.transform.position,pr.toPlace[0].transform.position+Vector3(0,person.transform.localScale.y/2,0), Time.deltaTime);
 			pr.ourAnimationPlay(1);
 			pr.model.transform.position = Vector3.MoveTowards(pr.model.transform.position, pr.toPlace[0].transform.position+tomiddleofplane, 5*Time.deltaTime);
+			
+			personShowStone.transform.position=Vector3.MoveTowards(personShowStone.transform.position, pr.toPlace[0].transform.position+new Vector3(0,3,0), 5*Time.deltaTime);
 			if(pr.model.transform.position==pr.toPlace[0].transform.position+tomiddleofplane){
 				pr.toPlace.RemoveAt(0);
 				
@@ -460,6 +473,7 @@ function resetSelectPlane(){ // let all plane return to the normal state and col
 public function setLocation(pr:person, x:int, y:int){ // set up character location
 	//board[x,y] = pr.getId();
 	bd.getBox(x, y).standIn(pr.getId());
+	bd.getBox(x, y).thisPlane.canStand=false;
 	pr.setLocation(x, y);
 }
 public function setLocation(pr:person, x:int, y:int, x2:int, y2:int){ // change the character location
@@ -467,6 +481,7 @@ public function setLocation(pr:person, x:int, y:int, x2:int, y2:int){ // change 
 	//board[x2,y2]=-1;
 	bd.getBox(x2, y2).leaveIt();
 	bd.getBox(x, y).standIn(pr.getId());
+	bd.getBox(x, y).thisPlane.canStand=false;
 	pr.setLocation(x, y);
 }
 
@@ -525,6 +540,7 @@ public function useSkill2(){
 				skTargetChoose();
 			}else{
 				skillStage=3;
+				
 				useSkill2();
 			}
 		}
@@ -662,12 +678,15 @@ public function useSkill2(){
 						knockBack(bs.knockBackDirection,bs.knockBackFunction,bs.de);
 					}
 					if(bs.isPlaceChange==true){
+						Debug.Log("before de position : " + bs.de.model.transform.position);
+						bs.de.model.transform.position = bd.getBox(bs.targetX,bs.targetY).thisPlane.transform.position;
+						Debug.Log("after de position : " + bs.de.model.transform.position);
 						setLocation(bs.de,bs.targetX,bs.targetY,bs.de.getLocationX(),bs.de.getLocationY());
 					}
 					if(bs.roundOfDelay != 0){
 						var thisTargetRound:int=0;
 						for(var k:int=round;k<playlist.Count();k++){
-							if(ps[playlist[k]]==skillTarget[j]){
+							if(ps[playlist[k]].getId()==skillTarget[j].getId()){
 								thisTargetRound = k;
 								break;
 							}
@@ -722,11 +741,18 @@ public function useSkill2(){
 				if(bs.spawnPlayerControl == false){
 					ps[ps.Count-1].getAI().insertStatus(ps[ps.Count-1]);
 				}
+				var new_one : GameObject = ps[ps.Count-1].getModel();
+				var cloud:GameObject = GameObject.Instantiate(Resources.Load("Prefabs/Group 1/Buildtree"), new_one.transform.position, new_one.transform.rotation);
+				GameObject.Destroy( cloud, 2);
+				
 				// reRender the playlist again
 				skillOf_createNewCharacter = true; 
 			}
 			if(bs.isPlaceChange==true && bs.needChoose == false){
-				bs.functions();
+				//bs.functions();
+				//Debug.Log("before de position : " + bs.de.model.transform.position);
+				bs.de.model.transform.position = bd.getBox(bs.targetX,bs.targetY).thisPlane.transform.position;
+				//Debug.Log("after de position : " + bs.de.model.transform.position);
 				setLocation(bs.de,bs.targetX,bs.targetY,bs.de.getLocationX(),bs.de.getLocationY());
 			}
 		}
@@ -787,6 +813,7 @@ public function skAddTarget(tar:person){
 	}
 	// means this character is already been selected to be a target
 	skillTarget[skillTarget.Count()-1].isSelectedBy = true;
+	
 	useSkill2();
 }
 
@@ -969,6 +996,7 @@ public function endTurnProcess(){
 		if(ps[id].getHp()> 0){
 			bd.whatFunction(ps[id]);
 			ps[id].endTurncheck();
+			ps[id].ourAnimationPlay(0);	// animation play
 		}
 	}
 	if(findDie()){
@@ -1046,7 +1074,7 @@ public function endTurnProcess(){
 			EndTurnBtn.active = false;
 			EndTurnBtnShow = false;
 		}
-	
+		
 		guy.AI.setEnemyAndFd(ps);
 		guy.AI.FSMFixedUpdate(bd);
 
@@ -1136,6 +1164,10 @@ public function setUpSkillSelection(){
 	if(skillUsed == false){
 		var skillSelectionAnim : Animator = GameObject.Find("Canvas/skillSelection").GetComponent("Animator") as Component;
 		if(SkillSelectionShow == false){
+			if(startSkill == true){
+				skillStop();
+			}
+			
 			startWalk = false;	// walk will not run with the skill together
 			
 			resetSelectPlane();
@@ -1144,16 +1176,14 @@ public function setUpSkillSelection(){
 			skillSelection.SendMessage("recieveCharacter",ps[playlist[round]]);
 			
 			skillSelectionAnim.SetBool("skillSelectionShow", true);
+		
 		}
 		else{
 			if(haveWalk==false){
 				showWalk();
 			}
-			SkillSelectionShow = false;
-			skillSelection = GameObject.Find("Canvas/skillSelection");
-			skillSelection.SendMessage("resetToEmpty");
+			closeSkillSelectionPanel();
 			
-			skillSelectionAnim.SetBool("skillSelectionShow", false);
 		}
 	}
 }
@@ -1162,6 +1192,7 @@ public function skillFinish(){
 	if(SkillSelectionShow == true){
 		destroySkillSelectBtn();
 	}
+	resetSelectPlane();
 	skillUsed = true;
 	startSkill=false;
 	if(haveWalk==false){
@@ -1175,6 +1206,7 @@ public function skillFinish(){
 }
 
 public function skillStop(){
+	skillStage = 0;
 	skillUsed = false;
 	startSkill=false;
 	resetSelectPlane();
@@ -1211,6 +1243,14 @@ public function deleteTeamController(){
 	if(TC != null){		
 		TC.SendMessage("destroyMe");
 	}
+}
+public function closeSkillSelectionPanel(){
+	var skillSelectionAnim : Animator = GameObject.Find("Canvas/skillSelection").GetComponent("Animator") as Component;
+	
+	SkillSelectionShow = false;
+	var skillSelection : GameObject = GameObject.Find("Canvas/skillSelection");
+	skillSelection.SendMessage("resetToEmpty");
+	skillSelectionAnim.SetBool("skillSelectionShow", false);
 }
 
 function zoom(){

@@ -10,6 +10,9 @@ public class delPhyDam extends assist{ // let somebody no physical buff
 		small_SkillType[5] = true;
 	}
 	public function functions(){
+		at.ourAnimationPlay(5);	// animation play
+		de.ourAnimationPlay(8);	// animation play
+	
 		de.phyAtBonus=1;
 		de.phyAtBuff=false;
 		de.phyAtTime=0;

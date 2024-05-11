@@ -63,7 +63,7 @@ function setUpLocation(pos:Vector2){
 	thisRect.localPosition.y = pos.y;
 	thisRect.localPosition.z = 0;
 	
-	Debug.Log(thisRect.localPosition.y);
+	//Debug.Log(thisRect.localPosition.y);
 }
 
 function changeTypeLogo (){

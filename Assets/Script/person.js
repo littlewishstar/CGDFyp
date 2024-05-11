@@ -239,20 +239,42 @@ import System.Collections.Generic;
 		Destroy(this.model);
 	}
 	public function getHurt(hurt:int){
-		hp-=hurt;
-		//anim.Play();
-		var hurtText:GameObject = Instantiate(Resources.Load("damagePrefabCanvas"), getModel().transform.position+new Vector3(0.25,0,0), new Quaternion());//getModel().transform.position
-		
-		//hurtText.transform.parent = GameObject.Find("Canvas").transform;
-		if(hurt > 0){
-			hurtText.transform.GetChild(0).GetChild(0).GetComponent.<UI.Text>().text = "-"+hurt.ToString();
-		}else{
-			hurtText.transform.GetChild(0).GetChild(0).GetComponent.<UI.Text>().text = "+"+hurt.ToString();
+		if(hurt < 0){
+			Debug.Log("heal");
+			if(-hurt > fullHp-hp){
+				hurt = -(fullHp-hp);
+			}
+			hp-=hurt;
+			//anim.Play();
+			var hurtText:GameObject = Instantiate(Resources.Load("damagePrefabCanvas"), getModel().transform.position+new Vector3(0.25,0,0), new Quaternion());//getModel().transform.position
+			
+			//hurtText.transform.parent = GameObject.Find("Canvas").transform;
+			if(hurt > 0){
+				hurtText.transform.GetChild(0).GetChild(0).GetComponent.<UI.Text>().text = "-"+hurt.ToString();
+			}else{
+				hurt = -hurt;
+				hurtText.transform.GetChild(0).GetChild(0).GetComponent.<UI.Text>().text = "+"+hurt.ToString();
+			}
+			
+			ourAnimationPlay(2);	// animation play
+			
+			print(getName()+" : hp -"+ hurt);
+		}else {
+			hp-=hurt;
+			//anim.Play();
+			hurtText = Instantiate(Resources.Load("damagePrefabCanvas"), getModel().transform.position+new Vector3(0.25,0,0), new Quaternion());//getModel().transform.position
+			
+			//hurtText.transform.parent = GameObject.Find("Canvas").transform;
+			if(hurt > 0){
+				hurtText.transform.GetChild(0).GetChild(0).GetComponent.<UI.Text>().text = "-"+hurt.ToString();
+			}else{
+				hurtText.transform.GetChild(0).GetChild(0).GetComponent.<UI.Text>().text = "+"+hurt.ToString();
+			}
+			
+			ourAnimationPlay(2);	// animation play
+			
+			print(getName()+" : hp -"+ hurt);
 		}
-		
-		ourAnimationPlay(2);	// animation play
-		
-		print(getName()+" : hp -"+ hurt);
 	}
 	public function slowDown(){
 		inIce = true;
@@ -390,6 +412,7 @@ import System.Collections.Generic;
 		if(protectedHit>0){
 			if(protectedHit == 1){
 				protector = -1;
+				Destroy(model.transform.FindChild("protect(Clone)").gameObject);
 			}
 			protectedHit--;
 		}

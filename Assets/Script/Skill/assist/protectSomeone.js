@@ -10,9 +10,12 @@ public class protectSomeone extends assist{
 		small_SkillType[2] = true;
 	}
 	public function functions(){
-		de.protectedHit = 1;
+		de.protectedHit = 10;
 		de.protectedRound = 999;
 		de.protector=at.getId();
+		
+		at.ourAnimationPlay(5);	// animation play
+		
 		print(de.protector + " start protect "+de.getName());
 		var pr : GameObject = de.getModel();
 		var p:GameObject=GameObject.Instantiate(Resources.Load("Prefabs/Group 1/protect"), pr.transform.position + new Vector3(0, 1, 0), pr.transform.rotation);
