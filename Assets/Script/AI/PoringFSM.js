@@ -7,18 +7,18 @@ public class PoringFSM extends FSM {
 	public var chaseDistance:int = 4;
 	public var curState: FSMState;
 	private var maxHealth:int;
-	private var saving:boolean;
 	private var King:PoringKingFSM;
 	private var target:person;
-	private var status:person;
+	private var hp:int=100;
 	var enemy : List.<person> = new List.<person>();
-	var walk : mySet[]=new mySet[4];
+	var fd : List.<person> = new List.<person>();
+	var walkTo:plane;
 	var localX:int;
 	var localY:int;
-	var distance: int;
-	var cal:Calculating;
-	var bd:board;
+	var distance: int=10;
 
+	
+	var haveKing:boolean=false;
 
 	public function getHealth():float{
 		return status.hp;
@@ -26,48 +26,58 @@ public class PoringFSM extends FSM {
 	// Use this for initialization
 	protected override function Initialize () 
 	{
-		saving=false;
-		status = GetComponent.<person>();
-		King = GameObject.FindWithTag("PoringKing").GetComponent.<PoringKingFSM>();
+	//	King = GameObject.FindWithTag("PoringKing").GetComponent.<PoringKingFSM>();
 		maxHealth = status.fullHp;
 		curState = FSMState.Walk;
-		localX = Random.Range(0,13);
-		localY = Random.Range(0,8);
+		//localX = Random.Range(0,13);
+	//	localY = Random.Range(0,8);
+		haveKing=false;
+		
 	}
 	
-	function setEnemy(Enemy:List.<person>){
-		enemy=Enemy;
+	function FSMsetEnemyAndFd(allPerson:List.<person>){
+		for(var i:int=0;i<allPerson.Count;i++){
+			if(allPerson[i].team!=status.team)
+				enemy.Add(allPerson[i]);
+			else
+				fd.Add(allPerson[i]);
+			if(allPerson[i].getName()=="PoringKing")
+				haveKing=true;
+		}
 	}
 
-	protected override function FSMFixedUpdate()
+	override function FSMFixedUpdate(bd :board){
+		this.bd = bd;
+		cal =new Calculating(bd);
+		print("Poring update");
+		if(haveKing == true && King.getHelp()==true)
+			curState=FSMState.saveKing;
+		else if (hp <= 0)
+			curState = FSMState.Dead;
+		else if(distance==1 && attacked==false)
+			curState=FSMState.Attack;
+		else if(walked==false)		
+			curState=FSMState.Walk;
+		else curState=FSMState.EndTurn;
+		switch (curState)
 		{
-			distance=Mathf.Abs(localX-target.GetComponent.<person>().locationX)+Mathf.Abs(localY-(target.GetComponent.<person>().locationY+1));
-			if(King.getHelp()==true)
-				curState=FSMState.saveKing;
-			else if (status.hp <= 0)
-				curState = FSMState.Dead;
-			else if(distance==1 && attacked==false)
-				curState=FSMState.Attack;
-			else if(walked==false)		
-				curState=FSMState.Walk;
-			else curstate=FSMState.EndTurn;
-			switch (curState)
-			{
-				case FSMState.Walk: UpdateWalkState(); break;
-				case FSMState.Attack: UpdateAttackState(); break;
-				case FSMState.saveKing: UpdateSaveKingState(); break;
-				case FSMState.EndTurn: UpdateEndTurnState(); break;
-				case FSMState.Dead: UpdateDeadState(); break;
-			}
+			case FSMState.Walk: UpdateWalkState(); break;
+			case FSMState.Attack: UpdateAttackState(); break;
+			case FSMState.saveKing: UpdateSaveKingState(); break;
+			case FSMState.EndTurn: UpdateEndTurnState(); break;
+			case FSMState.Dead: UpdateDeadState(); break;
 		}
+	}
 
 	protected function setTarget(){
 		var id:int=0;
 		if(curState==FSMState.Walk){
-			var OKList:mySet[] = cal.go(enemy[id].getLocationX(),enemy[id].getLocationY(),target.GetComponent.<plane>().posX,target.GetComponent.<plane>().posY);
+		print(status.getLocationX()+","+status.getLocationY()+","+enemy[0].getLocationX()+","+enemy[0].getLocationY());
+			//var OKList:mySet[] = cal.go(status.getLocationX(),status.getLocationY(),enemy[0].getLocationX(),enemy[0].getLocationY());
+			var OKList:mySet[] = cal.go2(status.getLocationX(),status.getLocationY(),3,12);
 			var smallest:int = OKList.length;
-			for(var i:int =startId;i<enemy.Count;i++){
-				var OKList2:mySet[] = cal.go(enemy[i].getLocationX(),enemy[i].getLocationY(),target.GetComponent.<plane>().posX,target.GetComponent.<plane>().posY);
+			for(var i:int =id;i<enemy.Count;i++){
+				var OKList2:mySet[] = cal.go2(status.getLocationX(),status.getLocationY(),enemy[i].getLocationX(),enemy[i].getLocationY());
 				var small:int = OKList2.length;
 				if(small<smallest)
 					id=i;
@@ -80,30 +90,46 @@ public class PoringFSM extends FSM {
 	}
 	
 	protected function getTarget(){
-		controller.skAddTarget(target);
+		controller.GetComponent.<MultipleGameProcess>().skAddTarget(target);
 	}
 	
 	protected function UpdateWalkState(){
+		print("Poring walk");
+		setTarget();
 		walked=true;
-		//if(distance==1){
-		//	if(target.tag!="PoringKing")
-		//		curState=FSMState.Attack;
-		//}
-		controller.walk2(bd.getBox(target.getLocationX(),target.getLocationY()).thisPlane);
+		var realOKList:mySet[]=cal.go2(status.getLocationX(),status.getLocationY(),target.getLocationX(),target.getLocationY());
+		if(realOKList.length<=4)
+			controller.GetComponent.<MultipleGameProcess>().walk2(bd.getBox(target.getLocationX(),target.getLocationY()).thisPlane);
+		else{
+		
+				controller = GameObject.Find("Main Game Controller");
+				print(controller.GetComponent.<MultipleGameProcess>());
+				controller.GetComponent.<MultipleGameProcess>().SendMessage("walk2",bd.getBox(realOKList[3].x,realOKList[3].y).thisPlane);
+			}
+		if(distance==1)
+			curState=FSMState.Attack;
 	}
 	
 	protected function UpdateAttackState(){
+		print("Poring attack");
 		attacked=true;
 		controller.GetComponent.<MultipleGameProcess>().useSkill01(1);
 	}
 	
 	protected function UpdateSaveKingState(){
+		print("Poring SaveK");
 		setTarget();
-		curState = FSMState.Chase;
+		var realOKList=cal.go2(status.getLocationX(),status.getLocationY(),target.getLocationX(),target.getLocationY());
+		if(realOKList.length<=4)
+			controller.GetComponent.<MultipleGameProcess>().walk2(bd.getBox(target.getLocationX(),target.getLocationY()).thisPlane);
+		else
+			controller.GetComponent.<MultipleGameProcess>().walk2(bd.getBox(realOKList[3].x,realOKList[3].y).thisPlane);
+		if(King.getHelp()==false)
+			curState=FSMState.Attack;
 	}
 	
-	protected function UpdateEndTurnState(){
-		controller.endTurnProcess();
+	function UpdateEndTurnState(){
+		controller.GetComponent.<MultipleGameProcess>().endTurnProcess();
 	}
 	protected function UpdateDeadState(){
 		GameObject.Destroy(gameObject);

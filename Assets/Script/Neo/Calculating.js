@@ -369,7 +369,94 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 	return fin2;
 }
 
-
+public function go2(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to find the path
+	var open:List.<mySet> = new List.<mySet>();
+	var close:List.<mySet> = new List.<mySet>();
+	var fin:List.<mySet> = new List.<mySet>();
+	open.Add(new mySet(x,y));
+	
+	do{
+		if((open[0].y-1>=0) ){
+			var tool:mySet = new mySet(open[0].x,open[0].y-1);
+			var same:boolean=false;
+			for(var i:int = 0;i<close.Count();i++){
+				if(close[i].x==tool.x &&close[i].y==tool.y)
+					same=true;
+			}
+			if(same==false){
+				tool.setHi(x,y);
+				tool.setBye(lx, ly);
+				open.Add(tool);
+				tool.setprev(open[0]);
+			}
+		}
+		if((open[0].y+1<=board.GetLength(1)-1) ){
+			tool = new mySet(open[0].x,open[0].y+1);
+			same=false;
+			for(i = 0;i<close.Count();i++){
+				if(close[i].x==tool.x &&close[i].y==tool.y)
+					same=true;
+			}
+			if(same==false){
+				tool.setHi(x,y);
+				tool.setBye(lx, ly);
+				open.Add(tool);
+				tool.setprev(open[0]);
+			}
+		}
+		if((open[0].x-1>=0) ){
+			tool = new mySet(open[0].x-1,open[0].y);
+			same=false;
+			for(i= 0;i<close.Count();i++){
+				if(close[i].x==tool.x &&close[i].y==tool.y)
+					same=true;
+			}
+			if(same==false){
+				tool.setHi(x,y);
+				tool.setBye(lx, ly);
+				open.Add(tool);
+				tool.setprev(open[0]);
+			}
+		}
+		if((open[0].x+1<=board.GetLength(0)-1) ){
+			tool = new mySet(open[0].x+1,open[0].y);
+			same=false;
+			for(i= 0;i<close.Count();i++){
+				if(close[i].x==tool.x &&close[i].y==tool.y)
+					same=true;
+			}
+			if(same==false){
+				tool.setHi(x,y);
+				tool.setBye(lx, ly);
+				open.Add(tool);
+				tool.setprev(open[0]);
+			}
+		}
+		close.Add(open[0]);
+		open.RemoveAt(0);
+		for(var in1:int =1;in1<open.Count();in1++){
+			for(var in2:int=in1;in2>0;in2--){
+				if(open[in2].getF()<open[in2-1].getF()){
+					var tmp:mySet=open[in2];
+					open[in2]= open[in2-1];
+					open[in2-1]= tmp;
+				}else
+					break;
+			}
+		}
+	}while(open[0].x!=lx || open[0].y!=ly);
+	
+	var tool3:mySet =open[0];
+	while(tool3.prev!=null){
+		fin.Add(tool3);
+		tool3=tool3.prev;
+	}
+	var fin2:mySet[]=new mySet[fin.Count()];
+	for(var j = 0;j<fin2.length;j++){
+		fin2[fin.Count()-j-1]=fin[j];
+	}
+	return fin2;
+}
 
 
 

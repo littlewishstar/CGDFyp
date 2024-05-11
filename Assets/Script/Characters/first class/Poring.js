@@ -9,20 +9,23 @@ public class Poring extends person{
 
 	}
 	public function Poring(){	
-		id = 100;
+		id = 0;
 		myName = "Poring";
 		star = 5;
 		sp = 60;
 		hp = 2300;
-		step = 3;
+		fullHp = hp;
+		step = 4;
 		pa = 650;
 		pd=390;
 		ma=0;
 		md=90;
-		job=5;
+		job=0;
+		
+		AI = new PoringFSM();
 		
 		setModel(Resources.Load("Prefabs/Characters/Poring") as GameObject);
-		//icon = (Resources.Load("iconcircle/Characters/t1") as Sprite);
+		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t1"));
 	}
 	
 }

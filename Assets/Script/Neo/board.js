@@ -54,7 +54,7 @@ public function setIce(x:int,y:int){
 	}
 	box[x,y].canStand = false;
 	box[x,y].setUpFunction(3);
-	GameObject.Instantiate( Resources.Load("Prefabs/Obstacle/ice") as GameObject,box[x,y].thisPlane.transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()));
+	GameObject.Instantiate( Resources.Load("Prefabs/Obstacle/KeoCycstal") as GameObject,box[x,y].thisPlane.transform.position+Vector3(0,0,0), Quaternion.Euler(new Vector3()));
 }
 public function setLifeTree(x:int,y:int){
 	for(var i:int=x-1;i<=x+1;i++){

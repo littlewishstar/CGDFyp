@@ -71,6 +71,7 @@ public function somethingIn(){
 public function clearThisSquare(){
 	empty = true;
 	canStand = true;
+	thisPlane.canSelect = true;
 	//System.out.println("hihi");
 }
 public function CanMeStand():boolean{
@@ -85,6 +86,7 @@ public function standIn(i:int){
 
 public function leaveIt(){
 	canStand = true;
+	thisPlane.canSelect = true;
 	ps=-1;
 }
 public function getMan():int{

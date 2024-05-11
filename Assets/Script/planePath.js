@@ -8,8 +8,6 @@ public class planePath {
 	
 	public var lastPlane:plane;
 	
-	var a:person = new person();
-	
 	public function planePath() {}
 	
 	public function planePath(tp:planePath ) {

@@ -18,8 +18,11 @@ import System.Collections.Generic;
 	var job:int; // which job you are ?
 	var team:int; // which team you are ? in the game play all character will allocate to two team
 	
+	var fullHp:int=0;
+	
 	var isPlayer:boolean=true;
-	var AI:FSM;
+	var AI : FSM;
+	
 	// record your location
 	var locationX:int;
 	var locationY:int;
@@ -75,6 +78,7 @@ import System.Collections.Generic;
 			this.star = star;
 			this.sp = sp;
 			this.hp = hp;  
+			fullHp = hp;
 			this.step = step;
 			this.pa = pa;
 			this.pd = pd;
@@ -91,6 +95,7 @@ import System.Collections.Generic;
 			this.star = star;
 			this.sp = sp;
 			this.hp = hp;  
+			fullHp = hp;
 			this.step = step;
 			this.pa = pa;
 			this.pd = pd;
@@ -108,6 +113,7 @@ import System.Collections.Generic;
 			this.star = pr.star;
 			this.sp = pr.sp;
 			this.hp = pr.hp;  
+			fullHp = hp;
 			this.step = pr.step;
 			this.pa = pr.pa;
 			this.pd = pr.pd;
@@ -150,9 +156,14 @@ import System.Collections.Generic;
 	function setIsPlayer(playerOrAI:boolean){
 		isPlayer = playerOrAI;
 	}
-	function setAI(AI:FSM){
-		this.AI=AI;
+	function getFullHp(){
+		return fullHp;
 	}
+	//function setAI(AI:FSM){
+	//	this.setAI =AI;
+	//}
+	
+	
 	public function getId():int{
 		return id;
 	}
@@ -191,7 +202,7 @@ import System.Collections.Generic;
 	}
 	public function youDie(){
 		dead = true;
-		Destroy(this.gameObject);
+		Destroy(this.model);
 	}
 	public function getHurt(hurt:int){
 		hp-=hurt;

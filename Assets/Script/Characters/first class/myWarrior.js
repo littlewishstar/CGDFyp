@@ -14,6 +14,7 @@ public class myWarrior extends person{
 		star = 5;
 		sp = 60;
 		hp = 2300;
+		fullHp = hp;
 		step = 3;
 		pa = 650;
 		pd=390;
@@ -22,7 +23,7 @@ public class myWarrior extends person{
 		job=0;
 		
 		setModel(Resources.Load("Prefabs/Characters/CD1") as GameObject);
-		//icon = (Resources.Load("iconcircle/Characters/t1") as Sprite);
+		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t1"));
 	}
 	
 }

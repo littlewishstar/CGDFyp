@@ -14,6 +14,7 @@ public class myHealer extends person{
 		star = 5;
 		sp = 50;
 		hp = 1800;
+		fullHp = hp;
 		step = 2;
 		pa = 100;
 		pd=250;
@@ -22,7 +23,7 @@ public class myHealer extends person{
 		job=3;
 		
 		setModel(Resources.Load("Prefabs/Characters/CB1") as GameObject);
-		//icon = (Resources.Load("iconcircle/Characters/t1") as Sprite);
+		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t4"));
 	}
 	
 }

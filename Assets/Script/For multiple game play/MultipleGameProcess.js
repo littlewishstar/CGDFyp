@@ -2,7 +2,6 @@
 
 var personUI : UI.Button;
 var icon : Sprite;
-var cube : GameObject;
 
 function Start () {
 	personShowStone = GameObject.Instantiate(Resources.Load("Prefabs/personShowStone") as GameObject);
@@ -11,19 +10,20 @@ function Start () {
 	canvasSkill.enabled = false;
 	
 	//personUI = GameObject.Find("Canvas/Icon") as UI.Button;
-	icon = Resources.Load("iconcircle/move")as Sprite;
+	//icon = Resources.Load.<Sprite>("iconcircle/move");// as Sprite;
+	//print(icon.rect);
 	//WaitForSeconds(0);
-	//personUI.image.overrideSprite = icon;
+	personUI.image.overrideSprite = icon;
 	
 	//gameProcess(8,13);
 	insertStage(new stage01());
 	insertTeam(new team01());
 	gameStart();
-	cube=GameObject.Find("Cube");
-	print(cube);
+	
 }
 
 function Update () {
+
 }
 
 var canvasSkill :Animator; // control the skill button Animator
@@ -53,16 +53,28 @@ var skillStage : int = 0; // when you using skill, there have a lot of stage.
 
 var personShowStone : GameObject;
 
+var infoShow : boolean = false;
+
 function insertStage(stage:stageSample){ // insert the stage
 	stageValue = stage;
 }
 
 function insertTeam(myTeam : teamSample){
-	this.myTeam = myTeam;
+	if(GameObject.Find("teamController") != null){
+		var tool:GameObject = GameObject.Find("teamController");
+		print(tool.GetComponent.<TeamControllerInMenu>().team.teamStore[1]);
+		this.myTeam = tool.GetComponent.<TeamControllerInMenu>().team;
+		this.myTeam.pickUpTeam();
+		this.myTeam.setUpLocation();
+		this.myTeam.setUpTeam();
+	}
+	else 
+		this.myTeam = myTeam;
 }
 function gameStart(){
 	bd=new board(stageValue.boardSizeX,stageValue.boardSizeY);
 	firstSetting();
+	
 }
 
 public function firstSetting(){ // do every setting with the first time
@@ -71,13 +83,13 @@ public function firstSetting(){ // do every setting with the first time
 
 	for(var i:int=0;i<stageValue.boardSizeY;i++){
 		for(var j:int=0;j<stageValue.boardSizeX;j++){
-			var newplane : plane = (GameObject.Instantiate(plane, new Vector3(i,0, j), Quaternion.Euler(new Vector3()))).GetComponent.<plane>();
-			newplane.transform.position = this.transform.position + Vector3(i,0,j);
+			var newplane : plane = (GameObject.Instantiate(plane, new Vector3(i,-1, j), Quaternion.Euler(new Vector3()))).GetComponent.<plane>();
+			newplane.transform.position = this.transform.position + Vector3(i,-1,j);
 			newplane.transform.parent = this.transform;
 			newplane.setUp(j,i);		
 			//board[j,i] =-1;
-			bd.getBox(j,i).clearThisSquare();
 			bd.getBox(j,i).insertPlane(newplane);
+			bd.getBox(j,i).clearThisSquare();
 		}
 	}
 	stageSetting();
@@ -85,6 +97,7 @@ public function firstSetting(){ // do every setting with the first time
 	for(i=0;i<ps.Count;i++){
 		inStanceCharacter(ps[i]);
 	}
+	
 	speed=new int[ps.Count()];
 	renderList();
 	showPerson();
@@ -118,16 +131,27 @@ function TeamSetting(){
 		ps.Add(myTeam.teammate[i]);
 		ps[i].setID(ps.Count-1);
 		setLocation(ps[i],ps[i].getLocationX(),ps[i].getLocationY());
+		ps[i].getModel().transform.Rotate(0,90,0);
 	}
 	for(i=0;i<stageValue.enemy.length;i++){
 		ps.Add(stageValue.enemy[i]);
 		ps[ps.Count-1].setID(ps.Count-1);
 		setLocation(ps[ps.Count-1],ps[ps.Count-1].getLocationX(),ps[ps.Count-1].getLocationY());
+		//ps[1].getModel().transform.Rotate(0,-90,0);
+		if(ps[ps.Count-1].getIsPlayer() == false){
+			ps[ps.Count-1].AI.insertStatus(ps[ps.Count-1]);
+		}
 	}
 }
 
 function inStanceCharacter(pr:person){
 	pr.model = GameObject.Instantiate(pr.getModel(),bd.getBox(pr.getLocationX(),pr.getLocationY()).thisPlane.transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()));
+	if(pr.team == 1){
+		pr.model.transform.Rotate(0,90,0);
+	}
+	else if(pr.team == 2){
+		pr.model.transform.Rotate(0,-90,0);
+	}
 }
 
 public function renderList(){ // render out the list of action
@@ -218,11 +242,12 @@ function showPerson(){ // show to the user that easy understand who is the curre
 	showWalk();
 	canvasSkill.enabled = true;
 	
-	/*if(ps[playlist[round]].icon != null){
-		var image:UI.Image = GameObject.Find("Canvas/Icon").GetComponent("Image"); 
-		image.sprite = ps[playlist[round]].getIcon();
-		print("I have run");
-	}*/
+	if(ps[playlist[round]].icon != null){
+		//var image:UI.Image = GameObject.Find("Canvas/Icon").GetComponent("Image"); 
+		//image.sprite = ps[playlist[round]].getIcon();
+		icon = ps[playlist[round]].getIcon();
+		personUI.image.overrideSprite = icon;
+	}
 }
 
 public function askAction(ans:int){ // ask play the action of walk ? skills? know the info? or wait?
@@ -296,9 +321,16 @@ function walk2(pln:plane){ // walk to the location this you choose after click t
 		var targetPos:Vector3=mytarget.transform.position;
 		while(pr.model.transform.position!=targetPos+tomiddleofplane){
 		//	pr.transform.position=Vector3.Lerp(pr.transform.position,pr.toPlace[0].transform.position+Vector3(0,person.transform.localScale.y/2,0), Time.deltaTime);
+		
 			pr.model.transform.position = Vector3.MoveTowards(pr.model.transform.position, pr.toPlace[0].transform.position+tomiddleofplane, 5*Time.deltaTime);
 			if(pr.model.transform.position==pr.toPlace[0].transform.position+tomiddleofplane){
 				pr.toPlace.RemoveAt(0);
+				if(pr.toPlace.Count >0){
+					var rotationPos = (pr.toPlace[0].transform.position+tomiddleofplane) - pr.model.transform.position;
+					var rotation = Quaternion.LookRotation(rotationPos);
+					//rotation.z = 0;
+					pr.model.transform.rotation = rotation;
+				}
 			}
 			yield WaitForSeconds(0);
 			//print(pr.model.transform.position);
@@ -312,19 +344,21 @@ function walk2(pln:plane){ // walk to the location this you choose after click t
 	cal = new Calculating(bd);
 	haveWalk=true;
 	//endTurnProcess();
-	if(guy.getIsPlayer() == false){
+	
+	//if(guy.getIsPlayer() == false){
 	// write down
 		// the coding
 			// which process
 				// the AI script
-		var guyEnemy : List.<person> = new List.<person>();
-		for(var i=0;i<ps.Count;i++)
-			if(guy.team != ps[i].team){
-				guyEnemy.Add(ps[i]);
-			}
-		guy.setEnemy(guyEnemy);
-		guy.AI.FSMFixedUpdate();		
-	}
+		//var guyEnemy : List.<person> = new List.<person>();
+		//for(var i:int;i<ps.Count;i++){
+		//	if(guy.team != ps[i].team){
+		//		guyEnemy.add(ps[i]);
+		//	}
+		//}
+		//guy.AI.setEnemy(guyEnemy);
+		//guy.AI.FSMFixedUpdate();
+	//}
 }
 
 function resetSelectPlane(){ // let all plane return to the normal state and color
@@ -533,19 +567,21 @@ public function useSkill2(){
 		}
 		skillUsed = true;
 		startSkill=false;
-		if(guy.getIsPlayer() == false){
+		
+		//if(guy.getIsPlayer() == false){
 		// write down
 			// the coding
 				// which process
 					// the AI script
-			var guyEnemy : List.<person> = new List.<person>();
-			for(var i=0;i<ps.Count;i++)
-				if(guy.team != ps[i].team){
-					guyEnemy.add(ps[i]);
-				}
-			guy.setEnemy(guyEnemy);
-			guy.AI.FSMFixedUpdate();		
-		}
+			//var guyEnemy : List.<person> = new List.<person>();
+			//for(var i:int;i<ps.Count;i++){
+			//	if(guy.team != ps[i].team){
+			//		guyEnemy.add(ps[i]);
+			//	}
+			//}
+			//guy.AI.setEnemy(guyEnemy);
+			//guy.AI.FSMFixedUpdate();
+		//}
 	}
 }
 
@@ -710,28 +746,34 @@ public function listSwap( first:int, second:int){
 public function skTargetChoose(){
 	skillStage = 2;
 	var pr:person = ps[playlist[round]];
-	var bs: skill = usingSkill;
-	var OKBoard:boolean[,]  = getSkillOKBoard(usingSkill,pr,bs.ToZ); 
-	if(usingSkill.allowMyself == true){
-		OKBoard[pr.getLocationX(),pr.getLocationY()] = true; // set the user is false because the skill to affect others don't choose his own self
-	}
-	else{
-		OKBoard[pr.getLocationX(),pr.getLocationY()] = false; 
-	}
-	for(var i:int=0;i<OKBoard.GetLength(0);i++){
-		for(var j:int=0;j<OKBoard.GetLength(1);j++){
-			if(bd.getBox(i, j).havePerson()==false){
-				OKBoard[i,j] = false;
-			}else{
-				if(bs.chooseTeamate == false){
-					if(ps[bd.getBox(i, j).ps].team == pr.team){
-						OKBoard[i,j] = false;
+	
+	if(pr.getIsPlayer() == true){
+		var bs: skill = usingSkill;
+		var OKBoard:boolean[,]  = getSkillOKBoard(usingSkill,pr,bs.ToZ); 
+		if(usingSkill.allowMyself == true){
+			OKBoard[pr.getLocationX(),pr.getLocationY()] = true; // set the user is false because the skill to affect others don't choose his own self
+		}
+		else{
+			OKBoard[pr.getLocationX(),pr.getLocationY()] = false; 
+		}
+		for(var i:int=0;i<OKBoard.GetLength(0);i++){
+			for(var j:int=0;j<OKBoard.GetLength(1);j++){
+				if(bd.getBox(i, j).havePerson()==false){
+					OKBoard[i,j] = false;
+				}else{
+					if(bs.chooseTeamate == false){
+						if(ps[bd.getBox(i, j).ps].team == pr.team){
+							OKBoard[i,j] = false;
+						}
 					}
 				}
 			}
 		}
+		showBoard(OKBoard);	
 	}
-	showBoard(OKBoard);	
+	else{
+		//pr.AI.getTarget();
+	}
 }
 
 // end turn function
@@ -765,20 +807,26 @@ public function endTurnProcess(){
 	startSkill=false;
 	startWalk=false;
 	showPerson();
+	if(infoShow==true){
+		setInfoContent(ps[playlist[round]]);
+	}
 	
 	guy = ps[playlist[round]]; // record the new character which can have action in this turn
+	print(guy.getIsPlayer());
 	if(guy.getIsPlayer() == false){
 	// write down
 		// the coding
 			// which process
 				// the AI script
-		var guyEnemy : List.<person> = new List.<person>();
-		for(var i=0;i<ps.Count;i++)
+		/*var guyEnemy : List.<person> = new List.<person>();
+		for(var i:int;i<ps.Count;i++){
 			if(guy.team != ps[i].team){
 				guyEnemy.add(ps[i]);
 			}
-		guy.setEnemy(guyEnemy);
-		guy.AI.FSMFixedUpdate();		
+		}*/
+		print("AI");
+		guy.AI.setEnemyAndFd(ps);
+		guy.AI.FSMFixedUpdate(bd);
 	}
 	
 	//ps[playlist[round]].isMe();
@@ -815,20 +863,45 @@ public function skipDie(id:int,round:int){ // delete the person who have already
 	}
 	ps[id].youDie();
 	print(ps[id].getName()+" is dead");
-	for(i=0;i<stageValue.boardSizeY;i++){
+	bd.getBox(ps[id].getLocationX(),ps[id].getLocationY()).leaveIt();
+	/*for(i=0;i<stageValue.boardSizeY;i++){
 		for(var j:int=0;j<stageValue.boardSizeX;j++){
 			if(bd.getBox(j,i).havePerson()== true && bd.getBox(j,i).getMan==id){
 				//board[j,i]=-1;
-				if(bd.getBox(j,i).haveFun()==false){
-					bd.getBox(j,i).clearThisSquare();
-				}
+				//if(bd.getBox(j,i).haveFun()==false){
+				//	bd.getBox(j,i).clearThisSquare();
+				//}
 				bd.getBox(j,i).leaveIt();
 			}
 		}
-	}
+	}*/
+	//Destroy(ps[playlist[i]].model);
+	
 }
+//public var hp:UI.Text;//UI.Text;
+public function PopInInfo(){
+	var pr : person = ps[playlist[round]];
+	setInfoContent(pr);
+	//hp.text = "hihi";//pr.getHp().ToString + "/" + pr.fullHp;
+	var infoAnim:Animator = GameObject.Find("Canvas/info").GetComponent("Animator") as Component;
+	infoShow = !infoShow;
+	infoAnim.SetBool("infoShow",infoShow);
+}
+public function setInfoContent(pr:person){
 
-
+	var infoIcon: UI.Image = GameObject.Find("Canvas/info/icon").GetComponent.<UI.Image>();	// icon in info
+	infoIcon.overrideSprite = ps[playlist[round]].getIcon();
+	var hp: UI.Text = GameObject.Find("Canvas/info/Hp/hpValue").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	hp.text = pr.getHp()+"/"+pr.getFullHp();
+	var pa: UI.Text = GameObject.Find("Canvas/info/hurt/pa value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	pa.text = pr.getPa().ToString();
+	var pd: UI.Text = GameObject.Find("Canvas/info/hurt/pd value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	pd.text = pr.getPd().ToString();
+	var ma: UI.Text = GameObject.Find("Canvas/info/hurt/ma value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	ma.text = pr.getMa().ToString();
+	var md: UI.Text = GameObject.Find("Canvas/info/hurt/md value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	md.text = pr.getMd().ToString();
+}
 
 
 

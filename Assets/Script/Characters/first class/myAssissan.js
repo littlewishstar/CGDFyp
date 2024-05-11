@@ -14,6 +14,7 @@ public class myAssissan extends person{
 		star = 5;
 		sp = 80;
 		hp = 1000;
+		fullHp = hp;
 		step = 4;
 		pa = 1000;
 		pd = 150;
@@ -22,7 +23,7 @@ public class myAssissan extends person{
 		job = 1;
 		
 		setModel(Resources.Load("Prefabs/Characters/CA1") as GameObject);
-		//icon = (Resources.Load("iconcircle/Characters/t1") as Sprite);
+		icon = (Resources.Load.<Sprite>("iconcircle/Characters/t2"));
 	}
 	
 }

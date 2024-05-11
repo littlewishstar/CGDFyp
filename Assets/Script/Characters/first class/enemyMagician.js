@@ -14,6 +14,7 @@ public class enemyMagician extends person{
 		star = 5;
 		sp = 45;
 		hp = 1400;
+		fullHp = hp;
 		step = 2;
 		pa = 100;
 		pd=200;
@@ -22,7 +23,7 @@ public class enemyMagician extends person{
 		job=2;
 		
 		setModel(Resources.Load("Prefabs/Characters/CC2") as GameObject);
-		//icon = (Resources.Load("iconcircle/Characters/t1") as Sprite);
+		icon = (Resources.Load.<Sprite>("iconcircle/Characters/e3"));
 	}
 	
 }

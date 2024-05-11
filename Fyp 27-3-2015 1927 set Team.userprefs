@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\For multiple game play\team\team01.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\TeamControllerInMenu.js" Line="37" Column="2" />
+      <File FileName="Assets\Script\For multiple game play\team\teamSample.js" Line="13" Column="2" />
+      <File FileName="Assets\Script\For multiple game play\TeamBoxes.js" Line="24" Column="4" />
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="66" Column="27" />
+      <File FileName="Assets\Script\For multiple game play\team\team01.js" Line="52" Column="32" />
+      <File FileName="Assets\Script\Characters\characterList.js" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

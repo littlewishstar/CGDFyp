@@ -13,8 +13,6 @@ public class skill{
 	var secondRange : int = 1; // if this skill to scan more than one times, this is the range of the skill coving
 	
 	var ToZ : int = 0;
-	
-	
 	// ToZ = Type of Zone
 	// because we have a lot of skill in this game, 
 	// and different skill have different type of Zone
