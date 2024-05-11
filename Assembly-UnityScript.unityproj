@@ -74,6 +74,7 @@
      <Compile Include="Assets\Script\Job\Healer.js" />
      <Compile Include="Assets\Script\Job\Magician.js" />
      <Compile Include="Assets\Script\Job\Warrior.js" />
+     <Compile Include="Assets\Script\Job\poring.js" />
      <Compile Include="Assets\Script\Neo\Calculating.js" />
      <Compile Include="Assets\Script\Neo\board.js" />
      <Compile Include="Assets\Script\Neo\mySet.js" />

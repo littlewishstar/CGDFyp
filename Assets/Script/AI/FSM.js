@@ -9,6 +9,7 @@ public class FSM extends MonoBehaviour
     protected function FSMUpdate() { }
     function FSMFixedUpdate(bd :board) { }
     function FSMsetEnemyAndFd(ps:List.<person>){}
+    function FSMgetTarget(){}
     function UpdateEndTurnState(){}
 	var controller : GameObject;
 	var status:person ;
@@ -29,7 +30,9 @@ public class FSM extends MonoBehaviour
     {
         FSMUpdate();
 	}
-
+	function getTarget(){
+		FSMgetTarget();
+	}
     function FixedUpdate() //fixed time update
     {
         FSMFixedUpdate(new board(0,0));

@@ -308,7 +308,7 @@ function walk2(pln:plane){ // walk to the location this you choose after click t
 
 	//if(startWalk==true){
 		resetSelectPlane();
-		
+		print(pr.getLocationX()+","+pr.getLocationY());
 		//var OKList:mySet[] = cal.go(pr.getLocationX(),pr.getLocationY(),x,y);
 		var OKList:mySet[] = cal.go(pr.getLocationX(),pr.getLocationY(),mytarget.posX,mytarget.posY);
 		for(var i:int=0;i<OKList.length;i++){
@@ -359,14 +359,18 @@ function walk2(pln:plane){ // walk to the location this you choose after click t
 		//guy.AI.setEnemy(guyEnemy);
 		//guy.AI.FSMFixedUpdate();
 	//}
+	if(pr.getIsPlayer()==false){
+		pr.AI.setEnemyAndFd(ps);
+		pr.AI.FixedUpdate();
+	}
 }
 
 function resetSelectPlane(){ // let all plane return to the normal state and color
 	for(var j:int=0;j<stageValue.boardSizeY;j++){
 		for(var i:int=0;i<stageValue.boardSizeX;i++){
-			if(bd.getBox(i,j).thisPlane.canSelect == true){
+			//if(bd.getBox(i,j).thisPlane.canSelect == true){
 				bd.getBox(i,j).thisPlane.setcanSelect(false);
-			}
+			//}
 		}
 	}
 }
@@ -582,6 +586,10 @@ public function useSkill2(){
 			//guy.AI.setEnemy(guyEnemy);
 			//guy.AI.FSMFixedUpdate();
 		//}
+		if(pr.getIsPlayer()==false){
+			pr.AI.setEnemyAndFd(ps);
+			pr.AI.FixedUpdate();
+		}
 	}
 }
 
@@ -746,6 +754,7 @@ public function listSwap( first:int, second:int){
 public function skTargetChoose(){
 	skillStage = 2;
 	var pr:person = ps[playlist[round]];
+	print(pr.getIsPlayer());
 	
 	if(pr.getIsPlayer() == true){
 		var bs: skill = usingSkill;
@@ -772,7 +781,7 @@ public function skTargetChoose(){
 		showBoard(OKBoard);	
 	}
 	else{
-		//pr.AI.getTarget();
+		pr.AI.getTarget();
 	}
 }
 
@@ -782,7 +791,7 @@ public function endTurnProcess(){
 	for(var id:int=0;id<ps.Count();id++){
 		bd.whatFunction(ps[id]);
 		ps[id].endTurncheck();
-		print(ps[id].getHp());
+		//print(ps[id].getHp());
 	}
 	if(findDie()){
 		for(var i:int=0;i<ps.Count();i++){
@@ -812,7 +821,7 @@ public function endTurnProcess(){
 	}
 	
 	guy = ps[playlist[round]]; // record the new character which can have action in this turn
-	print(guy.getIsPlayer());
+//	print(guy.getIsPlayer());
 	if(guy.getIsPlayer() == false){
 	// write down
 		// the coding

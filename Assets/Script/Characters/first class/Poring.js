@@ -20,7 +20,7 @@ public class Poring extends person{
 		pd=390;
 		ma=0;
 		md=90;
-		job=0;
+		job=4;
 		
 		AI = new PoringFSM();
 		

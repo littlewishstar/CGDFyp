@@ -267,6 +267,8 @@ import System.Collections.Generic;
 			return Magician.getSkill(ans,this);
 		else if(job==3)
 			return Healer.getSkill(ans,this);
+		else if(job==4)
+			return poring.getSkill(ans,this);
 		
 		return null;
 	}

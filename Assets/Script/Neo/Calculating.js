@@ -285,13 +285,18 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 	var close:List.<mySet> = new List.<mySet>();
 	var fin:List.<mySet> = new List.<mySet>();
 	open.Add(new mySet(x,y));
-	
+	Debug.Log("close.Count() "+close.Count());
+	Debug.Log("x " +x+" y "+y+"lx "+lx+" ly "+ly);
 	do{
 		if((open[0].y-1>=0) && OKBoard[open[0].x,open[0].y-1]==true){
 			var tool:mySet = new mySet(open[0].x,open[0].y-1);
 			var same:boolean=false;
 			for(var i:int = 0;i<close.Count();i++){
 				if(close[i].x==tool.x &&close[i].y==tool.y)
+					same=true;
+			}
+			for(i = 0;i<open.Count();i++){
+				if(open[i].x==tool.x &&open[i].y==tool.y)
 					same=true;
 			}
 			if(same==false){
@@ -308,6 +313,10 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 				if(close[i].x==tool.x &&close[i].y==tool.y)
 					same=true;
 			}
+			for(i = 0;i<open.Count();i++){
+				if(open[i].x==tool.x &&open[i].y==tool.y)
+					same=true;
+			}
 			if(same==false){
 				tool.setHi(x,y);
 				tool.setBye(lx, ly);
@@ -320,6 +329,10 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 			same=false;
 			for(i= 0;i<close.Count();i++){
 				if(close[i].x==tool.x &&close[i].y==tool.y)
+					same=true;
+			}
+			for(i = 0;i<open.Count();i++){
+				if(open[i].x==tool.x &&open[i].y==tool.y)
 					same=true;
 			}
 			if(same==false){
@@ -336,6 +349,10 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 				if(close[i].x==tool.x &&close[i].y==tool.y)
 					same=true;
 			}
+			for(i = 0;i<open.Count();i++){
+				if(open[i].x==tool.x &&open[i].y==tool.y)
+					same=true;
+			}
 			if(same==false){
 				tool.setHi(x,y);
 				tool.setBye(lx, ly);
@@ -345,16 +362,18 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 		}
 		close.Add(open[0]);
 		open.RemoveAt(0);
+		//Debug.Log("open.Count() "+open.Count());
+		var smallest:int=0;
 		for(var in1:int =1;in1<open.Count();in1++){
-			for(var in2:int=in1;in2>0;in2--){
-				if(open[in2].getF()<open[in2-1].getF()){
-					var tmp:mySet=open[in2];
-					open[in2]= open[in2-1];
-					open[in2-1]= tmp;
-				}else
-					break;
-			}
+			if(open[in1].getF()<open[smallest].getF())
+				smallest=in1;
 		}
+		var tmp:mySet=open[smallest];
+		open[smallest]= open[0];
+		open[0]= tmp;
+		
+		Debug.Log("open[0]: "+open[0].x+","+open[0].y);
+		Debug.Log("close[end]: "+close[close.Count()-1].x+","+close[close.Count()-1].y);
 	}while(open[0].x!=lx || open[0].y!=ly);
 	
 	var tool3:mySet =open[0];
@@ -383,6 +402,10 @@ public function go2(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fi
 				if(close[i].x==tool.x &&close[i].y==tool.y)
 					same=true;
 			}
+			for(i = 0;i<open.Count();i++){
+				if(open[i].x==tool.x &&open[i].y==tool.y)
+					same=true;
+			}
 			if(same==false){
 				tool.setHi(x,y);
 				tool.setBye(lx, ly);
@@ -395,6 +418,10 @@ public function go2(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fi
 			same=false;
 			for(i = 0;i<close.Count();i++){
 				if(close[i].x==tool.x &&close[i].y==tool.y)
+					same=true;
+			}
+			for(i = 0;i<open.Count();i++){
+				if(open[i].x==tool.x &&open[i].y==tool.y)
 					same=true;
 			}
 			if(same==false){
@@ -411,6 +438,10 @@ public function go2(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fi
 				if(close[i].x==tool.x &&close[i].y==tool.y)
 					same=true;
 			}
+			for(i = 0;i<open.Count();i++){
+				if(open[i].x==tool.x &&open[i].y==tool.y)
+					same=true;
+			}
 			if(same==false){
 				tool.setHi(x,y);
 				tool.setBye(lx, ly);
@@ -425,6 +456,10 @@ public function go2(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fi
 				if(close[i].x==tool.x &&close[i].y==tool.y)
 					same=true;
 			}
+			for(i = 0;i<open.Count();i++){
+				if(open[i].x==tool.x &&open[i].y==tool.y)
+					same=true;
+			}			
 			if(same==false){
 				tool.setHi(x,y);
 				tool.setBye(lx, ly);
