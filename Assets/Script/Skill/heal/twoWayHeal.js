@@ -6,6 +6,8 @@ public class twoWayHeal extends heal{ // choose two people in zone to heal
 		setUser(a);
 		skillRange = 5;
 		targetNumber=2;
+		
+		small_SkillType[4] = true;
 	}
 	public function action(){
 		cure = Heal();

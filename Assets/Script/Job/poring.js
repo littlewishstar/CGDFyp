@@ -6,6 +6,7 @@ public class poring {
 		
 		if(i==0)
 			return new basicAttack(pr);
+			
 		return null;
 	}
 }

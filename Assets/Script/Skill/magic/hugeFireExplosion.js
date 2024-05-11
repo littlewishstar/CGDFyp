@@ -11,6 +11,8 @@ public class hugeFireExplosion extends magic{ // no special bonus attack
 		secondRange = 4;
 		// SecondToZ = 0; // in fact is no need to set , but write down it as being reminder 
 		needScan=true;
+		
+		small_SkillType[3] = true;
 	}
 	public function action(){
 		hurt=MagHurt()*2;

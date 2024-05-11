@@ -4,6 +4,13 @@ var personUI : UI.Button;
 var icon : Sprite;
 
 function Start () {
+	// testing function
+	var skillSelectBtn : GameObject = GameObject.Find("Canvas/skillSelection/skill01");
+	skillSelectBtn.SendMessage("setUpThisSkill",new roundAttack(new person()));
+
+	var skillSelectBtn2 : GameObject = GameObject.Find("Canvas/skillSelection/skill_btn");
+	skillSelectBtn2.SendMessage("setUpThisSkill",new selfTeleport(new person()));
+
 	personShowStone = GameObject.Instantiate(Resources.Load("Prefabs/personShowStone") as GameObject);
 	
 	canvasSkill = GameObject.Find("Canvas/skill").GetComponent("Animator") as Component;
@@ -16,7 +23,7 @@ function Start () {
 	personUI.image.overrideSprite = icon;
 	
 	//gameProcess(8,13);
-	insertStage(new stage01());
+	insertStage(new stageFinal());
 	insertTeam(new team01());
 	gameStart();
 	
@@ -54,7 +61,9 @@ var skillStage : int = 0; // when you using skill, there have a lot of stage.
 var personShowStone : GameObject;
 
 var infoShow : boolean = false;
+var btnSkillShow: boolean = false;
 
+var followPersonShow : followingRoundDisplay;
 function insertStage(stage:stageSample){ // insert the stage
 	stageValue = stage;
 }
@@ -100,6 +109,10 @@ public function firstSetting(){ // do every setting with the first time
 	
 	speed=new int[ps.Count()];
 	renderList();
+
+	followPersonShow = GameObject.Find("followingRounds2").GetComponent.<followingRoundDisplay>();
+	followPersonShow.SendMessage("setPsList",ps);	
+	
 	showPerson();
 }
 function stageSetting(){
@@ -161,7 +174,7 @@ public function renderList(){ // render out the list of action
 		}
 	}
 	playlist = new List.<int>();
-	print(playlist.Count());
+	//print(playlist.Count());
 	do{
 		for(var j:int=0;j<speed.length;j++){
 			speed[j]--;
@@ -236,7 +249,7 @@ public function reRenderList(number:int){ // number is the number of charcter in
 
 function showPerson(){ // show to the user that easy understand who is the current character
 	
-	print(ps[playlist[round]].getName());
+	//print(ps[playlist[round]].getName());
 	//charName.text="寵"+ps[playlist[round]].getId().ToString();
 	personShowStone.transform.position = ps[playlist[round]].model.transform.position+ Vector3(0,1,0);
 	showWalk();
@@ -248,6 +261,20 @@ function showPerson(){ // show to the user that easy understand who is the curre
 		icon = ps[playlist[round]].getIcon();
 		personUI.image.overrideSprite = icon;
 	}
+	
+	// if is player to control 
+	if(ps[playlist[round]].getIsPlayer()){
+		var skillAnim:Animator = GameObject.Find("Canvas/skill").GetComponent("Animator") as Component;
+		btnSkillShow = true;
+		skillAnim.SetBool("skillShow",btnSkillShow);
+	}
+	
+	// send the next six person to show on the UI
+	var aryTool : int[] = new int[6];
+	for(var i:int=round+1;i<round+aryTool.length+1;i++){
+		aryTool[i-round-1]=playlist[i];
+	}
+	followPersonShow.SendMessage("changeIcon",aryTool);
 }
 
 public function askAction(ans:int){ // ask play the action of walk ? skills? know the info? or wait?
@@ -391,7 +418,9 @@ public function setLocation(pr:person, x:int, y:int, x2:int, y2:int){ // change 
 public function useSkill01(whichSkill:int){ // first
 	if(skillUsed ==false){
 		var pr:person = ps[playlist[round]];
+		
 		var bs:skill = pr.haveWhatSkill(whichSkill);
+		
 		//var x:int=pr.getLocationX();
 		//var y:int=pr.getLocationY();
 		usingSkill=bs;
@@ -503,10 +532,12 @@ public function useSkill2(){
 					print("Have hurt calculating !");
 					if(target2.team == pr.team){
 						if(bs.attackTeamate == true){
+							print("high "+bs.attackTeamate);
 							target2.getHurt(bs.damage());
 						}
 					}else{
 						if(bs.attackEmery == true){
+						print("high "+bs.attackTeamate);
 							target2.getHurt(bs.damage());
 						}
 					}
@@ -786,7 +817,7 @@ public function skTargetChoose(){
 }
 
 // end turn function
-public function endTurnProcess(){
+public function endTurnProcess(){	
 	var guy:person = ps[playlist[round]];
 	for(var id:int=0;id<ps.Count();id++){
 		bd.whatFunction(ps[id]);
@@ -803,11 +834,17 @@ public function endTurnProcess(){
 	if(guy.mustTarget != -1){
 		guy.mustTarget = -1; // whatever you do , provocative is lost effect because your round is over
 	}
+	
+	var skillAnim:Animator = GameObject.Find("Canvas/skill").GetComponent("Animator") as Component;
+	btnSkillShow = false;
+	skillAnim.SetBool("skillShow",btnSkillShow);
+	
 	haveWalk=false;
 	skillUsed = false;
 	skillTarget = new List.<person>();
 	skillStage=0;
 	cal = new Calculating(bd);
+	
 	round++;
 	if(round > 300){
 		renderList();
@@ -837,6 +874,7 @@ public function endTurnProcess(){
 		guy.AI.setEnemyAndFd(ps);
 		guy.AI.FSMFixedUpdate(bd);
 	}
+	
 	
 	//ps[playlist[round]].isMe();
 	//cal = new Calculating(bd);
@@ -900,15 +938,15 @@ public function setInfoContent(pr:person){
 
 	var infoIcon: UI.Image = GameObject.Find("Canvas/info/icon").GetComponent.<UI.Image>();	// icon in info
 	infoIcon.overrideSprite = ps[playlist[round]].getIcon();
-	var hp: UI.Text = GameObject.Find("Canvas/info/Hp/hpValue").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	var hp: UI.Text = GameObject.Find("Canvas/info/personDetail/Hp/hpValue").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
 	hp.text = pr.getHp()+"/"+pr.getFullHp();
-	var pa: UI.Text = GameObject.Find("Canvas/info/hurt/pa value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	var pa: UI.Text = GameObject.Find("Canvas/info/personDetail/hurt/pa value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
 	pa.text = pr.getPa().ToString();
-	var pd: UI.Text = GameObject.Find("Canvas/info/hurt/pd value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	var pd: UI.Text = GameObject.Find("Canvas/info/personDetail/hurt/pd value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
 	pd.text = pr.getPd().ToString();
-	var ma: UI.Text = GameObject.Find("Canvas/info/hurt/ma value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	var ma: UI.Text = GameObject.Find("Canvas/info/personDetail/hurt/ma value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
 	ma.text = pr.getMa().ToString();
-	var md: UI.Text = GameObject.Find("Canvas/info/hurt/md value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
+	var md: UI.Text = GameObject.Find("Canvas/info/personDetail/hurt/md value").GetComponent.<UI.Text>();//charName.text="寵"+ps[playlist[round]].getId().ToString();
 	md.text = pr.getMd().ToString();
 }
 

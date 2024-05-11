@@ -48,7 +48,9 @@ class stage01 extends stageSample{
 		enemy[1].setLocation(4,10);
 		//enemy[1].setModel(Resources.Load("Prefabs/Characters/CA2") as GameObject);
 		
-		enemy[2] = new enemyMagician();
+		enemy[2]= new PoringKing();
+		enemy[2].setIsPlayer(false);
+		//enemy[2] = new enemyMagician();
 		//enemy[2].insertDetail(12,"magic 2",5,45,1400,2,100,200,1000,460,2,2);
 		enemy[2].setLocation(3,11);
 		//enemy[2].setModel(Resources.Load("Prefabs/Characters/CC2") as GameObject);

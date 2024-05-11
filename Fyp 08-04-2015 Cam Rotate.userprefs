@@ -1,18 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\AI\PoringFSM.js">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\For multiple game play\MainCameraController.js">
     <Files>
-      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="311" Column="1" />
-      <File FileName="Assets\Script\AI\PoringFSM.js" Line="55" Column="1" />
-      <File FileName="Assets\Script\Job\poring.js" Line="11" Column="2" />
-      <File FileName="Assets\Script\Job\Warrior.js" Line="5" Column="32" />
-      <File FileName="Assets\Script\For multiple game play\stage\stage01.js" Line="1" Column="1" />
-      <File FileName="Assets\Script\Characters\first class\Poring.js" Line="23" Column="8" />
-      <File FileName="Assets\Script\person.js" Line="271" Column="37" />
-      <File FileName="Assets\Script\AI\PoringKingFSM.js" Line="1" Column="1" />
-      <File FileName="Assets\Script\Neo\Calculating.js" Line="359" Column="20" />
-      <File FileName="Assets\Script\plane.js" Line="125" Column="85" />
-      <File FileName="Assets\Script\Characters\characterList.js" Line="14" Column="1" />
+      <File FileName="Assets\Script\For multiple game play\MainCameraController.js" Line="21" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -23,6 +23,8 @@ import System.Collections.Generic;
 	var isPlayer:boolean=true;
 	var AI : FSM;
 	
+	var skill_List:List.<skill> = new List.<skill>(); // how many skill this character have ?
+	
 	// record your location
 	var locationX:int;
 	var locationY:int;
@@ -70,7 +72,6 @@ import System.Collections.Generic;
 	
 	var model : GameObject;
 	var icon : Sprite;
-	//var AI: AI;
 	
 	public function person(id:int,myName:String,star:int,sp:int,hp:int,step:int,pa:int,pd:int,ma:int,md:int,job:int,team:int){
 			this.id=id;
@@ -159,9 +160,12 @@ import System.Collections.Generic;
 	function getFullHp(){
 		return fullHp;
 	}
-	//function setAI(AI:FSM){
-	//	this.setAI =AI;
-	//}
+	function setAI(AI:FSM){
+		this.AI =AI;
+	}
+	function getAI():FSM{
+		return AI;
+	}
 	
 	
 	public function getId():int{
@@ -257,7 +261,6 @@ import System.Collections.Generic;
 		return 1;
 	}
 	public function haveWhatSkill(ans:int):skill{
-	
 		//ans = 0;
 		if(job==0)
 			return Warrior.getSkill(ans,this);

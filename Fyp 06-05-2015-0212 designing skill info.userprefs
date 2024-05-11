@@ -1,0 +1,21 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Neo\Calculating.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="421" Column="23" />
+      <File FileName="Assets\Script\For multiple game play\followingRoundDisplay.js" Line="8" Column="70" />
+      <File FileName="Assets\Script\Characters\first class\Poring.js" Line="7" Column="1" />
+      <File FileName="Assets\Script\Job\poring.js" Line="9" Column="4" />
+      <File FileName="Assets\Script\Job\Magician.js" Line="1" Column="1" />
+      <File FileName="Assets\Script\Skill\basicAttack.js" Line="7" Column="31" />
+      <File FileName="Assets\Script\person.js" Line="261" Column="47" />
+      <File FileName="Assets\Script\AI\PoringFSM.js" Line="134" Column="2" />
+      <File FileName="Assets\Script\Skill\skill.js" Line="8" Column="25" />
+      <File FileName="Assets\Script\Neo\Calculating.js" Line="482" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

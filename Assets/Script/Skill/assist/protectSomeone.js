@@ -4,6 +4,8 @@
 public class protectSomeone extends assist{ 
 	public function protectSomeone(a:person){
 		setUser(a);
+		
+		small_SkillType[2] = true;
 	}
 	public function functions(){
 		de.protectedHit = 1;

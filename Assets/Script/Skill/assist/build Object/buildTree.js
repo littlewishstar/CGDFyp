@@ -8,6 +8,8 @@ public class buildTree extends assist{
 		placeChoose = true;
 		needChoose = false;
 		buildObject = 4;
+		
+		small_SkillType[3] = true;
 	}
 	public function functions(){
 		

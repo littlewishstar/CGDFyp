@@ -7,6 +7,7 @@ public class highRoundAttack extends attack{ // no special bonus attack
 		needChoose = false;
 		needScan=true;
 		ToZ = 4;
+		attackTeamate = false;
 	}
 	public function action(){
 		hurt=2*PhyHurt();

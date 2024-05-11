@@ -4,6 +4,7 @@
 public class basicAttack extends attack{ // no special bonus attack
 	public function basicAttack(a:person){
 		setUser(a);
+		skill_name = "basic Attack";
 	}
 	public function action(){
 		hurt=PhyHurt();

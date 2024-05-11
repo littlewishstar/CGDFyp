@@ -8,7 +8,9 @@ public class addSelfPhyDam extends assist{ // upgrade self physical attack
 		at.phyAtBonus=1.2;
 		at.phyAtBuff=true;
 		at.phyAtTime++;
-		print("add phy");
+		//print("add phy");
+		
+		small_SkillType[0] = true;
 	}
 	public function functions(){
 	

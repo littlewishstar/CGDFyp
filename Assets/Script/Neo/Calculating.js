@@ -285,8 +285,8 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 	var close:List.<mySet> = new List.<mySet>();
 	var fin:List.<mySet> = new List.<mySet>();
 	open.Add(new mySet(x,y));
-	Debug.Log("close.Count() "+close.Count());
-	Debug.Log("x " +x+" y "+y+"lx "+lx+" ly "+ly);
+	//Debug.Log("close.Count() "+close.Count());
+	//Debug.Log("x " +x+" y "+y+"lx "+lx+" ly "+ly);
 	do{
 		if((open[0].y-1>=0) && OKBoard[open[0].x,open[0].y-1]==true){
 			var tool:mySet = new mySet(open[0].x,open[0].y-1);
@@ -372,8 +372,8 @@ public function go(x:int ,y:int ,lx:int,ly:int):mySet[]{ // A* Algorithms to fin
 		open[smallest]= open[0];
 		open[0]= tmp;
 		
-		Debug.Log("open[0]: "+open[0].x+","+open[0].y);
-		Debug.Log("close[end]: "+close[close.Count()-1].x+","+close[close.Count()-1].y);
+		//Debug.Log("open[0]: "+open[0].x+","+open[0].y);
+		//Debug.Log("close[end]: "+close[close.Count()-1].x+","+close[close.Count()-1].y);
 	}while(open[0].x!=lx || open[0].y!=ly);
 	
 	var tool3:mySet =open[0];

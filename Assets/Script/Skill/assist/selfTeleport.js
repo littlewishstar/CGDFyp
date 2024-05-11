@@ -9,6 +9,9 @@ public class selfTeleport extends assist{ // teleport means move the a place sud
 		needChoose = false;
 		isPlaceChange = true;
 		de =at;
+		
+		small_SkillType[3] = true;
+		small_SkillType[7] = true;
 	}
 	public function functions(){
 		

@@ -7,7 +7,7 @@ public class PoringFSM extends FSM {
 	public var chaseDistance:int = 4;
 	public var curState: FSMState;
 	private var maxHealth:int;
-	private var King:PoringKingFSM;
+	private var King:FSM;
 	private var target:person;
 	private var hp:int=100;
 	var enemy : List.<person> = new List.<person>();
@@ -32,7 +32,6 @@ public class PoringFSM extends FSM {
 		//localX = Random.Range(0,13);
 	//	localY = Random.Range(0,8);
 		haveKing=false;
-		
 	}
 	
 	function FSMsetEnemyAndFd(allPerson:List.<person>){
@@ -41,8 +40,10 @@ public class PoringFSM extends FSM {
 				enemy.Add(allPerson[i]);
 			else
 				fd.Add(allPerson[i]);
-			if(allPerson[i].getName()=="PoringKing")
+			if(allPerson[i].getName()=="PoringKing"){
+				King = allPerson[i].getAI();
 				haveKing=true;
+			}
 		}
 	}
 
@@ -52,8 +53,9 @@ public class PoringFSM extends FSM {
 		this.bd = bd;
 		cal =new Calculating(bd);
 		setTarget();
-		print("disn "+distance);
-		print("me "+status.getLocationX()+","+status.getLocationY()+" tar "+target.getLocationX()+target.getLocationY());
+//		print("disn "+distance);
+//		print("me "+status.getLocationX()+","+status.getLocationY()+" tar "+target.getLocationX()+target.getLocationY());
+		Debug.Log(King.getHelp());
 		if(haveKing == true && King.getHelp()==true)
 			curState=FSMState.saveKing;
 		else if (hp <= 0)
@@ -81,7 +83,7 @@ public class PoringFSM extends FSM {
 			if(curState==FSMState.saveKing)
 				target = GameObject.FindWithTag("PoringKing").GetComponent.<person>();
 			else{
-				print("setTarget: "+status.getLocationX()+","+status.getLocationY()+","+enemy[0].getLocationX()+","+enemy[0].getLocationY());
+		//		print("setTarget: "+status.getLocationX()+","+status.getLocationY()+","+enemy[0].getLocationX()+","+enemy[0].getLocationY());
 				var OKList:mySet[] = cal.go2(status.getLocationX(),status.getLocationY(),enemy[0].getLocationX(),enemy[0].getLocationY());
 				var smallest:int = OKList.length;
 				for(var i:int =id;i<enemy.Count;i++){

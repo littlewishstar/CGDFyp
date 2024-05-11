@@ -7,6 +7,8 @@ var cure : int  = 0;
 
 
 public function heal(){ // constructer for extends
+	isHeal = true;
+	
 	needHurtCal=true;
 	haveFunction=false;
 }

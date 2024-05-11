@@ -7,6 +7,8 @@ public class roundAttack extends attack{ // no special bonus attack
 		needChoose = false;
 		needScan=true;
 		ToZ = 4;
+		attackTeamate = false;
+		skill_name = "roundAttack";
 	}
 	public function action(){
 		hurt=PhyHurt();

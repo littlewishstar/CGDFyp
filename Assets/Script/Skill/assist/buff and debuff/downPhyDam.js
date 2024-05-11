@@ -4,6 +4,8 @@
 public class downPhyDam extends assist{ // upgrade self physical attack
 	public function downPhyDam(a:person){
 		setUser(a);
+		
+		small_SkillType[5] = true;
 	}
 	public function functions(){
 		if(de.phyAtBuff == true){
@@ -19,7 +21,7 @@ public class downPhyDam extends assist{ // upgrade self physical attack
 			de.phyAtBuff=true;
 			de.phyAtTime--;
 		}
-		print("del phy");
+		//print("del phy");
 	}	
 function Start () {
 

@@ -7,6 +7,8 @@ var hurt : int  = 0;
 
 	
 public function attack(){ // constructer for extends
+	isPhy = true;
+	
 	needHurtCal=true;
 	haveFunction=false;
 	chooseTeamate = false;

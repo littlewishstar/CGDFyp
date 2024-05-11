@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{232C4E97-4074-CCC0-20C5-7576334C6480}</ProjectGuid>
+	<ProjectGuid>{86FB3A8C-AC9D-BD57-1A3F-0C59707113E6}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -62,9 +62,14 @@
      <Compile Include="Assets\Script\Characters\first class\myWarrior.js" />
      <Compile Include="Assets\Script\For multiple game play\MainCameraController.js" />
      <Compile Include="Assets\Script\For multiple game play\MultipleGameProcess.js" />
+     <Compile Include="Assets\Script\For multiple game play\Skill btn\skillSelectBtn.js" />
+     <Compile Include="Assets\Script\For multiple game play\Skill btn\skillSelectButtonCreate.js" />
+     <Compile Include="Assets\Script\For multiple game play\Skill btn\skillSmallIcon.js" />
      <Compile Include="Assets\Script\For multiple game play\TeamBoxes.js" />
      <Compile Include="Assets\Script\For multiple game play\TeamControllerInMenu.js" />
+     <Compile Include="Assets\Script\For multiple game play\followingRoundDisplay.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stage01.js" />
+     <Compile Include="Assets\Script\For multiple game play\stage\stageFinal.js" />
      <Compile Include="Assets\Script\For multiple game play\stage\stageSample.js" />
      <Compile Include="Assets\Script\For multiple game play\team\emptyTeam.js" />
      <Compile Include="Assets\Script\For multiple game play\team\team01.js" />
@@ -75,6 +80,7 @@
      <Compile Include="Assets\Script\Job\Magician.js" />
      <Compile Include="Assets\Script\Job\Warrior.js" />
      <Compile Include="Assets\Script\Job\poring.js" />
+     <Compile Include="Assets\Script\Job\poringKing.js" />
      <Compile Include="Assets\Script\Neo\Calculating.js" />
      <Compile Include="Assets\Script\Neo\board.js" />
      <Compile Include="Assets\Script\Neo\mySet.js" />
@@ -147,9 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{6658FE60-6342-9CF1-BBF9-36D854A98481}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{5088620C-7A27-518E-4F3F-5647D4472AC2}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
-      <Project>{D79B551B-C142-4EEF-8B13-803AF82FDEB4}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
+      <Project>{D3DECB6E-1D41-F208-C38F-CEE36EDE4CAE}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

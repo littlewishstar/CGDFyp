@@ -4,6 +4,8 @@
 public class poison extends assist{ // Poison 10 round hurt the person automatically
 	public function poison(a:person){
 		setUser(a);
+		
+		small_SkillType[6] = true;
 	}
 	public function functions(){
 		de.isPoison=true;

@@ -8,6 +8,8 @@ var hurt : int  = 0;
 
 
 public function magic(){ // constructer for extends
+	isMag = true;
+
 	needHurtCal=true;
 	haveFunction=false;
 	chooseTeamate = false;

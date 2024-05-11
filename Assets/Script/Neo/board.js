@@ -36,7 +36,7 @@ public function setFire(x:int,y:int){
 		}
 	}
 	box[x,y].setUpFunction(2);
-	GameObject.Instantiate( Resources.Load("Prefabs/Obstacle/fire") as GameObject,box[x,y].thisPlane.transform.position+Vector3(0,0.5,0), Quaternion.Euler(new Vector3()));
+	GameObject.Instantiate( Resources.Load("Prefabs/Obstacle/fireObject") as GameObject,box[x,y].thisPlane.transform.position+Vector3(0,0.1,0), Quaternion.Euler(new Vector3()));
 }
 
 public function setStone(x:int,y:int){

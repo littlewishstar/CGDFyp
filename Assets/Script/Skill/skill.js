@@ -4,9 +4,16 @@ import System.Collections.Generic ;
 
 
 public class skill{
+
+	var skill_name = "skill";
 	
 	var at : person; // the person who use this skill 
 	var de : person; // the person who be used by this skill
+	
+	var isPhy : boolean = false;
+	var isMag : boolean = false;
+	var isHeal : boolean = false;
+	var isAss : boolean = false;
 	
 	var runTimes : int = 1; // how many time will this skill run
 	var skillRange : int = 1; // how big will this skill cover 
@@ -62,6 +69,19 @@ public class skill{
 	var chooseTeamate:boolean = true; // can this skill choose target that who is your teammate
 	var attackTeamate:boolean = true; // can this skiil attack your teamate
 	var attackEmery : boolean = true; // can this skill attack your emery
+	
+	var small_SkillType :boolean[] = [false,false,false,false,false,false,false,false,false];
+	/*
+		buff = 0;
+		can't target = 1;
+		damage transfer = 2
+		ground attack = 3
+		multi target = 4;
+		nerf down = 5;
+		poison = 6
+		position change = 7
+		time relate = 8
+	*/
 	
 	public function skill(){ // constructer // empty for extends
 	
@@ -202,6 +222,10 @@ public class skill{
 			return 1.15;
 		}
 		return 1.2;
+	}
+	
+	function getSkillName():String{
+		return skill_name;
 	}
 
 }

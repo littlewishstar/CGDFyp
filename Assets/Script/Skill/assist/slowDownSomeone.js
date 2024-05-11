@@ -7,6 +7,8 @@ public class slowDownSomeone extends assist{
 		//isListChange = true;
 		skillRange = 3;
 		roundOfDelay = 2;
+		
+		small_SkillType[8] = true;
 	}
 	public function functions(){
 		

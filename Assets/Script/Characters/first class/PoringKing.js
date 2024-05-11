@@ -15,12 +15,12 @@ public class PoringKing extends person{
 		sp = 60;
 		hp = 2300;
 		fullHp = hp;
-		step = 3;
+		step = 0;
 		pa = 650;
 		pd=390;
 		ma=0;
 		md=90;
-		job=0;
+		job=5;
 		
 		AI = new PoringKingFSM();
 		

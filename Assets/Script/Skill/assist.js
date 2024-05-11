@@ -3,6 +3,8 @@
 
 public class assist extends skill{
 	public function assist(){
+		isAss = true;
+	
 		needHurtCal=false;
 		haveFunction=true;
 	}

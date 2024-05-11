@@ -4,6 +4,8 @@
 public class provocative extends assist{ // provocative means let somebody angry
 	public function provocative(a:person){
 		setUser(a);
+		
+		small_SkillType[1] = true;
 	}
 	public function functions(){
 		de.mustTarget = at.getId();

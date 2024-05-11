@@ -5,6 +5,7 @@ public class FSM extends MonoBehaviour
 
 	var walked:boolean;
 	var attacked:boolean;
+	function getHelp():boolean{}
     protected function Initialize() { }
     protected function FSMUpdate() { }
     function FSMFixedUpdate(bd :board) { }

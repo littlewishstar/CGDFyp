@@ -6,6 +6,8 @@ public class simpleKnockBack extends assist{ // knock back somebody but no hurt
 		setUser(a);
 		knockBackFunction = 1;
 		//needChoose = true;
+		
+		small_SkillType[5] = true;
 	}
 	public function functions(){
 		if(de.getLocationX()==at.getLocationX()){
