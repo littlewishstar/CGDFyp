@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\For multiple game play\MultipleGameProcess.js">
+    <Files>
+      <File FileName="Assets\Script\For multiple game play\stage\stageFinal.js" Line="35" Column="11" />
+      <File FileName="Assets\ChangeScene.cs" Line="8" Column="41" />
+      <File FileName="Assets\Script\For multiple game play\MultipleGameProcess.js" Line="963" Column="12" />
+      <File FileName="Assets\sizeDelta.cs" Line="14" Column="40" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

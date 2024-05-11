@@ -32,6 +32,7 @@ function Start () {
 function Update () {
 
 }
+var win:boolean;
 
 var canvasSkill :Animator; // control the skill button Animator
 
@@ -43,6 +44,8 @@ var ps :List.<person> = new List.<person>(); // record 8 character
 
 var bd :board; // create board variable
 public var plane :GameObject; // collect gameObejct plane which used to be plane
+
+var toStage:stageSample;
 
 var speed:int[]; // record the character speed
 var round :int=0;
@@ -955,6 +958,12 @@ public function setInfoContent(pr:person){
 	md.text = pr.getMd().ToString();
 }
 
-
+public function winOrLose(){
+	for(var i:int=0;i<ps.Count;i++)
+		if(ps[i]==stageValue.enemy){
+			win=false;
+			return;
+		}
+}
 
 
